@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class LearnBootOneApplication {
+public class RMSApplication {
 
 
 	public static void main(String[] args) {
-		SpringApplication.run(LearnBootOneApplication.class, args);
+		SpringApplication.run(RMSApplication.class, args);
     }
 }
