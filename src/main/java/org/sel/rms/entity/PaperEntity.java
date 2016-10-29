@@ -18,7 +18,6 @@ public class PaperEntity {
     private String keyWord;
     private String abstractText;
     private String content;
-    private byte checkStatus;
     private String param1;
     private String param2;
 
@@ -112,15 +111,6 @@ public class PaperEntity {
         this.content = content;
     }
 
-    @Basic
-    @Column(name = "checkStatus", nullable = false)
-    public byte getCheckStatus() {
-        return checkStatus;
-    }
-
-    public void setCheckStatus(byte checkStatus) {
-        this.checkStatus = checkStatus;
-    }
 
     @Basic
     @Column(name = "param1", nullable = true, length = 45)
@@ -150,7 +140,6 @@ public class PaperEntity {
         PaperEntity that = (PaperEntity) o;
 
         if (idPaper != that.idPaper) return false;
-        if (checkStatus != that.checkStatus) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (releaseDate != null ? !releaseDate.equals(that.releaseDate) : that.releaseDate != null) return false;
         if (writer != null ? !writer.equals(that.writer) : that.writer != null) return false;
@@ -176,7 +165,6 @@ public class PaperEntity {
         result = 31 * result + (keyWord != null ? keyWord.hashCode() : 0);
         result = 31 * result + (abstractText != null ? abstractText.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + (int) checkStatus;
         result = 31 * result + (param1 != null ? param1.hashCode() : 0);
         result = 31 * result + (param2 != null ? param2.hashCode() : 0);
         return result;

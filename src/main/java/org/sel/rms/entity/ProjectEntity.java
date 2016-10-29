@@ -18,7 +18,6 @@ public class ProjectEntity {
     private BigDecimal funds;
     private Date publishTime;
     private String introduction;
-    private byte checkStatus;
     private String param1;
     private String param2;
 
@@ -102,15 +101,6 @@ public class ProjectEntity {
         this.introduction = introduction;
     }
 
-    @Basic
-    @Column(name = "checkStatus", nullable = false)
-    public byte getCheckStatus() {
-        return checkStatus;
-    }
-
-    public void setCheckStatus(byte checkStatus) {
-        this.checkStatus = checkStatus;
-    }
 
     @Basic
     @Column(name = "param1", nullable = true, length = 45)
@@ -140,7 +130,6 @@ public class ProjectEntity {
         ProjectEntity that = (ProjectEntity) o;
 
         if (idProject != that.idProject) return false;
-        if (checkStatus != that.checkStatus) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (source != null ? !source.equals(that.source) : that.source != null) return false;
         if (projectTime != null ? !projectTime.equals(that.projectTime) : that.projectTime != null) return false;
@@ -164,7 +153,6 @@ public class ProjectEntity {
         result = 31 * result + (funds != null ? funds.hashCode() : 0);
         result = 31 * result + (publishTime != null ? publishTime.hashCode() : 0);
         result = 31 * result + (introduction != null ? introduction.hashCode() : 0);
-        result = 31 * result + (int) checkStatus;
         result = 31 * result + (param1 != null ? param1.hashCode() : 0);
         result = 31 * result + (param2 != null ? param2.hashCode() : 0);
         return result;
