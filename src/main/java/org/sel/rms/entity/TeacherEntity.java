@@ -4,14 +4,14 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * Created by xubowei on 29/10/2016.
+ * Created by xubowei on 30/10/2016.
  */
 @Entity
 @Table(name = "Teacher", schema = "RMS", catalog = "")
 public class TeacherEntity {
     private int idTeacher;
     private String account;
-    private String passWord;
+    private String password;
     private Date birthday;
     private String educationBackground;
     private String college;
@@ -27,7 +27,7 @@ public class TeacherEntity {
     private String param2;
 
     @Id
-    @Column(name = "idTeacher", nullable = false)
+    @Column(name = "id_teacher", nullable = false)
     public int getIdTeacher() {
         return idTeacher;
     }
@@ -47,13 +47,13 @@ public class TeacherEntity {
     }
 
     @Basic
-    @Column(name = "passWord", nullable = false, length = 45)
-    public String getPassWord() {
-        return passWord;
+    @Column(name = "password", nullable = false, length = 45)
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Basic
@@ -67,7 +67,7 @@ public class TeacherEntity {
     }
 
     @Basic
-    @Column(name = "educationBackground", nullable = true, length = 45)
+    @Column(name = "education_background", nullable = true, length = 45)
     public String getEducationBackground() {
         return educationBackground;
     }
@@ -117,7 +117,7 @@ public class TeacherEntity {
     }
 
     @Basic
-    @Column(name = "phoneNumber", nullable = false, length = 45)
+    @Column(name = "phone_number", nullable = false, length = 45)
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -137,7 +137,7 @@ public class TeacherEntity {
     }
 
     @Basic
-    @Column(name = "workPlace", nullable = false, length = 45)
+    @Column(name = "work_place", nullable = false, length = 45)
     public String getWorkPlace() {
         return workPlace;
     }
@@ -157,7 +157,7 @@ public class TeacherEntity {
     }
 
     @Basic
-    @Column(name = "avatarUrl", nullable = true, length = 45)
+    @Column(name = "avatar_url", nullable = true, length = 45)
     public String getAvatarUrl() {
         return avatarUrl;
     }
@@ -196,7 +196,7 @@ public class TeacherEntity {
         if (idTeacher != that.idTeacher) return false;
         if (gender != that.gender) return false;
         if (account != null ? !account.equals(that.account) : that.account != null) return false;
-        if (passWord != null ? !passWord.equals(that.passWord) : that.passWord != null) return false;
+        if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
         if (educationBackground != null ? !educationBackground.equals(that.educationBackground) : that.educationBackground != null)
             return false;
@@ -218,7 +218,7 @@ public class TeacherEntity {
     public int hashCode() {
         int result = idTeacher;
         result = 31 * result + (account != null ? account.hashCode() : 0);
-        result = 31 * result + (passWord != null ? passWord.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + (educationBackground != null ? educationBackground.hashCode() : 0);
         result = 31 * result + (college != null ? college.hashCode() : 0);

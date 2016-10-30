@@ -3,19 +3,19 @@ package org.sel.rms.entity;
 import javax.persistence.*;
 
 /**
- * Created by xubowei on 29/10/2016.
+ * Created by xubowei on 30/10/2016.
  */
 @Entity
 @Table(name = "Admin", schema = "RMS", catalog = "")
 public class AdminEntity {
     private int idAdmin;
     private String account;
-    private String passWord;
+    private String password;
     private String param1;
     private String param2;
 
     @Id
-    @Column(name = "idAdmin", nullable = false)
+    @Column(name = "id_admin", nullable = false)
     public int getIdAdmin() {
         return idAdmin;
     }
@@ -35,13 +35,13 @@ public class AdminEntity {
     }
 
     @Basic
-    @Column(name = "passWord", nullable = false, length = 45)
-    public String getPassWord() {
-        return passWord;
+    @Column(name = "password", nullable = false, length = 45)
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Basic
@@ -73,7 +73,7 @@ public class AdminEntity {
 
         if (idAdmin != that.idAdmin) return false;
         if (account != null ? !account.equals(that.account) : that.account != null) return false;
-        if (passWord != null ? !passWord.equals(that.passWord) : that.passWord != null) return false;
+        if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (param1 != null ? !param1.equals(that.param1) : that.param1 != null) return false;
         if (param2 != null ? !param2.equals(that.param2) : that.param2 != null) return false;
 
@@ -84,7 +84,7 @@ public class AdminEntity {
     public int hashCode() {
         int result = idAdmin;
         result = 31 * result + (account != null ? account.hashCode() : 0);
-        result = 31 * result + (passWord != null ? passWord.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (param1 != null ? param1.hashCode() : 0);
         result = 31 * result + (param2 != null ? param2.hashCode() : 0);
         return result;
