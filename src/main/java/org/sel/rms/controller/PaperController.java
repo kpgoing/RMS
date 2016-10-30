@@ -87,11 +87,11 @@ public class PaperController {
     @RequestMapping(value = "/publish",method = RequestMethod.POST)
     public ResponseMessage publish(@Validated(PaperGroup.publish.class) @RequestBody PaperEntity paperEntity, BindingResult bindingResult) {
         PaperStatus paperStatus;
-        System.out.println(paperEntity);
         if (bindingResult.hasErrors()) {
-            StringBuilder errors = new StringBuilder("error:");
-            bindingResult.getAllErrors().forEach(n -> errors.append(n.getCode() + "  "  + n.getDefaultMessage() + "     "));
-            logger.error(errors.toString());
+//            StringBuilder errors = new StringBuilder("error:");
+//            bindingResult.getAllErrors().forEach(n -> errors.append(n.getDefaultMessage() + "     "));
+//            logger.error(errors.toString());
+            logger.error("paperPublish argument error: " + paperEntity);
             paperStatus = PaperStatus.ERROR;
         } else {
             paperService.publishPaper(paperEntity);
