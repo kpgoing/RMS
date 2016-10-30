@@ -12,7 +12,10 @@ public interface PaperService {
 
     public void modifyPaper(PaperEntity paperEntity);
 
-    public void deletePaper(PaperEntity paperEntity);
+    public void deletePaper(int id);
+
+    public PaperEntity getPaperById(int id);
+
 
 
 }

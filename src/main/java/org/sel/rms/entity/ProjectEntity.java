@@ -5,12 +5,13 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by xubowei on 29/10/2016.
+ * Created by xubowei on 30/10/2016.
  */
 @Entity
 @Table(name = "Project", schema = "RMS", catalog = "")
 public class ProjectEntity {
     private int idProject;
+    private int idTeacher;
     private String name;
     private String source;
     private Date projectTime;
@@ -22,13 +23,23 @@ public class ProjectEntity {
     private String param2;
 
     @Id
-    @Column(name = "idProject", nullable = false)
+    @Column(name = "id_project", nullable = false)
     public int getIdProject() {
         return idProject;
     }
 
     public void setIdProject(int idProject) {
         this.idProject = idProject;
+    }
+
+    @Basic
+    @Column(name = "id_teacher", nullable = false)
+    public int getIdTeacher() {
+        return idTeacher;
+    }
+
+    public void setIdTeacher(int idTeacher) {
+        this.idTeacher = idTeacher;
     }
 
     @Basic
@@ -52,7 +63,7 @@ public class ProjectEntity {
     }
 
     @Basic
-    @Column(name = "projectTime", nullable = false)
+    @Column(name = "project_time", nullable = false)
     public Date getProjectTime() {
         return projectTime;
     }
@@ -82,7 +93,7 @@ public class ProjectEntity {
     }
 
     @Basic
-    @Column(name = "publishTime", nullable = false)
+    @Column(name = "publish_time", nullable = false)
     public Date getPublishTime() {
         return publishTime;
     }
@@ -100,7 +111,6 @@ public class ProjectEntity {
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
     }
-
 
     @Basic
     @Column(name = "param1", nullable = true, length = 45)
@@ -130,6 +140,7 @@ public class ProjectEntity {
         ProjectEntity that = (ProjectEntity) o;
 
         if (idProject != that.idProject) return false;
+        if (idTeacher != that.idTeacher) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (source != null ? !source.equals(that.source) : that.source != null) return false;
         if (projectTime != null ? !projectTime.equals(that.projectTime) : that.projectTime != null) return false;
@@ -146,6 +157,7 @@ public class ProjectEntity {
     @Override
     public int hashCode() {
         int result = idProject;
+        result = 31 * result + idTeacher;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (projectTime != null ? projectTime.hashCode() : 0);

@@ -3,17 +3,17 @@ package org.sel.rms.entity;
 import javax.persistence.*;
 
 /**
- * Created by xubowei on 29/10/2016.
+ * Created by xubowei on 30/10/2016.
  */
 @Entity
-@Table(name = "CheckStatusOfTeacher", schema = "RMS", catalog = "")
+@Table(name = "check_status_of_teacher", schema = "RMS", catalog = "")
 public class CheckStatusOfTeacherEntity {
     private int idCheckStatusOfTeacher;
     private int idTeacher;
     private byte checkStatus;
 
     @Id
-    @Column(name = "idCheckStatusOfTeacher", nullable = false)
+    @Column(name = "id_check_status_of_teacher", nullable = false)
     public int getIdCheckStatusOfTeacher() {
         return idCheckStatusOfTeacher;
     }
@@ -23,7 +23,7 @@ public class CheckStatusOfTeacherEntity {
     }
 
     @Basic
-    @Column(name = "idTeacher", nullable = false)
+    @Column(name = "id_teacher", nullable = false)
     public int getIdTeacher() {
         return idTeacher;
     }
@@ -33,7 +33,7 @@ public class CheckStatusOfTeacherEntity {
     }
 
     @Basic
-    @Column(name = "checkStatus", nullable = false)
+    @Column(name = "check_status", nullable = false)
     public byte getCheckStatus() {
         return checkStatus;
     }
