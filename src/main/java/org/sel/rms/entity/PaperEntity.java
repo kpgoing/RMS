@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
-import static com.sun.tools.doclets.formats.html.markup.HtmlStyle.title;
 
 /**
  * Created by xubowei on 30/10/2016.
