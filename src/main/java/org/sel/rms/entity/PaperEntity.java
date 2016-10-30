@@ -1,35 +1,59 @@
 package org.sel.rms.entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.sel.rms.entity.ValidGroup.PaperGroup;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
+
 /**
- * Created by xubowei on 29/10/2016.
+ * Created by xubowei on 30/10/2016.
  */
 @Entity
 @Table(name = "Paper", schema = "RMS", catalog = "")
 public class PaperEntity {
     private int idPaper;
+    @NotNull(groups = {PaperGroup.publish.class})
+    private int idTeacher;
+    @NotBlank(groups = {PaperGroup.publish.class})
     private String title;
+    @NotNull(groups = {PaperGroup.publish.class})
     private Date releaseDate;
+    @NotBlank(groups = {PaperGroup.publish.class})
     private String writer;
+    @NotNull(groups = {PaperGroup.publish.class})
     private Date publishDate;
+    @NotBlank(groups = {PaperGroup.publish.class})
     private String publishPlace;
+    @NotBlank(groups = {PaperGroup.publish.class})
     private String keyWord;
-    private String abstractText;
+    @NotBlank(groups = {PaperGroup.publish.class})
+    private String abstractContent;
+    @NotBlank(groups = {PaperGroup.publish.class})
     private String content;
-    private byte checkStatus;
     private String param1;
     private String param2;
 
     @Id
-    @Column(name = "idPaper", nullable = false)
+    @Column(name = "id_paper", nullable = false)
     public int getIdPaper() {
         return idPaper;
     }
 
     public void setIdPaper(int idPaper) {
         this.idPaper = idPaper;
+    }
+
+    @Basic
+    @Column(name = "id_teacher", nullable = false)
+    public int getIdTeacher() {
+        return idTeacher;
+    }
+
+    public void setIdTeacher(int idTeacher) {
+        this.idTeacher = idTeacher;
     }
 
     @Basic
@@ -43,7 +67,7 @@ public class PaperEntity {
     }
 
     @Basic
-    @Column(name = "releaseDate", nullable = false)
+    @Column(name = "release_date", nullable = false)
     public Date getReleaseDate() {
         return releaseDate;
     }
@@ -63,7 +87,7 @@ public class PaperEntity {
     }
 
     @Basic
-    @Column(name = "publishDate", nullable = false)
+    @Column(name = "publish_date", nullable = false)
     public Date getPublishDate() {
         return publishDate;
     }
@@ -73,7 +97,7 @@ public class PaperEntity {
     }
 
     @Basic
-    @Column(name = "publishPlace", nullable = false, length = 45)
+    @Column(name = "publish_place", nullable = false, length = 45)
     public String getPublishPlace() {
         return publishPlace;
     }
@@ -83,7 +107,7 @@ public class PaperEntity {
     }
 
     @Basic
-    @Column(name = "keyWord", nullable = false, length = 45)
+    @Column(name = "key_word", nullable = false, length = 45)
     public String getKeyWord() {
         return keyWord;
     }
@@ -93,13 +117,13 @@ public class PaperEntity {
     }
 
     @Basic
-    @Column(name = "abstractText", nullable = false, length = -1)
-    public String getAbstractText() {
-        return abstractText;
+    @Column(name = "abstract_content", nullable = false, length = -1)
+    public String getAbstractContent() {
+        return abstractContent;
     }
 
-    public void setAbstractText(String abstractText) {
-        this.abstractText = abstractText;
+    public void setAbstractContent(String abstractContent) {
+        this.abstractContent = abstractContent;
     }
 
     @Basic
@@ -110,16 +134,6 @@ public class PaperEntity {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    @Basic
-    @Column(name = "checkStatus", nullable = false)
-    public byte getCheckStatus() {
-        return checkStatus;
-    }
-
-    public void setCheckStatus(byte checkStatus) {
-        this.checkStatus = checkStatus;
     }
 
     @Basic
@@ -150,14 +164,15 @@ public class PaperEntity {
         PaperEntity that = (PaperEntity) o;
 
         if (idPaper != that.idPaper) return false;
-        if (checkStatus != that.checkStatus) return false;
+        if (idTeacher != that.idTeacher) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (releaseDate != null ? !releaseDate.equals(that.releaseDate) : that.releaseDate != null) return false;
         if (writer != null ? !writer.equals(that.writer) : that.writer != null) return false;
         if (publishDate != null ? !publishDate.equals(that.publishDate) : that.publishDate != null) return false;
         if (publishPlace != null ? !publishPlace.equals(that.publishPlace) : that.publishPlace != null) return false;
         if (keyWord != null ? !keyWord.equals(that.keyWord) : that.keyWord != null) return false;
-        if (abstractText != null ? !abstractText.equals(that.abstractText) : that.abstractText != null) return false;
+        if (abstractContent != null ? !abstractContent.equals(that.abstractContent) : that.abstractContent != null)
+            return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
         if (param1 != null ? !param1.equals(that.param1) : that.param1 != null) return false;
         if (param2 != null ? !param2.equals(that.param2) : that.param2 != null) return false;
@@ -168,17 +183,35 @@ public class PaperEntity {
     @Override
     public int hashCode() {
         int result = idPaper;
+        result = 31 * result + idTeacher;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
         result = 31 * result + (writer != null ? writer.hashCode() : 0);
         result = 31 * result + (publishDate != null ? publishDate.hashCode() : 0);
         result = 31 * result + (publishPlace != null ? publishPlace.hashCode() : 0);
         result = 31 * result + (keyWord != null ? keyWord.hashCode() : 0);
-        result = 31 * result + (abstractText != null ? abstractText.hashCode() : 0);
+        result = 31 * result + (abstractContent != null ? abstractContent.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + (int) checkStatus;
         result = 31 * result + (param1 != null ? param1.hashCode() : 0);
         result = 31 * result + (param2 != null ? param2.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "PaperEntity{" +
+                "idPaper=" + idPaper +
+                ", idTeacher=" + idTeacher +
+                ", title='" + title + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", writer='" + writer + '\'' +
+                ", publishDate=" + publishDate +
+                ", publishPlace='" + publishPlace + '\'' +
+                ", keyWord='" + keyWord + '\'' +
+                ", abstractContent='" + abstractContent + '\'' +
+                ", content='" + content + '\'' +
+                ", param1='" + param1 + '\'' +
+                ", param2='" + param2 + '\'' +
+                '}';
     }
 }

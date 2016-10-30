@@ -17,45 +17,39 @@ body{
     font-family: "Microsoft YaHei";
 }
 .header{
-    padding: 13px 5px;
-    height: 33px;
+    padding: 10px 13.1%;
+    height: 29px;
     background-color: #f5f5f5;
     border-bottom: 1px solid #e5e5e5;
-    position: relative;
 }
 .logo{
-    width: 33px;
-    height: 33px;
-    position: absolute;
-    margin-left: 137px;
-    top: 10px;
+    float: left;
+    width: 29px;
+    height: 29px;
 }
 .search{
-    position: absolute;
-    top: 11px;
-    left: 188px;
-    width: 380px;
-    height: 25px;
+    float: left;
+    margin-left: 10px;
+    width: 360px;
+    height: 26px;
     border: 1px solid #e5e5e5;
     border-radius: 4px;
-    font-size: 16px;
-    padding: 4px 20px;
+    font-size: 13px;
+    padding: 0px 5px;
+    font-family: "Microsoft YaHei";
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
 }
 .avatar_holder{
-    display: inline-block;
-    position: absolute;
-    width: 53px;
-    height: 21px;
-    top: 15px;
-    right: 186px;
+    float: right;
 }
 .avatar_holder:hover{
     cursor: pointer;
     color: #4078c0;
 }
 .small_avatar{
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
 }
 .arrow{
     display: inline-block;
@@ -64,6 +58,7 @@ body{
     vertical-align: middle;
     content: "";
     margin-bottom: 10px;
+    margin-top: 12px;
     border: 4px solid;
     border-right-color: transparent;
     border-bottom-color: transparent;
@@ -74,48 +69,37 @@ body{
     cursor: pointer;
 }
 .latest_info{
-    width: 50%;
-    margin-left: 140px;
+    display: inline-block;
+    width: 63%;
 }
 .info_holder{
     width: 100%;
     display: block;
-    padding: 23px;
+    padding: 23px 0 23px 10px;
     border-bottom: 1px solid #f1f1f1;
     font-size: 14px;
-    position: relative;
 }
 .mark{
     width: 20px;
     height: 20px;
+    float: left;
     margin-right: 10px;
-    position: absolute;
-    top: 23px;
 }
 .info_detail{
     display: inline-block;
-    padding-left: 32px;
 }
 .message{
-    position: absolute;
-    top: 24px;
-    left: 901px;
-    width: 310px;
+    float: right;
+    width: 270px;
     min-height: 129px;
     padding: 11px 10px 10px 62px;
     border: solid 1px #4078c0;
     border-radius: 6px;
     background: url(../img/review.png) no-repeat 10px 10px;
-    background-size: 37px
+    background-size: 37px;
 }
 .content{
-    width: 100%;
-    position: relative;
-}
-.headline{
-    font-size: 18px;
-    color: #4078c0;
-    margin-bottom: 6px;
+    padding:23px 13.1%;
 }
 .review_holder{
     display: block;
@@ -174,10 +158,7 @@ body{
     color: #bbb;
 }
 .menu{
-    position: absolute;
     width: 100px;
-    top: 0;
-    left: 1076px;
     border: 1px solid rgba(0,0,0,0.15);
     border-radius: 4px;
     background-color: #fff;
@@ -185,6 +166,9 @@ body{
     box-shadow: 0 3px 12px rgba(0,0,0,0.15);
     z-index: 100;
     display: none;
+    position: absolute;
+    top: 50px;
+    right: 13.1%;
 }
 
 .menu_detail{
@@ -196,7 +180,11 @@ body{
     border-bottom: 1px solid #d5d5d5;
     font-size: 14px;
 }
-.menu_detail:hover{
+.menu_detail:hover {
     background: #4078c0;
     color: #fff;
+}
+.headline{
+    font-size: 16px;
+    color: #4078c0;
 }

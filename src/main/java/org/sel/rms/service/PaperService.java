@@ -8,4 +8,14 @@ import org.springframework.stereotype.Service;
 */
 public interface PaperService {
 
+    public void publishPaper(PaperEntity paperEntity);
+
+    public void modifyPaper(PaperEntity paperEntity);
+
+    public void deletePaper(int id);
+
+    public PaperEntity getPaperById(int id);
+
+
+
 }
