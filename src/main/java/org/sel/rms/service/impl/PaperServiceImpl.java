@@ -7,6 +7,10 @@ import org.sel.rms.status.PaperStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 
 /**
 * 生成于2016/10/29
@@ -27,12 +31,17 @@ public class PaperServiceImpl implements PaperService {
     }
 
     public PaperEntity getPaperById(int id) {
-        PaperEntity paperEntity = paperRepository.getOne(id);
+        PaperEntity paperEntity;
+        paperEntity = paperRepository.findOne(id);
+        if (paperEntity == null) {
+            throw new PaperException("no such paper! idPaper : " + id, PaperStatus.NOT_FOUND);
+        }
         return paperEntity;
     }
 
     @Override
     public void modifyPaper(PaperEntity paperEntity) {
+        PaperEntity found = getPaperById(paperEntity.getIdPaper());
         paperRepository.save(paperEntity);
     }
 

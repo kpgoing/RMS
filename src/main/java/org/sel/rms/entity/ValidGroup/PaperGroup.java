@@ -5,4 +5,5 @@ package org.sel.rms.entity.ValidGroup;
  */
 public interface PaperGroup {
     public static interface publish{};
+    public static interface modify{};
 }

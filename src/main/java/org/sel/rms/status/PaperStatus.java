@@ -6,7 +6,7 @@ import org.sel.rms.status.inter.Statusable;
  * Created by xubowei on 30/10/2016.
  */
 public enum  PaperStatus implements Statusable {
-    SUCCESS(0),ERROR(1),DATABASE_ERROR(2);
+    SUCCESS(0),ERROR(1),ARGUMENTS_ERROR(2),DATABASE_ERROR(3),NOT_FOUND(4);
 
 
     private int status;

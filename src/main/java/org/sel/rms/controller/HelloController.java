@@ -28,6 +28,15 @@ public class HelloController {
      *   @apiVersion 0.1.0
      *   @apiSuccess {String} null hello + xxx
      */
+
+    /**
+     *   @api {get} /hellodsad 测试
+     *   @apiName 返回测试字符串
+     *   @apiGroup Test
+     *   @apiVersion 0.1.0
+     *   @apiSuccess {String} null hello + xxx
+     */
+
     @RequestMapping("/hello")
     public String helloWorldMessage() {
         return "hello " + name ;

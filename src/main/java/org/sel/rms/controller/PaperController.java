@@ -27,36 +27,12 @@ public class PaperController {
     @Autowired
     PaperService paperService;
 
-    /**
-     * @apiDefine NomalErrorResponse
-     *
-     *
-     * @apiErrorExample NomalErrorResponse:
-     *
-     *     {
-     *       "code": 1,
-     *       "msg": "ERROR",
-     *       "body": null
-     *     }
-     */
 
-    /**
-     * @apiDefine DataBaseErrorResponse
-     *
-     *
-     * @apiErrorExample DataBaseErrorResponse:
-     *
-     *     {
-     *       "code": 2,
-     *       "msg": "DATABASE_ERROR",
-     *       "body": null
-     *     }
-     */
 
 
     /**
      *   @api {post} /paper/publish 发表论文
-     *   @apiName 发表论文
+     *   @apiName publishPaper
      *   @apiGroup Paper
      *   @apiVersion 0.1.0
      *   @apiParam {json} paperEntity 论文信息
@@ -82,19 +58,69 @@ public class PaperController {
      *     }
      *
      *   @apiUse  NomalErrorResponse
+     *   @apiUse  ArgumentsErrorResponse
      *   @apiUse  DataBaseErrorResponse
      */
     @RequestMapping(value = "/publish",method = RequestMethod.POST)
     public ResponseMessage publish(@Validated(PaperGroup.publish.class) @RequestBody PaperEntity paperEntity, BindingResult bindingResult) {
         PaperStatus paperStatus;
         if (bindingResult.hasErrors()) {
+            logger.error("paperPublish argument error: " + paperEntity);
+            paperStatus = PaperStatus.ARGUMENTS_ERROR;
+        } else {
+            paperService.publishPaper(paperEntity);
+            paperStatus = PaperStatus.SUCCESS;
+        }
+        return new ResponseMessage(paperStatus);
+    }
+
+
+
+    /**
+     *
+     *   @api {post} /paper/modify 修改论文
+     *   @apiName modifyPaper
+     *   @apiGroup Paper
+     *   @apiVersion 0.1.0
+     *   @apiParam {json} paperEntity 论文信息
+     *   @apiParamExample {json} Request-Example:
+     *     {
+     *       "idPaper":1,
+     *       "idTeacher":1,
+     *       "title":"ds",
+     *       "releaseDate":"2016-10-30",
+     *       "writer":"xbw",
+     *       "publishDate":"2016-10-30",
+     *       "publishPlace":"aaa",
+     *       "keyWord":"123",
+     *       "abstractContent":"123",
+     *       "content":"123"
+     *     }
+     *
+     *   @apiSuccessExample {json} Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "code": 0,
+     *       "msg": "SUCCESS",
+     *       "body": null
+     *     }
+     *
+     *   @apiUse  NomalErrorResponse
+     *   @apiUse  ArgumentsErrorResponse
+     *   @apiUse  DataBaseErrorResponse
+     *   @apiUse  NotFoundErrorResponse
+     */
+    @RequestMapping(value = "/modify",method = RequestMethod.POST)
+    public ResponseMessage modify(@Validated(PaperGroup.modify.class) @RequestBody PaperEntity paperEntity, BindingResult bindingResult) {
+        PaperStatus paperStatus;
+        if (bindingResult.hasErrors()) {
 //            StringBuilder errors = new StringBuilder("error:");
 //            bindingResult.getAllErrors().forEach(n -> errors.append(n.getDefaultMessage() + "     "));
 //            logger.error(errors.toString());
             logger.error("paperPublish argument error: " + paperEntity);
-            paperStatus = PaperStatus.ERROR;
+            paperStatus = PaperStatus.ARGUMENTS_ERROR;
         } else {
-            paperService.publishPaper(paperEntity);
+            paperService.modifyPaper(paperEntity);
             paperStatus = PaperStatus.SUCCESS;
         }
         return new ResponseMessage(paperStatus);
