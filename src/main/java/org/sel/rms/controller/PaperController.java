@@ -11,10 +11,7 @@ import org.sel.rms.status.PaperStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by xubowei on 30/10/2016.
@@ -49,14 +46,7 @@ public class PaperController {
      *       "content":"123"
      *     }
      *
-     *   @apiSuccessExample {json} Success-Response:
-     *     HTTP/1.1 200 OK
-     *     {
-     *       "code": 0,
-     *       "msg": "SUCCESS",
-     *       "body": null
-     *     }
-     *
+     *   @apiUse  NomalSuccessResponse
      *   @apiUse  NomalErrorResponse
      *   @apiUse  ArgumentsErrorResponse
      *   @apiUse  DataBaseErrorResponse
@@ -97,14 +87,7 @@ public class PaperController {
      *       "content":"123"
      *     }
      *
-     *   @apiSuccessExample {json} Success-Response:
-     *     HTTP/1.1 200 OK
-     *     {
-     *       "code": 0,
-     *       "msg": "SUCCESS",
-     *       "body": null
-     *     }
-     *
+     *   @apiUse  NomalSuccessResponse
      *   @apiUse  NomalErrorResponse
      *   @apiUse  ArgumentsErrorResponse
      *   @apiUse  DataBaseErrorResponse
@@ -124,5 +107,23 @@ public class PaperController {
             paperStatus = PaperStatus.SUCCESS;
         }
         return new ResponseMessage(paperStatus);
+    }
+
+    /**
+     *
+     *   @api {get} /paper/delete/:id 删除论文
+     *   @apiName deletePaper
+     *   @apiGroup Paper
+     *   @apiVersion 0.1.0
+     *   @apiParam {Number} id 论文id
+     *
+     *   @apiUse  NomalSuccessResponse
+     *   @apiUse  NomalErrorResponse
+     *   @apiUse  NotFoundErrorResponse
+     */
+    @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
+    public ResponseMessage delete(@PathVariable("id") int id) {
+        paperService.deletePaper(id);
+        return new ResponseMessage(PaperStatus.SUCCESS);
     }
 }

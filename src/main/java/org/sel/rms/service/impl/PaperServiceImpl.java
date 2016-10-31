@@ -47,6 +47,10 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
     public void deletePaper(int id) {
-        paperRepository.delete(id);
+        try {
+            paperRepository.delete(id);
+        } catch (Exception ex) {
+            throw new PaperException("delete paper error which id = " + id, ex, PaperStatus.NOT_FOUND);
+        }
     }
 }
