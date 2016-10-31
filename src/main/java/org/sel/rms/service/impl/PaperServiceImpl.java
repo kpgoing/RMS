@@ -5,6 +5,8 @@ import org.sel.rms.repository.PaperRepository;
 import org.sel.rms.service.PaperService;
 import org.sel.rms.status.PaperStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -40,17 +42,35 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
+    public Page<PaperEntity> getPageEntitiesByIdOfTeacher(int id, Pageable page) {
+        Page<PaperEntity> paperEntities;
+        try {
+            paperEntities = paperRepository.findByIdTeacher(id, page);
+        } catch (Exception ex) {
+            throw new PaperException("get entities by teacher id error who id = " + id, ex, PaperStatus.DATABASE_ERROR);
+        }
+        return paperEntities;
+    }
+
+    @Override
     public void modifyPaper(PaperEntity paperEntity) {
         PaperEntity found = getPaperById(paperEntity.getIdPaper());
         paperRepository.save(paperEntity);
     }
 
     @Override
-    public void deletePaper(int id) {
-        try {
-            paperRepository.delete(id);
-        } catch (Exception ex) {
-            throw new PaperException("delete paper error which id = " + id, ex, PaperStatus.NOT_FOUND);
+    public void deletePaper(int idPaper, int idTeacher) {
+        PaperEntity paperEntity = paperRepository.findOne(idPaper);
+        if (paperEntity.getIdTeacher() == idTeacher) {
+            try {
+                paperRepository.delete(idPaper);
+            } catch (Exception ex) {
+                throw new PaperException("delete paper error which id = " + id, ex, PaperStatus.NOT_FOUND);
+            }
+        } else {
+            throw new PaperException("delete paper error because the paper is not belong to the teacher which idPaper =  " + idPaper + " idTeahcer = " + idTeacher, PaperStatus.PERMISSIOM_DENY);
         }
     }
+
+
 }

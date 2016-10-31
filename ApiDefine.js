@@ -21,7 +21,7 @@
  *
  *     {
  *       "code": 1,
- *       "msg": "ERROR",
+ *       "msg": "ERROR(:...some err info)",
  *       "body": null
  *     }
  */
@@ -61,6 +61,32 @@
  *     {
  *       "code": 4,
  *       "msg": "NOT_FOUND",
+ *       "body": null
+ *     }
+ */
+
+/**
+ * @apiDefine UnLoginErrorResponse
+ *
+ *
+ * @apiErrorExample UnLoginErrorResponse:
+ *
+ *     {
+ *       "code": 5,
+ *       "msg": "UN_LOGIN",
+ *       "body": null
+ *     }
+ */
+
+/**
+ * @apiDefine PermissionDenyErrorResponse
+ *
+ *
+ * @apiErrorExample PermissionDenyErrorResponse:
+ *
+ *     {
+ *       "code": 6,
+ *       "msg": "PERMISSIOM_DENY",
  *       "body": null
  *     }
  */
