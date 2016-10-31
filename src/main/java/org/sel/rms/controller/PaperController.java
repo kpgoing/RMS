@@ -35,7 +35,7 @@ public class PaperController {
 
 
     /**
-     * @api {post} /paper/publish 发表论文
+     * @api {post} /teacher/paper/publish 发表论文
      * @apiName publishPaper
      * @apiGroup Paper
      * @apiPermission teacher
@@ -83,7 +83,7 @@ public class PaperController {
 
     /**
      *
-     *   @api {post} /paper/modify 修改论文
+     *   @api {post} /teacher/paper/modify 修改论文
      *   @apiName modifyPaper
      *   @apiGroup Paper
      *   @apiPermission teacher
@@ -133,7 +133,7 @@ public class PaperController {
     }
 
     /**
-     * @api {get} /paper/delete/:id 删除论文
+     * @api {get} /teacher/paper/delete/:id 删除论文
      * @apiName deletePaper
      * @apiGroup Paper
      * @apiPermission teacher
@@ -161,7 +161,7 @@ public class PaperController {
 
     /**
      *
-     *   @api {post} /paper/mypapers 查询自己发表的论文
+     *   @api {post} /teacher/paper/mypapers 查询自己发表的论文
      *   @apiName getPapersByTeacher
      *   @apiGroup Paper
      *   @apiPermission teacher
