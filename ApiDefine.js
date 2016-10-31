@@ -1,5 +1,5 @@
 /**
- * @apiDefine  NomalSuccessResponse
+ * @apiDefine  NormalSuccessResponse
  *
  *
  *   @apiSuccessExample {json} Success-Response:
@@ -14,10 +14,10 @@
 
 
 /**
- * @apiDefine NomalErrorResponse
+ * @apiDefine NormalErrorResponse
  *
  *
- * @apiErrorExample NomalErrorResponse:
+ * @apiErrorExample NormalErrorResponse:
  *
  *     {
  *       "code": 1,

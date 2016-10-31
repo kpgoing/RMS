@@ -9,6 +9,7 @@ import org.sel.rms.exception.PaperException;
 import org.sel.rms.service.PaperService;
 import org.sel.rms.status.PaperStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,9 @@ public class PaperController {
     @Autowired
     PaperService paperService;
 
+    @Value("${config.teacher.key}")
+    String teacherKey;
+
 
     /**
      * @api {post} /teacher/paper/publish 发表论文
@@ -53,8 +57,8 @@ public class PaperController {
      * "abstractContent":"123",
      * "content":"123"
      * }
-     * @apiUse NomalSuccessResponse
-     * @apiUse NomalErrorResponse
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
      * @apiUse ArgumentsErrorResponse
      * @apiUse DataBaseErrorResponse
      * @apiUse  UnLoginErrorResponse
@@ -63,7 +67,7 @@ public class PaperController {
     public ResponseMessage publish(@Validated(PaperGroup.publish.class) @RequestBody PaperEntity paperEntity, BindingResult bindingResult, HttpSession httpSession) {
 
         PaperStatus paperStatus;
-        String idTeacher = (String) httpSession.getAttribute("idTeacher");
+        String idTeacher = (String) httpSession.getAttribute(teacherKey);
         if (idTeacher == null) {
             logger.error("teacher is offline!");
             paperStatus = PaperStatus.UN_LOGIN;
@@ -103,8 +107,8 @@ public class PaperController {
      *       "content":"123"
      *     }
      *
-     *   @apiUse  NomalSuccessResponse
-     *   @apiUse  NomalErrorResponse
+     *   @apiUse  NormalSuccessResponse
+     *   @apiUse  NormalErrorResponse
      *   @apiUse  ArgumentsErrorResponse
      *   @apiUse  DataBaseErrorResponse
      *   @apiUse  NotFoundErrorResponse
@@ -113,7 +117,7 @@ public class PaperController {
     @RequestMapping(value = "/teacher/paper/modify",method = RequestMethod.POST)
     public ResponseMessage modify(@Validated(PaperGroup.modify.class) @RequestBody PaperEntity paperEntity, BindingResult bindingResult, HttpSession httpSession) {
         PaperStatus paperStatus;
-        String idTeacher = (String) httpSession.getAttribute("idTeacher");
+        String idTeacher = (String) httpSession.getAttribute(teacherKey);
         if (idTeacher == null) {
             logger.error("teacher is offline!");
             paperStatus = PaperStatus.UN_LOGIN;
@@ -139,8 +143,8 @@ public class PaperController {
      * @apiPermission teacher
      * @apiVersion 0.1.0
      * @apiParam {Number} id 论文id
-     * @apiUse NomalSuccessResponse
-     * @apiUse NomalErrorResponse
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
      * @apiUse NotFoundErrorResponse
      * @apiUse UnLoginErrorResponse
      * @apiUse PermissionDenyErrorResponse
@@ -148,7 +152,7 @@ public class PaperController {
     @RequestMapping(value = "/teacher/paper/delete/{id}", method = RequestMethod.GET)
     public ResponseMessage delete(@PathVariable("id") int id, HttpSession httpSession) {
         PaperStatus paperStatus;
-        String idTeacher = (String) httpSession.getAttribute("idTeacher");
+        String idTeacher = (String) httpSession.getAttribute(teacherKey);
         if (idTeacher == null) {
             logger.error("teacher is offline!");
             paperStatus = PaperStatus.UN_LOGIN;
@@ -242,7 +246,7 @@ public class PaperController {
      *           }
      *     }
      *
-     *   @apiUse  NomalErrorResponse
+     *   @apiUse  NormalErrorResponse
      *   @apiUse  ArgumentsErrorResponse
      *   @apiUse  DataBaseErrorResponse
      *   @apiUse  UnLoginErrorResponse
@@ -250,7 +254,7 @@ public class PaperController {
     @RequestMapping(value = "/teacher/paper/mypapers",method = RequestMethod.POST)
     public ResponseMessage getPapersByTeacher(@RequestBody Map map, HttpSession httpSession) {
         Page<PaperEntity> paperEntities = null;
-        String idTeacher = (String) httpSession.getAttribute("idTeacher");
+        String idTeacher = (String) httpSession.getAttribute(teacherKey);
         int page = (int)map.get("page");
         int size = (int)map.get("size");
         PaperStatus paperStatus;
