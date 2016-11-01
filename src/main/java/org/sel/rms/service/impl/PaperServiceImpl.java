@@ -100,7 +100,7 @@ public class PaperServiceImpl implements PaperService {
             file.transferTo(fil);
             sqPath = path.substring(path.indexOf(File.separator + "upload"));
         } catch (IOException e) {
-            throw new PaperException("upload file error!", e, PaperStatus.UPLOAD_PAPER_ERROR);
+            throw new PaperException("upload file error!", e, PaperStatus.UPLOAD_FILE_ERROR);
         }
         return sqPath;
     }
@@ -110,13 +110,16 @@ public class PaperServiceImpl implements PaperService {
     public PaperStatus deleteFile(HttpServletRequest request, String oldPath) {
         oldPath = request.getServletContext().getRealPath("") + oldPath;
         File oldFile = new File(oldPath);
+        try {
         boolean deleted = oldFile.delete();
-        if (deleted) {
-            try {
+            if (deleted) {
                 return PaperStatus.SUCCESS;
-            }catch (Exception ex){
-                throw new PaperException("delele the old file error!.", ex, PaperStatus.DELETE_OLD_PAPER_ERROR);
+            } else {
+                throw new PaperException("delele the old file error!.", PaperStatus.DELETE_OLD_FILE_ERROR);
             }
+        }catch (Exception ex){
+            throw new PaperException("delele the old file error!.", ex, PaperStatus.DELETE_OLD_FILE_ERROR);
         }
+
     }
 }

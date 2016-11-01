@@ -30,6 +30,8 @@ public class GlobalDefaultExceptionHandler {
         logger.error(e.getMessage(),e);
             if (e instanceof PaperException) {
                 return new ResponseMessage(((PaperException) e).getPaperStatus());
+            } else if (e instanceof ProjectException) {
+                return new ResponseMessage(((ProjectException) e).getProjectStatus());
             } else if (e instanceof HttpMessageNotReadableException) {
                 return new ResponseMessage(PaperStatus.ARGUMENTS_ERROR);
             } else {
