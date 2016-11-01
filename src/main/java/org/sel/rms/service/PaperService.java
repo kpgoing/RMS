@@ -1,8 +1,12 @@
 package org.sel.rms.service;
 import org.sel.rms.entity.PaperEntity;
+import org.sel.rms.status.PaperStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -10,14 +14,17 @@ import org.springframework.stereotype.Service;
 */
 public interface PaperService {
 
-    public void publishPaper(PaperEntity paperEntity);
+    void publishPaper(PaperEntity paperEntity);
 
-    public void modifyPaper(PaperEntity paperEntity);
+    void modifyPaper(PaperEntity paperEntity, HttpServletRequest request);
 
-    public void deletePaper(int idPaper, int idTeacher);
+    void deletePaper(int idPaper, int idTeacher);
 
-    public PaperEntity getPaperById(int id);
+    PaperEntity getPaperById(int id);
 
-    public Page<PaperEntity> getPageEntitiesByIdOfTeacher(int id, Pageable pagea);
+    Page<PaperEntity> getPageEntitiesByIdOfTeacher(int id, Pageable pagea);
 
+    String uploadFile(HttpServletRequest request, MultipartFile file);
+
+    PaperStatus deleteFile(HttpServletRequest request, String oldPath);
 }

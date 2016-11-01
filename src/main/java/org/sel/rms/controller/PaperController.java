@@ -18,7 +18,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -61,7 +63,7 @@ public class PaperController {
      * @apiUse NormalErrorResponse
      * @apiUse ArgumentsErrorResponse
      * @apiUse DataBaseErrorResponse
-     * @apiUse  UnLoginErrorResponse
+     * @apiUse UnLoginErrorResponse
      */
     @RequestMapping(value = "/teacher/paper/publish", method = RequestMethod.POST)
     public ResponseMessage publish(@Validated(PaperGroup.publish.class) @RequestBody PaperEntity paperEntity, BindingResult bindingResult, HttpSession httpSession) {
@@ -84,40 +86,38 @@ public class PaperController {
     }
 
 
-
     /**
-     *
-     *   @api {post} /teacher/paper/modify 修改论文
-     *   @apiName modifyPaper
-     *   @apiGroup Paper
-     *   @apiPermission teacher
-     *   @apiVersion 0.1.0
-     *   @apiParam {json} paperEntity 论文信息
-     *   @apiParamExample {json} Request-Example:
-     *     {
-     *       "idPaper":1,
-     *       "idTeacher":1,
-     *       "title":"ds",
-     *       "releaseDate":"2016-10-30",
-     *       "writer":"xbw",
-     *       "publishDate":"2016-10-30",
-     *       "publishPlace":"aaa",
-     *       "keyWord":"123",
-     *       "abstractContent":"123",
-     *       "content":"123"
-     *     }
-     *
-     *   @apiUse  NormalSuccessResponse
-     *   @apiUse  NormalErrorResponse
-     *   @apiUse  ArgumentsErrorResponse
-     *   @apiUse  DataBaseErrorResponse
-     *   @apiUse  NotFoundErrorResponse
-     *   @apiUse  UnLoginErrorResponse
+     * @api {post} /teacher/paper/modify 修改论文
+     * @apiName modifyPaper
+     * @apiGroup Paper
+     * @apiPermission teacher
+     * @apiVersion 0.1.0
+     * @apiParam {json} paperEntity 论文信息
+     * @apiParamExample {json} Request-Example:
+     * {
+     * "idPaper":1,
+     * "idTeacher":1,
+     * "title":"ds",
+     * "releaseDate":"2016-10-30",
+     * "writer":"xbw",
+     * "publishDate":"2016-10-30",
+     * "publishPlace":"aaa",
+     * "keyWord":"123",
+     * "abstractContent":"123",
+     * "content":"123"
+     * }
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
+     * @apiUse ArgumentsErrorResponse
+     * @apiUse DataBaseErrorResponse
+     * @apiUse NotFoundErrorResponse
+     * @apiUse UnLoginErrorResponse
+     * @apiUse DeleteFileErrorResponse
      */
-    @RequestMapping(value = "/teacher/paper/modify",method = RequestMethod.POST)
-    public ResponseMessage modify(@Validated(PaperGroup.modify.class) @RequestBody PaperEntity paperEntity, BindingResult bindingResult, HttpSession httpSession) {
+    @RequestMapping(value = "/teacher/paper/modify", method = RequestMethod.POST)
+    public ResponseMessage modify(@Validated(PaperGroup.modify.class) @RequestBody PaperEntity paperEntity, BindingResult bindingResult, HttpServletRequest request) {
         PaperStatus paperStatus;
-        String idTeacher = (String) httpSession.getAttribute(teacherKey);
+        String idTeacher = (String) request.getSession().getAttribute(teacherKey);
         if (idTeacher == null) {
             logger.error("teacher is offline!");
             paperStatus = PaperStatus.UN_LOGIN;
@@ -129,7 +129,7 @@ public class PaperController {
                 logger.error("paperPublish argument error: " + paperEntity);
                 paperStatus = PaperStatus.ARGUMENTS_ERROR;
             } else {
-                paperService.modifyPaper(paperEntity);
+                paperService.modifyPaper(paperEntity,request);
                 paperStatus = PaperStatus.SUCCESS;
             }
         }
@@ -164,99 +164,96 @@ public class PaperController {
     }
 
     /**
-     *
-     *   @api {post} /teacher/paper/mypapers 查询自己发表的论文
-     *   @apiName getPapersByTeacher
-     *   @apiGroup Paper
-     *   @apiPermission teacher
-     *   @apiVersion 0.1.0
-     *   @apiParam {json} map 分页信息
-     *   @apiParamExample {json} Request-Example:
-     *      {
-     *          "page":0,
-     *          "size":3
-     *      }
-     *
-     *   @apiSuccessExample {json} Success-Response:
-     *     HTTP/1.1 200 OK
-     *     {
-     *       "code": 0,
-     *       "msg": "SUCCESS",
-     *       "body": {
-     *           "content": [
-     *           {
-     *           "idPaper": 15,
-     *           "idTeacher": 1,
-     *           "title": "aaaaaaaaaaaaaaa",
-     *           "releaseDate": "2016-10-30",
-     *           "writer": "xbw",
-     *           "publishDate": "2016-10-30",
-     *           "publishPlace": "aaa",
-     *           "keyWord": "123",
-     *           "abstractContent": "123",
-     *           "content": "123",
-     *           "param1": null,
-     *           "param2": null
-     *           },
-     *           {
-     *           "idPaper": 14,
-     *           "idTeacher": 1,
-     *           "title": "aaaaaaaaaaaaaaa",
-     *           "releaseDate": "2016-10-30",
-     *           "writer": "xbw",
-     *           "publishDate": "2016-10-30",
-     *           "publishPlace": "aaa",
-     *           "keyWord": "123",
-     *           "abstractContent": "123",
-     *           "content": "123",
-     *           "param1": null,
-     *           "param2": null
-     *           },
-     *           {
-     *           "idPaper": 13,
-     *           "idTeacher": 1,
-     *           "title": "aaaaaaaaaaaaaaa",
-     *           "releaseDate": "2016-10-30",
-     *           "writer": "xbw",
-     *           "publishDate": "2016-10-30",
-     *           "publishPlace": "aaa",
-     *           "keyWord": "123",
-     *           "abstractContent": "123",
-     *           "content": "123",
-     *           "param1": null,
-     *           "param2": null
-     *           }
-     *           ],
-     *           "last": false,
-     *           "totalElements": 14,
-     *           "totalPages": 5,
-     *           "size": 3,
-     *           "number": 0,
-     *           "sort": [
-     *           {
-     *           "direction": "DESC",
-     *           "property": "idPaper",
-     *           "ignoreCase": false,
-     *           "nullHandling": "NATIVE",
-     *           "ascending": false
-     *           }
-     *           ],
-     *           "first": true,
-     *           "numberOfElements": 3
-     *           }
-     *     }
-     *
-     *   @apiUse  NormalErrorResponse
-     *   @apiUse  ArgumentsErrorResponse
-     *   @apiUse  DataBaseErrorResponse
-     *   @apiUse  UnLoginErrorResponse
+     * @api {post} /teacher/paper/mypapers 查询自己发表的论文
+     * @apiName getPapersByTeacher
+     * @apiGroup Paper
+     * @apiPermission teacher
+     * @apiVersion 0.1.0
+     * @apiParam {json} map 分页信息
+     * @apiParamExample {json} Request-Example:
+     * {
+     * "page":0,
+     * "size":3
+     * }
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     * "code": 0,
+     * "msg": "SUCCESS",
+     * "body": {
+     * "content": [
+     * {
+     * "idPaper": 15,
+     * "idTeacher": 1,
+     * "title": "aaaaaaaaaaaaaaa",
+     * "releaseDate": "2016-10-30",
+     * "writer": "xbw",
+     * "publishDate": "2016-10-30",
+     * "publishPlace": "aaa",
+     * "keyWord": "123",
+     * "abstractContent": "123",
+     * "content": "123",
+     * "param1": null,
+     * "param2": null
+     * },
+     * {
+     * "idPaper": 14,
+     * "idTeacher": 1,
+     * "title": "aaaaaaaaaaaaaaa",
+     * "releaseDate": "2016-10-30",
+     * "writer": "xbw",
+     * "publishDate": "2016-10-30",
+     * "publishPlace": "aaa",
+     * "keyWord": "123",
+     * "abstractContent": "123",
+     * "content": "123",
+     * "param1": null,
+     * "param2": null
+     * },
+     * {
+     * "idPaper": 13,
+     * "idTeacher": 1,
+     * "title": "aaaaaaaaaaaaaaa",
+     * "releaseDate": "2016-10-30",
+     * "writer": "xbw",
+     * "publishDate": "2016-10-30",
+     * "publishPlace": "aaa",
+     * "keyWord": "123",
+     * "abstractContent": "123",
+     * "content": "123",
+     * "param1": null,
+     * "param2": null
+     * }
+     * ],
+     * "last": false,
+     * "totalElements": 14,
+     * "totalPages": 5,
+     * "size": 3,
+     * "number": 0,
+     * "sort": [
+     * {
+     * "direction": "DESC",
+     * "property": "idPaper",
+     * "ignoreCase": false,
+     * "nullHandling": "NATIVE",
+     * "ascending": false
+     * }
+     * ],
+     * "first": true,
+     * "numberOfElements": 3
+     * }
+     * }
+     * @apiUse NormalErrorResponse
+     * @apiUse ArgumentsErrorResponse
+     * @apiUse DataBaseErrorResponse
+     * @apiUse UnLoginErrorResponse
      */
-    @RequestMapping(value = "/teacher/paper/mypapers",method = RequestMethod.POST)
+    @RequestMapping(value = "/teacher/paper/mypapers", method = RequestMethod.POST)
     public ResponseMessage getPapersByTeacher(@RequestBody Map map, HttpSession httpSession) {
         Page<PaperEntity> paperEntities = null;
         String idTeacher = (String) httpSession.getAttribute(teacherKey);
-        int page = (int)map.get("page");
-        int size = (int)map.get("size");
+        int page = (int) map.get("page");
+        int size = (int) map.get("size");
         PaperStatus paperStatus;
         if (idTeacher == null) {
             logger.error("teacher is offline!");
@@ -268,4 +265,27 @@ public class PaperController {
         }
         return new ResponseMessage(paperStatus, paperEntities);
     }
+
+
+    /**
+     * @api {post} /teacher/paper/uploadfile 上传论文
+     * @apiName uploadFile
+     * @apiGroup Paper
+     * @apiPermission teacher
+     * @apiVersion 0.1.0
+     * @apiParam {File} paper 论文pdf
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
+     * @apiUse ArgumentsErrorResponse
+     * @apiUse NotFoundErrorResponse
+     * @apiUse UnLoginErrorResponse
+     * @apiUse UploadFileErrorResponse
+     */
+    @RequestMapping(value = "/teacher/paper/uploadfile", method = RequestMethod.POST)
+    public ResponseMessage uploadFile(HttpServletRequest request, @RequestParam("paper") MultipartFile file) {
+        String url = paperService.uploadFile(request, file);
+        return new ResponseMessage(PaperStatus.SUCCESS, url);
+    }
+
+
 }

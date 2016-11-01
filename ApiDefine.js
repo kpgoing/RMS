@@ -90,3 +90,29 @@
  *       "body": null
  *     }
  */
+
+/**
+ * @apiDefine UploadFileErrorResponse
+ *
+ *
+ * @apiErrorExample UploadFileErrorResponse:
+ *
+ *     {
+ *       "code": 7,
+ *       "msg": "UPLOAD_FILE_ERROR",
+ *       "body": null
+ *     }
+ */
+
+/**
+ * @apiDefine DeleteFileErrorResponse
+ *
+ *
+ * @apiErrorExample DeleteFileErrorResponse:
+ *
+ *     {
+ *       "code": 7,
+ *       "msg": "DELETE_OLD_FILE_ERROR",
+ *       "body": null
+ *     }
+ */
