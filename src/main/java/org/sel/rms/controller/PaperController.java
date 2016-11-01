@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.Map;
 
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
@@ -150,14 +151,14 @@ public class PaperController {
      * @apiUse PermissionDenyErrorResponse
      */
     @RequestMapping(value = "/teacher/paper/delete/{id}", method = RequestMethod.GET)
-    public ResponseMessage delete(@PathVariable("id") int id, HttpSession httpSession) {
+    public ResponseMessage delete(@PathVariable("id") int id, HttpServletRequest request) {
         PaperStatus paperStatus;
-        String idTeacher = (String) httpSession.getAttribute(teacherKey);
+        String idTeacher = (String) request.getSession().getAttribute(teacherKey);
         if (idTeacher == null) {
             logger.error("teacher is offline!");
             paperStatus = PaperStatus.UN_LOGIN;
         } else {
-            paperService.deletePaper(id, Integer.parseInt(idTeacher));
+            paperService.deletePaper(id, Integer.parseInt(idTeacher), request);
             paperStatus = PaperStatus.SUCCESS;
         }
         return new ResponseMessage(paperStatus);
@@ -282,8 +283,8 @@ public class PaperController {
      * @apiUse UploadFileErrorResponse
      */
     @RequestMapping(value = "/teacher/paper/uploadfile", method = RequestMethod.POST)
-    public ResponseMessage uploadFile(HttpServletRequest request, @RequestParam("paper") MultipartFile file) {
-        String url = paperService.uploadFile(request, file);
+    public ResponseMessage uploadFile(HttpServletRequest request,  @RequestParam("paper") MultipartFile paper) {
+        String url = paperService.uploadFile(request, paper);
         return new ResponseMessage(PaperStatus.SUCCESS, url);
     }
 
