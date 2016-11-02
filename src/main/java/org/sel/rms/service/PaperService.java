@@ -18,7 +18,7 @@ public interface PaperService {
 
     void modifyPaper(PaperEntity paperEntity, HttpServletRequest request);
 
-    void deletePaper(int idPaper, int idTeacher);
+    void deletePaper(int idPaper, int idTeacher, HttpServletRequest request);
 
     PaperEntity getPaperById(int id);
 

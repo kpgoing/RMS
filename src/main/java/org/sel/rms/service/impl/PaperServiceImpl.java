@@ -31,7 +31,7 @@ public class PaperServiceImpl implements PaperService {
     PaperRepository paperRepository;
 
 
-    @Value("config.teacher.key")
+    @Value("${config.teacher.key}")
     String teacherKey;
 
     @Override
@@ -71,13 +71,15 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
-    public void deletePaper(int idPaper, int idTeacher) {
+    public void deletePaper(int idPaper, int idTeacher, HttpServletRequest request) {
         PaperEntity paperEntity = paperRepository.findOne(idPaper);
         if (paperEntity.getIdTeacher() == idTeacher) {
             try {
+                deleteFile(request, paperEntity.getContent());
                 paperRepository.delete(idPaper);
+
             } catch (Exception ex) {
-                throw new PaperException("delete paper error which id = " + id, ex, PaperStatus.NOT_FOUND);
+                throw new PaperException("delete paper error which id = " + idPaper, ex, PaperStatus.NOT_FOUND);
             }
         } else {
             throw new PaperException("delete paper error because the paper is not belong to the teacher which idPaper =  " + idPaper + " idTeahcer = " + idTeacher, PaperStatus.PERMISSIOM_DENY);
@@ -89,15 +91,19 @@ public class PaperServiceImpl implements PaperService {
         int id = Integer.parseInt((String) request.getSession().getAttribute(teacherKey));
         String sqPath;
         String fileName = file.getOriginalFilename();
-        String extensionName = fileName.substring(fileName.indexOf(".") + 1);
+        String extensionName = fileName.substring(fileName.indexOf("."));
+        fileName = fileName.substring(0,fileName.indexOf("."));
         fileName = fileName + new Date().getTime() + extensionName;
-        String path = request.getServletContext().getRealPath(File.separator + "upload") + File.separator + id + File.separator + fileName;
+        String path = request.getServletContext().getRealPath(File.separator + "upload") + File.separator + id ;
 
-        File fil = new File(path);
-        if (!fil.exists())
-            fil.mkdirs();
+        File dir = new File(path);
+        if (!dir.exists())
+            dir.mkdirs();
         try {
-            file.transferTo(fil);
+            path = path + File.separator + fileName;
+            File realFile = new File(path);
+            realFile.createNewFile();
+            file.transferTo(realFile);
             sqPath = path.substring(path.indexOf(File.separator + "upload"));
         } catch (IOException e) {
             throw new PaperException("upload file error!", e, PaperStatus.UPLOAD_FILE_ERROR);
