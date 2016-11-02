@@ -6,6 +6,7 @@ import org.sel.rms.controller.PaperController;
 import org.sel.rms.exception.annoation.WithStatus;
 import org.sel.rms.status.PaperStatus;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,8 +30,12 @@ public class GlobalDefaultExceptionHandler {
         logger.error(e.getMessage(),e);
             if (e instanceof PaperException) {
                 return new ResponseMessage(((PaperException) e).getPaperStatus());
+            } else if (e instanceof ProjectException) {
+                return new ResponseMessage(((ProjectException) e).getProjectStatus());
+            } else if (e instanceof HttpMessageNotReadableException) {
+                return new ResponseMessage(PaperStatus.ARGUMENTS_ERROR);
             } else {
-                return new ResponseMessage(1,"ERROR: " + e.getMessage(),null);
+                return new ResponseMessage(1, "ERROR: " + e.getMessage(), null);
             }
         // Otherwise setup and send the user to a default error-view.
 //        ModelAndView mav = new ModelAndView();

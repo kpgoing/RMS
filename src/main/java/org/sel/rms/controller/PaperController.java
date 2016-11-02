@@ -9,94 +9,284 @@ import org.sel.rms.exception.PaperException;
 import org.sel.rms.service.PaperService;
 import org.sel.rms.status.PaperStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.util.Map;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 /**
  * Created by xubowei on 30/10/2016.
  */
 @RestController
-@RequestMapping(value = "/paper")
 public class PaperController {
     private final static Logger logger = Logger.getLogger(PaperController.class);
 
     @Autowired
     PaperService paperService;
 
-    /**
-     * @apiDefine NomalErrorResponse
-     *
-     *
-     * @apiErrorExample NomalErrorResponse:
-     *
-     *     {
-     *       "code": 1,
-     *       "msg": "ERROR",
-     *       "body": null
-     *     }
-     */
-
-    /**
-     * @apiDefine DataBaseErrorResponse
-     *
-     *
-     * @apiErrorExample DataBaseErrorResponse:
-     *
-     *     {
-     *       "code": 2,
-     *       "msg": "DATABASE_ERROR",
-     *       "body": null
-     *     }
-     */
+    @Value("${config.teacher.key}")
+    String teacherKey;
 
 
     /**
-     *   @api {post} /paper/publish 发表论文
-     *   @apiName 发表论文
-     *   @apiGroup Paper
-     *   @apiVersion 0.1.0
-     *   @apiParam {json} paperEntity 论文信息
-     *   @apiParamExample {json} Request-Example:
-     *     {
-     *       "idTeacher":1,
-     *       "title":"ds",
-     *       "releaseDate":"2016-10-30",
-     *       "writer":"xbw",
-     *       "publishDate":"2016-10-30",
-     *       "publishPlace":"aaa",
-     *       "keyWord":"123",
-     *       "abstractContent":"123",
-     *       "content":"123"
-     *     }
-     *
-     *   @apiSuccessExample {json} Success-Response:
-     *     HTTP/1.1 200 OK
-     *     {
-     *       "code": 0,
-     *       "msg": "SUCCESS",
-     *       "body": null
-     *     }
-     *
-     *   @apiUse  NomalErrorResponse
-     *   @apiUse  DataBaseErrorResponse
+     * @api {post} /teacher/paper/publish 发表论文
+     * @apiName publishPaper
+     * @apiGroup Paper
+     * @apiPermission teacher
+     * @apiVersion 0.1.0
+     * @apiParam {json} paperEntity 论文信息
+     * @apiParamExample {json} Request-Example:
+     * {
+     * "idTeacher":1,
+     * "title":"ds",
+     * "releaseDate":"2016-10-30",
+     * "writer":"xbw",
+     * "publishDate":"2016-10-30",
+     * "publishPlace":"aaa",
+     * "keyWord":"123",
+     * "abstractContent":"123",
+     * "content":"123"
+     * }
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
+     * @apiUse ArgumentsErrorResponse
+     * @apiUse DataBaseErrorResponse
+     * @apiUse UnLoginErrorResponse
      */
-    @RequestMapping(value = "/publish",method = RequestMethod.POST)
-    public ResponseMessage publish(@Validated(PaperGroup.publish.class) @RequestBody PaperEntity paperEntity, BindingResult bindingResult) {
+    @RequestMapping(value = "/teacher/paper/publish", method = RequestMethod.POST)
+    public ResponseMessage publish(@Validated(PaperGroup.publish.class) @RequestBody PaperEntity paperEntity, BindingResult bindingResult, HttpSession httpSession) {
+
         PaperStatus paperStatus;
-        if (bindingResult.hasErrors()) {
+        String idTeacher = (String) httpSession.getAttribute(teacherKey);
+        if (idTeacher == null) {
+            logger.error("teacher is offline!");
+            paperStatus = PaperStatus.UN_LOGIN;
+        } else {
+            if (bindingResult.hasErrors()) {
+                logger.error("paperPublish argument error: " + paperEntity);
+                paperStatus = PaperStatus.ARGUMENTS_ERROR;
+            } else {
+                paperService.publishPaper(paperEntity);
+                paperStatus = PaperStatus.SUCCESS;
+            }
+        }
+        return new ResponseMessage(paperStatus);
+    }
+
+
+    /**
+     * @api {post} /teacher/paper/modify 修改论文
+     * @apiName modifyPaper
+     * @apiGroup Paper
+     * @apiPermission teacher
+     * @apiVersion 0.1.0
+     * @apiParam {json} paperEntity 论文信息
+     * @apiParamExample {json} Request-Example:
+     * {
+     * "idPaper":1,
+     * "idTeacher":1,
+     * "title":"ds",
+     * "releaseDate":"2016-10-30",
+     * "writer":"xbw",
+     * "publishDate":"2016-10-30",
+     * "publishPlace":"aaa",
+     * "keyWord":"123",
+     * "abstractContent":"123",
+     * "content":"123"
+     * }
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
+     * @apiUse ArgumentsErrorResponse
+     * @apiUse DataBaseErrorResponse
+     * @apiUse NotFoundErrorResponse
+     * @apiUse UnLoginErrorResponse
+     * @apiUse DeleteFileErrorResponse
+     */
+    @RequestMapping(value = "/teacher/paper/modify", method = RequestMethod.POST)
+    public ResponseMessage modify(@Validated(PaperGroup.modify.class) @RequestBody PaperEntity paperEntity, BindingResult bindingResult, HttpServletRequest request) {
+        PaperStatus paperStatus;
+        String idTeacher = (String) request.getSession().getAttribute(teacherKey);
+        if (idTeacher == null) {
+            logger.error("teacher is offline!");
+            paperStatus = PaperStatus.UN_LOGIN;
+        } else {
+            if (bindingResult.hasErrors()) {
 //            StringBuilder errors = new StringBuilder("error:");
 //            bindingResult.getAllErrors().forEach(n -> errors.append(n.getDefaultMessage() + "     "));
 //            logger.error(errors.toString());
-            logger.error("paperPublish argument error: " + paperEntity);
-            paperStatus = PaperStatus.ERROR;
+                logger.error("paperPublish argument error: " + paperEntity);
+                paperStatus = PaperStatus.ARGUMENTS_ERROR;
+            } else {
+                paperService.modifyPaper(paperEntity,request);
+                paperStatus = PaperStatus.SUCCESS;
+            }
+        }
+        return new ResponseMessage(paperStatus);
+    }
+
+    /**
+     * @api {get} /teacher/paper/delete/:id 删除论文
+     * @apiName deletePaper
+     * @apiGroup Paper
+     * @apiPermission teacher
+     * @apiVersion 0.1.0
+     * @apiParam {Number} id 论文id
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
+     * @apiUse NotFoundErrorResponse
+     * @apiUse UnLoginErrorResponse
+     * @apiUse PermissionDenyErrorResponse
+     */
+    @RequestMapping(value = "/teacher/paper/delete/{id}", method = RequestMethod.GET)
+    public ResponseMessage delete(@PathVariable("id") int id, HttpServletRequest request) {
+        PaperStatus paperStatus;
+        String idTeacher = (String) request.getSession().getAttribute(teacherKey);
+        if (idTeacher == null) {
+            logger.error("teacher is offline!");
+            paperStatus = PaperStatus.UN_LOGIN;
         } else {
-            paperService.publishPaper(paperEntity);
+            paperService.deletePaper(id, Integer.parseInt(idTeacher), request);
             paperStatus = PaperStatus.SUCCESS;
         }
         return new ResponseMessage(paperStatus);
     }
+
+    /**
+     * @api {post} /teacher/paper/mypapers 查询自己发表的论文
+     * @apiName getPapersByTeacher
+     * @apiGroup Paper
+     * @apiPermission teacher
+     * @apiVersion 0.1.0
+     * @apiParam {json} map 分页信息
+     * @apiParamExample {json} Request-Example:
+     * {
+     * "page":0,
+     * "size":3
+     * }
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     * "code": 0,
+     * "msg": "SUCCESS",
+     * "body": {
+     * "content": [
+     * {
+     * "idPaper": 15,
+     * "idTeacher": 1,
+     * "title": "aaaaaaaaaaaaaaa",
+     * "releaseDate": "2016-10-30",
+     * "writer": "xbw",
+     * "publishDate": "2016-10-30",
+     * "publishPlace": "aaa",
+     * "keyWord": "123",
+     * "abstractContent": "123",
+     * "content": "123",
+     * "param1": null,
+     * "param2": null
+     * },
+     * {
+     * "idPaper": 14,
+     * "idTeacher": 1,
+     * "title": "aaaaaaaaaaaaaaa",
+     * "releaseDate": "2016-10-30",
+     * "writer": "xbw",
+     * "publishDate": "2016-10-30",
+     * "publishPlace": "aaa",
+     * "keyWord": "123",
+     * "abstractContent": "123",
+     * "content": "123",
+     * "param1": null,
+     * "param2": null
+     * },
+     * {
+     * "idPaper": 13,
+     * "idTeacher": 1,
+     * "title": "aaaaaaaaaaaaaaa",
+     * "releaseDate": "2016-10-30",
+     * "writer": "xbw",
+     * "publishDate": "2016-10-30",
+     * "publishPlace": "aaa",
+     * "keyWord": "123",
+     * "abstractContent": "123",
+     * "content": "123",
+     * "param1": null,
+     * "param2": null
+     * }
+     * ],
+     * "last": false,
+     * "totalElements": 14,
+     * "totalPages": 5,
+     * "size": 3,
+     * "number": 0,
+     * "sort": [
+     * {
+     * "direction": "DESC",
+     * "property": "idPaper",
+     * "ignoreCase": false,
+     * "nullHandling": "NATIVE",
+     * "ascending": false
+     * }
+     * ],
+     * "first": true,
+     * "numberOfElements": 3
+     * }
+     * }
+     * @apiUse NormalErrorResponse
+     * @apiUse ArgumentsErrorResponse
+     * @apiUse DataBaseErrorResponse
+     * @apiUse UnLoginErrorResponse
+     */
+    @RequestMapping(value = "/teacher/paper/mypapers", method = RequestMethod.POST)
+    public ResponseMessage getPapersByTeacher(@RequestBody Map map, HttpSession httpSession) {
+        Page<PaperEntity> paperEntities = null;
+        String idTeacher = (String) httpSession.getAttribute(teacherKey);
+        int page = (int) map.get("page");
+        int size = (int) map.get("size");
+        PaperStatus paperStatus;
+        if (idTeacher == null) {
+            logger.error("teacher is offline!");
+            paperStatus = PaperStatus.UN_LOGIN;
+        } else {
+            Pageable pageable = new PageRequest(page, size, Sort.Direction.DESC, "idPaper");
+            paperEntities = paperService.getPageEntitiesByIdOfTeacher(Integer.parseInt(idTeacher), pageable);
+            paperStatus = PaperStatus.SUCCESS;
+        }
+        return new ResponseMessage(paperStatus, paperEntities);
+    }
+
+
+    /**
+     * @api {post} /teacher/paper/uploadfile 上传论文
+     * @apiName uploadFile
+     * @apiGroup Paper
+     * @apiPermission teacher
+     * @apiVersion 0.1.0
+     * @apiParam {File} paper 论文pdf
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
+     * @apiUse ArgumentsErrorResponse
+     * @apiUse NotFoundErrorResponse
+     * @apiUse UnLoginErrorResponse
+     * @apiUse UploadFileErrorResponse
+     */
+    @RequestMapping(value = "/teacher/paper/uploadfile", method = RequestMethod.POST)
+    public ResponseMessage uploadFile(HttpServletRequest request,  @RequestParam("paper") MultipartFile paper) {
+        String url = paperService.uploadFile(request, paper);
+        return new ResponseMessage(PaperStatus.SUCCESS, url);
+    }
+
+
 }

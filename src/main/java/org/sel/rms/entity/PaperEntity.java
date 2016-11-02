@@ -7,6 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
+import static com.sun.tools.doclint.Entity.not;
+import static com.sun.tools.doclint.Entity.nu;
+
 
 /**
  * Created by xubowei on 30/10/2016.
@@ -14,24 +17,25 @@ import java.sql.Date;
 @Entity
 @Table(name = "Paper", schema = "RMS", catalog = "")
 public class PaperEntity {
+    @NotNull(groups = {PaperGroup.modify.class})
     private int idPaper;
-    @NotNull(groups = {PaperGroup.publish.class})
+    @NotNull(groups = {PaperGroup.publish.class, PaperGroup.modify.class})
     private int idTeacher;
-    @NotBlank(groups = {PaperGroup.publish.class})
+    @NotBlank(groups = {PaperGroup.publish.class, PaperGroup.modify.class})
     private String title;
-    @NotNull(groups = {PaperGroup.publish.class})
+    @NotNull(groups = {PaperGroup.publish.class, PaperGroup.modify.class})
     private Date releaseDate;
-    @NotBlank(groups = {PaperGroup.publish.class})
+    @NotBlank(groups = {PaperGroup.publish.class, PaperGroup.modify.class})
     private String writer;
-    @NotNull(groups = {PaperGroup.publish.class})
+    @NotNull(groups = {PaperGroup.publish.class, PaperGroup.modify.class})
     private Date publishDate;
-    @NotBlank(groups = {PaperGroup.publish.class})
+    @NotBlank(groups = {PaperGroup.publish.class, PaperGroup.modify.class})
     private String publishPlace;
-    @NotBlank(groups = {PaperGroup.publish.class})
+    @NotBlank(groups = {PaperGroup.publish.class, PaperGroup.modify.class})
     private String keyWord;
-    @NotBlank(groups = {PaperGroup.publish.class})
+    @NotBlank(groups = {PaperGroup.publish.class, PaperGroup.modify.class})
     private String abstractContent;
-    @NotBlank(groups = {PaperGroup.publish.class})
+    @NotBlank(groups = {PaperGroup.publish.class, PaperGroup.modify.class})
     private String content;
     private String param1;
     private String param2;

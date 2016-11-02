@@ -1,6 +1,11 @@
 package org.sel.rms.entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.sel.rms.entity.ValidGroup.PaperGroup;
+import org.sel.rms.entity.ValidGroup.ProjectGroup;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.sql.Date;
 
@@ -10,14 +15,23 @@ import java.sql.Date;
 @Entity
 @Table(name = "Project", schema = "RMS", catalog = "")
 public class ProjectEntity {
+    @NotNull(groups = {ProjectGroup.modify.class})
     private int idProject;
+    @NotNull(groups = {ProjectGroup.modify.class, ProjectGroup.publish.class})
     private int idTeacher;
+    @NotBlank(groups = {ProjectGroup.modify.class, ProjectGroup.publish.class})
     private String name;
+    @NotBlank(groups = {ProjectGroup.modify.class, ProjectGroup.publish.class})
     private String source;
+    @NotNull(groups = {ProjectGroup.modify.class, ProjectGroup.publish.class})
     private Date projectTime;
+    @NotBlank(groups = {ProjectGroup.modify.class, ProjectGroup.publish.class})
     private String master;
+    @NotNull(groups = {ProjectGroup.modify.class, ProjectGroup.publish.class})
     private BigDecimal funds;
+    @NotNull(groups = {ProjectGroup.modify.class, ProjectGroup.publish.class})
     private Date publishTime;
+    @NotBlank(groups = {ProjectGroup.modify.class, ProjectGroup.publish.class})
     private String introduction;
     private String param1;
     private String param2;
@@ -168,5 +182,22 @@ public class ProjectEntity {
         result = 31 * result + (param1 != null ? param1.hashCode() : 0);
         result = 31 * result + (param2 != null ? param2.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectEntity{" +
+                "idProject=" + idProject +
+                ", idTeacher=" + idTeacher +
+                ", name='" + name + '\'' +
+                ", source='" + source + '\'' +
+                ", projectTime=" + projectTime +
+                ", master='" + master + '\'' +
+                ", funds=" + funds +
+                ", publishTime=" + publishTime +
+                ", introduction='" + introduction + '\'' +
+                ", param1='" + param1 + '\'' +
+                ", param2='" + param2 + '\'' +
+                '}';
     }
 }
