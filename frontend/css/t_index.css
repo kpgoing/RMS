@@ -113,7 +113,7 @@ a:hover{
 
 #loginname{
 	font-family: "Microsoft YaHei Light";
-	font-size: 18px;
+	font-size: 16px;
 }
 
 #name{
@@ -137,12 +137,19 @@ a:hover{
 #intro_detail li{
 	font-family: "Microsoft YaHei Light";
 	color: #333;
-	font-size: 14px;
-	margin-bottom: 5px;
+	font-size: 13px;
+	margin-bottom: 10px;
+}
+
+#intro_detail li > span,#intro_detail li > a{
+	display: inline-block;
 }
 
 #intro_detail li > img{
+	float: left;
 	margin-right: 5px;
+	height: 20px;
+	width: 20px;
 }
 
 #pro_area{
@@ -154,12 +161,12 @@ a:hover{
 .pro_box{
 	float: left;
 	width: 49%;
-	height: 55px;
+	height: 75px;
 	font-size: 14px;
 	border: 1px solid #ddd;
 	border-radius: 3px;
-	padding: 20px 0 15px;
-	margin-bottom: 15px;
+	padding: 15px 0 10px;
+	margin-bottom: 10px;
 }
 
 .pro_box:nth-child(2n){
@@ -170,8 +177,52 @@ a:hover{
 	margin-left: 10px;
 }
 
+.pro_box > a{
+	display: inline-block;
+	padding-left: 20px;
+	background: url('../img/menu.png') left no-repeat;
+	background-size: 15px 15px;
+}
+
 .pro_intro{
-	margin-top: 20px;
+	margin-top: 10px;
 	color: #767676;
 	font-size: 12px;
+}
+
+.pro_kind{
+	margin-top: 15px;
+	font-size: 12px;
+	padding-left: 20px;
+	color: #767676;
+	background:url('../img/branch.png') left no-repeat;
+	background-size: 15px 15px;
+}
+
+.menu{
+    width: 100px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    background-color: #fff;
+    background-clip: padding-box;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+    z-index: 100;
+    display: none;
+    position: absolute;
+    top: 50px;
+}
+
+.menu_detail{
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    padding-top: 10px;
+    height: 33px;
+    border-bottom: 1px solid #d5d5d5;
+    font-size: 14px;
+}
+
+.menu_detail:hover {
+    background: #4078c0;
+    color: #fff;
 }
