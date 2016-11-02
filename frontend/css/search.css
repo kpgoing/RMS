@@ -147,11 +147,23 @@ body{
 }
 .result_menu>span{
     display: block;
-    padding: 9px;
+    padding:9px 9px 9px 38px;
     color: #4078c0;
     border-bottom: 1px solid #eeeeee;
     font-size: 15px;
     cursor: pointer;
+}
+.paper{
+    background: url("../img/paper.png") no-repeat 9.5px 10.5px;
+    background-size: 16px;
+}
+.proj{
+    background: url("../img/proj.png") no-repeat 9.5px 10.5px;
+    background-size: 16px;
+}
+.user{
+    background: url("../img/user.png") no-repeat 9.5px 10.5px;
+    background-size: 16px;
 }
 .result_menu>span:last-child{
     border-bottom: 0;
@@ -180,4 +192,11 @@ body{
     font-size: 12px;
     color: #888;
     padding-top: 17px;
+}
+.update_time{
+    font-size: 13px;
+    color: #888;
+    display: inline-block;
+    float: right;
+    padding-top: 7px;
 }
