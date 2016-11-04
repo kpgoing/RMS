@@ -30,7 +30,7 @@ public class AdminServiceImpl implements AdminService {
         AdminStatus status = AdminStatus.ERROR;
         AdminEntity adminEntityAuth;
         try {
-            adminEntityAuth = adminRepository.findByAdminName(adminEntity.getAccount());
+            adminEntityAuth = adminRepository.findByAccount(adminEntity.getAccount());
             if(null == adminEntityAuth) {
                 throw new AdminException("username error or username not exist", AdminStatus.USERNAME_ERROR_OR_EXIST);
             } else {
@@ -48,13 +48,13 @@ public class AdminServiceImpl implements AdminService {
 
     public List getAdmin(AdminEntity adminEntity) {
         List list = new ArrayList<>();
-        AdminEntity adminResult = new AdminEntity();
+        AdminEntity adminResult;
         try {
-            adminResult = adminRepository.findByAdminName(adminEntity.getAccount());
+            adminResult = adminRepository.findByAccount(adminEntity.getAccount());
         } catch (Exception e) {
             throw new AdminException("find admin by account error", e, AdminStatus.ERROR);
         }
-        list.add(adminEntity.getIdAdmin());
+        list.add(adminResult.getIdAdmin());
         return list;
     }
 }
