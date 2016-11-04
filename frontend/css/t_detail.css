@@ -102,3 +102,113 @@ a:hover{
     background: #4078c0;
     color: #fff;
 }
+
+#sub_header{
+	height: 30px;
+	padding: 20px 13.1%;
+	border-bottom: 1px solid #eee;
+	background-color: #fafafa; 
+	margin-bottom: 25px;
+}
+
+#sub_header > img{
+	padding: 3px;
+	height: 18px;
+}
+
+.owner,#sub_header > span,.proj_name,#sub_header > img{
+	float: left;
+}
+
+.owner,.proj_name{
+	color: #4078c0;
+}
+
+#sub_header > span{
+	color: #666;
+}
+
+.proj_name{
+	font-weight: bold;
+}
+
+#sub_header > span{
+	margin:0 5px;
+}
+
+#button_group{
+	height: 35px;
+	padding: 0 13.1%;
+	margin-bottom: 25px;
+}
+
+.operate{
+	float: right;
+	display: inline-block;
+	height: 100%;
+	width: 90px;
+	margin-left: 10px;
+	border-radius: 3px;
+	color: #fff;
+}
+
+.operate:nth-child(1){
+	border:1px solid #900;
+	background-color: #df3e3e;
+}
+
+.operate:nth-child(2){
+	background-image: linear-gradient(to bottom,#8edb6d,#58b032);
+	border:1px solid #5aad35;
+}
+
+#content{
+	width: 73.9%;
+	margin: 0 auto;
+	padding: 10px 0;
+	border-radius: 3px;
+	border:1px solid #e5e5e5;
+	box-shadow: inset 0 1px 10px rgba(0,0,0,0.075);
+	background-color: #fafafa;
+	color: #333;
+	font-size: 15px;
+}
+
+#content .left{
+	width: 70%;
+	display: inline-block;
+}
+
+.key,.value{
+	display: inline-block;
+	margin-top: 10px;
+}
+
+.key{
+	margin-left: 15px;
+	width: 20%;
+}
+
+.value{
+	margin-right: 15px;
+	font-size: 14px;
+}
+
+#content .right{
+	width: 29%;
+	display: inline-block;
+}
+
+#content .right img{
+	width: 150px;
+}
+
+#content .right button{
+	height: 35px;
+	margin: 5px 25px;
+	width: 90px;
+	border-radius: 3px;
+	color: #333;
+	background-color: #fff;
+	border:1px solid #e5e5e5;
+}

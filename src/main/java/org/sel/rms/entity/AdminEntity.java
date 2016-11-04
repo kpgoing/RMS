@@ -1,6 +1,9 @@
 package org.sel.rms.entity;
 
+import org.sel.rms.entity.ValidGroup.AdminGroup;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by xubowei on 30/10/2016.
@@ -9,7 +12,9 @@ import javax.persistence.*;
 @Table(name = "Admin", schema = "RMS", catalog = "")
 public class AdminEntity {
     private int idAdmin;
+    @NotNull(groups = {AdminGroup.class})
     private String account;
+    @NotNull(groups = {AdminGroup.class})
     private String password;
     private String param1;
     private String param2;

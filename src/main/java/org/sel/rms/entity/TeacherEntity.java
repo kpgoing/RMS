@@ -1,6 +1,10 @@
 package org.sel.rms.entity;
 
+import org.sel.rms.entity.ValidGroup.AdminGroup;
+import org.sel.rms.entity.ValidGroup.TeacherGroup;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 /**
@@ -10,7 +14,9 @@ import java.sql.Date;
 @Table(name = "Teacher", schema = "RMS", catalog = "")
 public class TeacherEntity {
     private int idTeacher;
+    @NotNull(groups = {TeacherGroup.login.class})
     private String account;
+    @NotNull(groups = {TeacherGroup.login.class})
     private String password;
     private Date birthday;
     private String educationBackground;
