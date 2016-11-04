@@ -156,6 +156,7 @@ body{
     vertical-align: middle;
     cursor: pointer;
     margin-left: 16px;
+    width: 137px;
 }
 .boxed>a{
     font-size: 14px;
