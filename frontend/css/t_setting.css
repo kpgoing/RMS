@@ -1,78 +1,82 @@
 *{
-    margin: 0;
+    margin:0;
     padding: 0;
+    font-family: "Microsoft YaHei";
 }
-a {
-    color: #4078c0;
+
+body{
+    min-width: 1366px;
+}
+
+ul{
+    list-style-type: none;
+}
+
+a{
+    color: #4080cd;
     text-decoration: none;
 }
+
 a:hover{
-    border-bottom: 1px solid #4078c0;
-    cursor: pointer;
+    text-decoration: underline;
 }
-body{
-    color: #333;
-    min-width: 1340px;
-    line-height: 1.5;
-    font-family: "Microsoft YaHei";
-}
-.header{
-    padding: 10px 13.1%;
+
+#header{
     height: 29px;
-    background-color: #f5f5f5;
     border-bottom: 1px solid #e5e5e5;
+    background-color: #f5f5f5;
+    padding: 10px 13.1%;
 }
-.logo{
+
+#header > img{
     float: left;
-    width: 29px;
     height: 29px;
 }
+
 .search{
     float: left;
-    margin-left: 10px;
-    width: 360px;
+    padding: 0 5px;
     height: 26px;
-    border: 1px solid #e5e5e5;
-    border-radius: 4px;
+    margin-left: 10px;
     font-size: 13px;
-    padding: 0px 5px;
-    font-family: "Microsoft YaHei";
+    border-radius: 3px;
+    width: 360px;
+    border:1px solid #ddd;
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
 }
-.avatar_holder{
+
+.header_nav_link{
     float: right;
-}
-.avatar_holder:hover{
     cursor: pointer;
+    margin-left: 15px;
+}
+
+.header_nav_link:hover,.header_nav_link:focus{
     color: #4078c0;
 }
-.small_avatar{
-    width: 20px;
-    height: 20px;
+
+.header_nav_link > img{
+    display: inline-block;
     vertical-align: middle;
+    height: 20px;
+    width: 20px;
 }
-.arrow{
+
+.dropdown{
     display: inline-block;
     width: 0;
     height: 0;
+    margin-top: 4px;
     vertical-align: middle;
     content: "";
-    margin-bottom: 10px;
-    margin-top: 12px;
     border: 4px solid;
     border-right-color: transparent;
     border-bottom-color: transparent;
     border-left-color: transparent;
 }
-.arrow:hover{
-    color: #4078c0;
-    cursor: pointer;
-}
+
 .menu{
-    position: absolute;
     width: 100px;
-    top:50px;
-    right:13.1%;
     border: 1px solid rgba(0,0,0,0.15);
     border-radius: 4px;
     background-color: #fff;
@@ -80,6 +84,8 @@ body{
     box-shadow: 0 3px 12px rgba(0,0,0,0.15);
     z-index: 100;
     display: none;
+    position: absolute;
+    top: 50px;
 }
 
 .menu_detail{
@@ -91,13 +97,12 @@ body{
     border-bottom: 1px solid #d5d5d5;
     font-size: 14px;
 }
-.menu_detail:hover{
+
+.menu_detail:hover {
     background: #4078c0;
     color: #fff;
 }
-.content{
-    width: 100%;
-}
+
 .boxed{
     width: 53.5%;
     margin-left: 23.25%;
@@ -119,6 +124,7 @@ body{
     color:#666;
     font-size: 14px;
     line-height: 1.5;
+    margin-bottom: 7px;
 }
 .info_detail{
     margin: 21px 16px;
@@ -130,7 +136,6 @@ body{
     line-height: 20px;
     height: 32px;
     color: #333;
-    font-family: "Microsoft YaHei";
     vertical-align: middle;
     background-color: #fafafa;
     background-repeat: no-repeat;
@@ -141,25 +146,63 @@ body{
     width: 422px;
     max-width: 100%;
     margin-right: 5px;
-    margin-top: 7px;
+    font-family: "Microsoft YaHei";
 }
 .input_detail:focus{
     background-color: #fff;
 }
-.password_submit{
-    background-color: #ddd;
-    background-image: linear-gradient(#eee, #ddd);
-    border:1px solid #ccc;
-    border-radius: 3px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 20px;
-    white-space: nowrap;
-    vertical-align: middle;
+input{
+    display: block;
+    border-radius: 5px;
+    height: 35px;
+    width: 100%;
+}
+
+input[type=button]{
+    width:137px ;
+    color: #ffffff;
+    border:0;
+    background-image: linear-gradient(to bottom,#88db6b,#64b548);
     cursor: pointer;
     margin-left: 16px;
-    width: 137px;
 }
-.boxed>a{
+.big_avatar{
+    width: 70px;
+    height: 70px;
+    display: inline-block;
+    overflow: hidden;
+    line-height: 1;
+    vertical-align: middle;
+    border-radius: 3px;
+}
+
+.upload{
+    display: inline-block;
+    float: right;
+    margin-right: 65%;
+}
+.upload>input{
+    background-image: linear-gradient(#fcfcfc, #eee);
+    color: #333;
+    width: 164px;
+    border-radius: 3px;
+    margin-left: 0px;
+    border: 1px solid #d5d5d5;
+}
+.edu_detail{
+    width: 422px;
+    height: 5.35em;
+    min-height: 0;
+    max-width: 100%;
+    margin-right: 5px;
+    background-color: #fafafa;
+    padding: 6px 8px;
     font-size: 14px;
+    line-height: 20px;
+    color: #333;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
 }
