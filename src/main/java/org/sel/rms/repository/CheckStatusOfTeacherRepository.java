@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 */
 public interface CheckStatusOfTeacherRepository extends JpaRepository<CheckStatusOfTeacherEntity,Integer> {
 
+    CheckStatusOfTeacherEntity findByidTeacher(int teacherId);
 }

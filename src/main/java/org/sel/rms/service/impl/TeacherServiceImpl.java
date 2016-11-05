@@ -1,6 +1,8 @@
 package org.sel.rms.service.impl;
+import org.sel.rms.entity.CheckStatusOfTeacherEntity;
 import org.sel.rms.entity.TeacherEntity;
 import org.sel.rms.exception.TeacherException;
+import org.sel.rms.repository.CheckStatusOfTeacherRepository;
 import org.sel.rms.repository.TeacherRepository;
 import org.sel.rms.service.TeacherService;
 import org.sel.rms.status.TeacherStatus;
@@ -20,6 +22,9 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Autowired
     TeacherRepository teacherRepository;
+
+    @Autowired
+    CheckStatusOfTeacherRepository checkStatusOfTeacherRepository;
 
     public TeacherStatus teacherAuth(TeacherEntity teacherEntity) {
         TeacherStatus teacherStatus;
@@ -51,5 +56,44 @@ public class TeacherServiceImpl implements TeacherService {
         }
         list.add(teacherResult.getIdTeacher());
         return list;
+    }
+
+    public TeacherStatus teacherRegister(TeacherEntity teacherEntity) {
+        TeacherStatus teacherStatus;
+        try {
+            teacherRepository.save(teacherEntity);
+            teacherStatus = TeacherStatus.SUCCESS;
+        } catch (Exception e) {
+            throw new TeacherException("save teacher information error", TeacherStatus.SAVE_INFO_ERROR);
+        }
+        return teacherStatus;
+    }
+
+    public void saveCheckStatus(TeacherEntity teacherEntity) {
+        TeacherEntity checkTeacher = new TeacherEntity();
+        CheckStatusOfTeacherEntity checkStatusOfTeacherEntity = new CheckStatusOfTeacherEntity();
+        try {
+            checkTeacher = teacherRepository.findByAccount(teacherEntity.getAccount());
+            checkStatusOfTeacherEntity.setIdTeacher(checkTeacher.getIdTeacher());
+            checkStatusOfTeacherEntity.setCheckStatus((byte)0);
+            checkStatusOfTeacherRepository.save(checkStatusOfTeacherEntity);
+        } catch (Exception e) {
+            teacherRepository.delete(checkTeacher.getIdTeacher());
+            throw new TeacherException("save teacher check status error", e, TeacherStatus.SAVE_CHECK_STATUS_ERROR);
+        }
+    }
+
+    public TeacherStatus modifyPassword(int teacherId, String newPassword) {
+        TeacherStatus teacherStatus;
+        TeacherEntity teacherEntity;
+        try {
+            teacherEntity = teacherRepository.findOne(teacherId);
+            teacherEntity.setPassword(newPassword);
+            teacherRepository.save(teacherEntity);
+            teacherStatus = TeacherStatus.SUCCESS;
+        } catch (Exception e) {
+            throw new TeacherException("modify password error", e, TeacherStatus.MODIFY_PASSWORD_ERROR);
+        }
+        return teacherStatus;
     }
 }

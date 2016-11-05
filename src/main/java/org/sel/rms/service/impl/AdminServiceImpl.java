@@ -1,7 +1,9 @@
 package org.sel.rms.service.impl;
 import org.sel.rms.entity.AdminEntity;
+import org.sel.rms.entity.CheckStatusOfTeacherEntity;
 import org.sel.rms.exception.AdminException;
 import org.sel.rms.repository.AdminRepository;
+import org.sel.rms.repository.CheckStatusOfTeacherRepository;
 import org.sel.rms.service.AdminService;
 import org.sel.rms.status.AdminStatus;
 import org.sel.rms.util.MD5Util;
@@ -21,6 +23,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     AdminRepository adminRepository;
+
+    @Autowired
+    CheckStatusOfTeacherRepository checkStatusOfTeacherRepository;
 
     @Value("config.admin.key")
     String adminKey;
@@ -56,5 +61,18 @@ public class AdminServiceImpl implements AdminService {
         }
         list.add(adminResult.getIdAdmin());
         return list;
+    }
+
+    public AdminStatus checkTeacher(int teacherId) {
+        AdminStatus adminStatus;
+        CheckStatusOfTeacherEntity checkStatusOfTeacherEntity;
+        try {
+            checkStatusOfTeacherEntity = checkStatusOfTeacherRepository.findByidTeacher(teacherId);
+            checkStatusOfTeacherEntity.setCheckStatus((byte)1);
+            adminStatus = AdminStatus.SUCCESS;
+        } catch (Exception e) {
+            throw new AdminException("check teacher error", e, AdminStatus.CHECK_TEACHER_ERROR);
+        }
+        return adminStatus;
     }
 }
