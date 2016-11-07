@@ -1,6 +1,11 @@
 package org.sel.rms.entity;
 
+import org.sel.rms.entity.ValidGroup.AdminGroup;
+import org.sel.rms.entity.ValidGroup.TeacherGroup;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.sql.Date;
 
 /**
@@ -10,16 +15,25 @@ import java.sql.Date;
 @Table(name = "Teacher", schema = "RMS", catalog = "")
 public class TeacherEntity {
     private int idTeacher;
+    @NotNull(groups = {TeacherGroup.login.class, TeacherGroup.register.class})
     private String account;
+    @NotNull(groups = {TeacherGroup.login.class, TeacherGroup.register.class})
     private String password;
     private Date birthday;
     private String educationBackground;
+    @NotNull(groups = {TeacherGroup.register.class})
     private String college;
+    @NotNull(groups = {TeacherGroup.register.class})
     private String name;
+    @NotNull(groups = {TeacherGroup.register.class})
     private String id;
+    @Pattern(regexp = "^\\\\s*\\\\w+(?:\\\\.{0,1}[\\\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\\\.[a-zA-Z]+\\\\s*$",groups = {TeacherGroup.register.class})
     private String email;
+    @Pattern(regexp = "^1[3-8]{1}\\d{9}$", groups = {TeacherGroup.register.class})
     private String phoneNumber;
+    @NotNull(groups = {TeacherGroup.register.class})
     private byte gender;
+    @NotNull(groups = {TeacherGroup.register.class})
     private String workPlace;
     private String title;
     private String avatarUrl;

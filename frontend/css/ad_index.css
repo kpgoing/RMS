@@ -89,7 +89,7 @@ body{
     display: inline-block;
 }
 .message{
-    float: right;
+    margin-bottom: 20px;
     width: 270px;
     min-height: 129px;
     padding: 11px 10px 10px 62px;
@@ -187,4 +187,9 @@ body{
 .headline{
     font-size: 16px;
     color: #4078c0;
+}
+
+.message_box{
+    float: right;
+    display: inline-block;
 }

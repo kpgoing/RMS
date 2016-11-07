@@ -34,6 +34,10 @@ public class GlobalDefaultExceptionHandler {
                 return new ResponseMessage(((ProjectException) e).getProjectStatus());
             } else if (e instanceof HttpMessageNotReadableException) {
                 return new ResponseMessage(PaperStatus.ARGUMENTS_ERROR);
+            } else if (e instanceof AdminException) {
+                return new ResponseMessage(((AdminException) e).getAdminStatus());
+            } else if (e instanceof TeacherException) {
+                return new ResponseMessage(((TeacherException) e).getTeacherStatus());
             } else {
                 return new ResponseMessage(1, "ERROR: " + e.getMessage(), null);
             }

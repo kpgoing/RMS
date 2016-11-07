@@ -3,15 +3,15 @@ package org.sel.rms.status;
 import org.sel.rms.status.inter.Statusable;
 
 /**
- * Created by Huxh on 2016/11/1.
+ * Created by Huxh on 2016/11/3.
  */
-public enum AdminStatus implements Statusable {
+public enum TeacherStatus implements Statusable {
     SUCCESS(0),ERROR(1),USERNAME_ERROR_OR_EXIST(2),PASSWORD_ERROR(3),ARGUMENTS_ERROR(4),
-    CHECK_TEACHER_ERROR(5);
+    SAVE_INFO_ERROR(5), SAVE_CHECK_STATUS_ERROR(6), MODIFY_PASSWORD_ERROR(7);
 
     private int status;
 
-    AdminStatus(int status) {
+    TeacherStatus(int status) {
         this.status = status;
     }
 
