@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>发布论文</title>
+	<link rel="stylesheet" type="text/css" href="../css/t_detail.css">
+</head>
+<body>
+	<div id="header">
+		<img src="../img/logo.png">
+		<input type="text" name="search" class="search" placeholder="搜索">
+		<div class="header_nav_link">
+		    <img src="../img/avatar.png">
+			<span class="dropdown"></span>
+		</div>
+		<div class="header_nav_link">
+		    <img src="../img/plus.png">
+			<span class="dropdown"></span>
+		</div>
+	</div>
+    <div class="menu" style="right:10%">
+		<div class="menu_detail">个人主页</div>
+        <div class="menu_detail" id="reset_password">修改密码</div>
+        <div class="menu_detail" id="sign_out">退出登录</div>
+    </div>
+    <div class="menu" style="right:14%">
+	    <div class="menu_detail">发布项目</div>
+	    <div class="menu_detail">发布论文</div>
+    </div>
+    <div id="button_group" style="margin-top:25px;">
+    	<button class="operate">取消</button>
+    	<button class="operate">发布</button>
+    </div>
+    <div id="content">
+    	<div class="left">
+    		<p class="key">题目</p><p class="value"><input type="text" name="title" placeholder="论文标题"></p><br>
+	    	<p class="key">作者</p><p class="value"><input type="text" name="author" placeholder="格式：作者1，作者2..."></p><br>
+	    	<p class="key">发表时间</p><p class="value"><input type="date" name="date"></p><br>
+	    	<p class="key">发表期刊/会议名称</p><p class="value"><input type="text" name="publish" placeholder="例如：《新青年杂志》2016期6月6号"></p><br>
+	    	<p class="key">关键字</p><p class="value"><input type="text" name="keywords" placeholder="格式：tag1,tag2..."></p><br>
+	    	<p class="key">论文摘要</p><br>
+	    	<p class="value" style="margin-left:15px">
+                <textarea placeholder="填写您要发布的论文摘要内容"></textarea>
+            </p>
+    	</div>
+    	<div class="right">
+    		<img src="../img/pdf.png"><br>
+    		<button style="background-color:#58b032;color:#fff;">上传pdf</button>
+    	</div>
+    </div>
+</body>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/t_detail.js"></script>
+</html>
