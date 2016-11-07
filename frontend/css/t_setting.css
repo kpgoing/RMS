@@ -135,7 +135,6 @@ a:hover{
     font-size: 14px;
     line-height: 20px;
     height: 32px;
-    color: #333;
     vertical-align: middle;
     background-color: #fafafa;
     background-repeat: no-repeat;
@@ -205,4 +204,7 @@ input[type=button]{
     border-radius: 3px;
     outline: none;
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+}
+.disabled{
+    color: #d5d5d5;
 }
