@@ -5,4 +5,5 @@ package org.sel.rms.entity.ValidGroup;
  */
 public interface TeacherGroup {
     public static interface login{};
+    public static interface register{};
 }
