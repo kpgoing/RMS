@@ -163,6 +163,7 @@ a:hover{
 }
 
 #content{
+	position: relative;
 	width: 73.9%;
 	margin: 0 auto;
 	padding: 10px 0;

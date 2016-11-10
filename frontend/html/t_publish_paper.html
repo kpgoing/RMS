@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title>发布论文</title>
 	<link rel="stylesheet" type="text/css" href="../css/t_detail.css">
+	<link rel="stylesheet" type="text/css" href="../webuploader/webuploader.css">
 </head>
 <body>
 	<div id="header">
@@ -45,10 +46,20 @@
     	</div>
     	<div class="right">
     		<img src="../img/pdf.png"><br>
-    		<button style="background-color:#58b032;color:#fff;">上传pdf</button>
+    		<button style="background-color:#58b032;color:#fff;" id="uploadpdf">选择文件</button>
+    		<div id="thelist" class="uploader-list" style="position:absolute;top:20px;left:700px"></div>
     	</div>
     </div>
 </body>
+<div id="uploader" class="wu-example" style="position: absolute;bottom:0;opacity:0">
+    <!--用来存放文件信息-->
+    <div class="btns">
+        <div id="picker">选择文件</div>
+        <button id="ctlBtn" class="btn btn-default">开始上传</button>
+    </div>
+</div>
 <script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../webuploader/webuploader.js"></script>
+<script type="text/javascript" src="../js/uploader.js"></script>
 <script type="text/javascript" src="../js/t_detail.js"></script>
 </html>

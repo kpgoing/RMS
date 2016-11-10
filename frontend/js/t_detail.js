@@ -9,7 +9,16 @@ $(function(){
        	$(".menu").eq(index-2).toggle();
        	e.stopPropagation();
    });
+
     $(document).click(function () {
        	$(".menu").hide();
     });
+
+    $(document).on("click","#uploadpdf",function(){
+    	$("#picker input").click();
+    });
+
+    $(document).on("click","#confirmupload",function(){
+    	$("#ctlBtn").click();
+    })
 });
