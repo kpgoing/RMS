@@ -27,7 +27,6 @@ public class PaperEntity {
     private Date releaseDate;
     @NotBlank(groups = {PaperGroup.publish.class, PaperGroup.modify.class})
     private String writer;
-    @NotNull(groups = {PaperGroup.publish.class, PaperGroup.modify.class})
     private Date publishDate;
     @NotBlank(groups = {PaperGroup.publish.class, PaperGroup.modify.class})
     private String publishPlace;

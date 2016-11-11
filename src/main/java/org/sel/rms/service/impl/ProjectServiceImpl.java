@@ -1,4 +1,5 @@
 package org.sel.rms.service.impl;
+import org.apache.commons.lang3.StringUtils;
 import org.sel.rms.entity.ProjectEntity;
 import org.sel.rms.exception.ProjectException;
 import org.sel.rms.repository.ProjectRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 
 /**
@@ -79,6 +81,19 @@ public class ProjectServiceImpl implements ProjectService {
         }
         return projectEntities;
         
+    }
+
+    @Override
+    public Page<ProjectEntity> searchProjects(String keyWord, Pageable page) {
+        Page<ProjectEntity> projectEntities;
+        String[] keyWords = keyWord.split(" ");
+//        keyWord = StringUtils.join(keyWords, "|");
+//        keyWord = "(" + keyWord + ")";
+//        Arrays.fill(keyWords, keyWord);
+        keyWord = StringUtils.join(keyWords, "%");
+        keyWord = "%" + keyWord + "%";
+        projectEntities = projectRepository.search(keyWord, page);
+        return projectEntities;
     }
 
 

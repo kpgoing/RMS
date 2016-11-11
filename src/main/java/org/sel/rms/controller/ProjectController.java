@@ -2,9 +2,11 @@ package org.sel.rms.controller;
 
 import org.apache.log4j.Logger;
 import org.sel.rms.common.ResponseMessage;
+import org.sel.rms.entity.PaperEntity;
 import org.sel.rms.entity.ProjectEntity;
 import org.sel.rms.entity.ValidGroup.ProjectGroup;
 import org.sel.rms.service.ProjectService;
+import org.sel.rms.status.PaperStatus;
 import org.sel.rms.status.ProjectStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -164,17 +166,13 @@ public class ProjectController {
     }
 
     /**
-     * @api {post} /teacher/project/myprojects 查询自己发表的论文
+     * @api {get} /project/teacher/:id/:page/:size 查询某个老师发表的项目
      * @apiName getProjectsByTeacher
      * @apiGroup Project
-     * @apiPermission teacher
      * @apiVersion 0.1.0
-     * @apiParam {json} map 分页信息
-     * @apiParamExample {json} Request-Example:
-     * {
-     * "page":0,
-     * "size":3
-     * }
+     * @apiParam {Number} id 老师id
+     * @apiParam {Number} page 页码（从0开始）
+     * @apiParam {Number} size 每页数据数量
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      *   {
@@ -228,28 +226,77 @@ public class ProjectController {
      *   }
      *   }
      * @apiUse NormalErrorResponse
-     * @apiUse ArgumentsErrorResponse
      * @apiUse DataBaseErrorResponse
-     * @apiUse UnLoginErrorResponse
      */
-    @RequestMapping(value = "/teacher/project/myprojects", method = RequestMethod.POST)
-    public ResponseMessage getProjectsByTeacher(@RequestBody Map map, HttpSession httpSession) {
+    @RequestMapping(value = "/project/teacher/{id}/{page}/{size}", method = RequestMethod.GET)
+    public ResponseMessage getProjectsByTeacher(@PathVariable("id") int id, @PathVariable("page") int page, @PathVariable("size") int size) {
         Page<ProjectEntity> projectEntities = null;
-        String idTeacher = (String) httpSession.getAttribute(teacherKey);
-        int page = (int) map.get("page");
-        int size = (int) map.get("size");
         ProjectStatus projectStatus;
-        if (idTeacher == null) {
-            logger.error("teacher is offline!");
-            projectStatus = ProjectStatus.UN_LOGIN;
-        } else {
-            Pageable pageable = new PageRequest(page, size, Sort.Direction.DESC, "idProject");
-            projectEntities = projectService.getProjectEntitiesByIdOfTeacher(Integer.parseInt(idTeacher), pageable);
-            projectStatus = ProjectStatus.SUCCESS;
-        }
+        Pageable pageable = new PageRequest(page, size, Sort.Direction.DESC, "idProject");
+        projectEntities = projectService.getProjectEntitiesByIdOfTeacher(id, pageable);
+        projectStatus = ProjectStatus.SUCCESS;
         return new ResponseMessage(projectStatus, projectEntities);
     }
 
+
+    /**
+     * @api {get} /project/search/:keyword/:page/:size 查询项目（匹配项目名称或项目介绍或项目责任人或项目来源，用空格分隔）
+     * @apiName searchProjects
+     * @apiGroup Project
+     * @apiVersion 0.1.0
+     * @apiParam {String} keyword 关键词
+     * @apiParam {Number} page 页码（从0开始）
+     * @apiParam {Number} size 每页数据数量
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     *   {
+     *     "code": 0,
+     *     "msg": "SUCCESS",
+     *     "body": {
+     *       "content": [
+     *         {
+     *           "idProject": 5,
+     *           "idTeacher": 1,
+     *           "name": "ds",
+     *           "source": "计算机学院",
+     *           "projectTime": "2016-10-30",
+     *           "master": "哈哈",
+     *           "funds": 1231412314.11,
+     *           "publishTime": "2016-10-30",
+     *           "introduction": "123",
+     *           "param1": null,
+     *           "param2": null
+     *         }
+     *       ],
+     *       "last": true,
+     *       "totalPages": 1,
+     *       "totalElements": 1,
+     *       "size": 5,
+     *       "number": 0,
+     *       "sort": [
+     *         {
+     *           "direction": "DESC",
+     *           "property": "idProject",
+     *           "ignoreCase": false,
+     *           "nullHandling": "NATIVE",
+     *           "ascending": false
+     *         }
+     *       ],
+     *       "first": true,
+     *       "numberOfElements": 1
+     *     }
+     *   }
+     *
+     *
+     * @apiUse NormalErrorResponse
+     * @apiUse DataBaseErrorResponse
+     */
+    @RequestMapping(value = "/project/search/{keyWord}/{page}/{size}", method = RequestMethod.GET)
+    public ResponseMessage search(@PathVariable("keyWord") String keyWord, @PathVariable("page") int page, @PathVariable("size") int size) {
+        Pageable pageable = new PageRequest(page, size, Sort.Direction.DESC, "idProject");
+        Page<ProjectEntity> projectEntities = projectService.searchProjects(keyWord, pageable);
+        return new ResponseMessage(PaperStatus.SUCCESS, projectEntities);
+    }
 
 
 }

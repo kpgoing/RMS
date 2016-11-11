@@ -14,6 +14,6 @@ public class RMSApplication {
 
 
 	public static void main(String[] args) {
-		SpringApplication.run(RMSApplication.class, "--debug");
+		SpringApplication.run(RMSApplication.class, args);
     }
 }

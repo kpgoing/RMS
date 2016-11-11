@@ -25,4 +25,5 @@ public interface ProjectService {
     public Page<ProjectEntity> getProjectEntitiesByIdOfTeacher(int id, Pageable pagea);
 
 
+    Page<ProjectEntity> searchProjects(String keyWord, Pageable page);
 }
