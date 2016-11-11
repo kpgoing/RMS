@@ -39,6 +39,12 @@ public class PaperController {
     @Value("${config.teacher.key}")
     String teacherKey;
 
+    @RequestMapping(value = "/test")
+    public void addSessionKey(HttpSession httpSession) {
+        httpSession.setAttribute(teacherKey,1);
+    }
+
+
 
     /**
      * @api {post} /teacher/paper/publish 发表论文
@@ -53,7 +59,6 @@ public class PaperController {
      * "title":"ds",
      * "releaseDate":"2016-10-30",
      * "writer":"xbw",
-     * "publishDate":"2016-10-30",
      * "publishPlace":"aaa",
      * "keyWord":"123",
      * "abstractContent":"123",
@@ -69,7 +74,7 @@ public class PaperController {
     public ResponseMessage publish(@Validated(PaperGroup.publish.class) @RequestBody PaperEntity paperEntity, BindingResult bindingResult, HttpSession httpSession) {
 
         PaperStatus paperStatus;
-        String idTeacher = (String) httpSession.getAttribute(teacherKey);
+        Integer idTeacher = (Integer) httpSession.getAttribute(teacherKey);
         if (idTeacher == null) {
             logger.error("teacher is offline!");
             paperStatus = PaperStatus.UN_LOGIN;
@@ -100,7 +105,6 @@ public class PaperController {
      * "title":"ds",
      * "releaseDate":"2016-10-30",
      * "writer":"xbw",
-     * "publishDate":"2016-10-30",
      * "publishPlace":"aaa",
      * "keyWord":"123",
      * "abstractContent":"123",
@@ -117,7 +121,7 @@ public class PaperController {
     @RequestMapping(value = "/teacher/paper/modify", method = RequestMethod.POST)
     public ResponseMessage modify(@Validated(PaperGroup.modify.class) @RequestBody PaperEntity paperEntity, BindingResult bindingResult, HttpServletRequest request) {
         PaperStatus paperStatus;
-        String idTeacher = (String) request.getSession().getAttribute(teacherKey);
+        Integer idTeacher = (Integer) request.getSession().getAttribute(teacherKey);
         if (idTeacher == null) {
             logger.error("teacher is offline!");
             paperStatus = PaperStatus.UN_LOGIN;
@@ -149,7 +153,7 @@ public class PaperController {
     @RequestMapping(value = "/teacher/paper/delete/{id}", method = RequestMethod.GET)
     public ResponseMessage delete(@PathVariable("id") int id, HttpServletRequest request) {
         PaperStatus paperStatus;
-        String idTeacher = (String) request.getSession().getAttribute(teacherKey);
+        Integer idTeacher = (Integer) request.getSession().getAttribute(teacherKey);
         if (idTeacher == null) {
             logger.error("teacher is offline!");
             paperStatus = PaperStatus.UN_LOGIN;

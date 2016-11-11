@@ -29,7 +29,6 @@ public class ProjectEntity {
     private String master;
     @NotNull(groups = {ProjectGroup.modify.class, ProjectGroup.publish.class})
     private BigDecimal funds;
-    @NotNull(groups = {ProjectGroup.modify.class, ProjectGroup.publish.class})
     private Date publishTime;
     @NotBlank(groups = {ProjectGroup.modify.class, ProjectGroup.publish.class})
     private String introduction;

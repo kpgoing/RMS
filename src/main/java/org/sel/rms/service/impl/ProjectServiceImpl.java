@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 
 
 /**
@@ -32,6 +34,8 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void publishProject(ProjectEntity projectEntity) {
         try {
+            LocalDate localDate = LocalDate.now();
+            projectEntity.setPublishTime(Date.valueOf(localDate));
             projectRepository.save(projectEntity);
         } catch (Exception ex) {
             throw new ProjectException("save paper error!", ex, ProjectStatus.DATABASE_ERROR);
@@ -41,6 +45,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void modifyProject(ProjectEntity projectEntity) {
         ProjectEntity found = getProjectById(projectEntity.getIdProject());
+        projectEntity.setPublishTime(found.getPublishTime());
         projectRepository.save(projectEntity);
 
     }

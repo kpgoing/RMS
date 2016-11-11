@@ -43,7 +43,7 @@ public class ProjectController {
 
 
     /**
-     * @api {post} /teacher/project/publish 发表论文
+     * @api {post} /teacher/project/publish 发表项目
      * @apiName publishProject
      * @apiGroup Project
      * @apiPermission teacher
@@ -57,7 +57,6 @@ public class ProjectController {
      *      "projectTime":"2016-10-30",
      *      "master":"哈哈",
      *      "funds":"1231412314.11",
-     *      "publishTime":"2016-10-30",
      *      "introduction":"123"
      * }
      *
@@ -71,7 +70,7 @@ public class ProjectController {
     public ResponseMessage publish(@Validated(ProjectGroup.publish.class) @RequestBody ProjectEntity projectEntity, BindingResult bindingResult, HttpSession httpSession) {
 
         ProjectStatus projectStatus;
-        String idTeacher = (String) httpSession.getAttribute(teacherKey);
+        Integer idTeacher = (Integer) httpSession.getAttribute(teacherKey);
         if (idTeacher == null) {
             logger.error("teacher is offline!");
             projectStatus = ProjectStatus.UN_LOGIN;
@@ -90,7 +89,7 @@ public class ProjectController {
 
 
     /**
-     * @api {post} /teacher/project/modify 修改论文
+     * @api {post} /teacher/project/modify 修改项目
      * @apiName modifyProject
      * @apiGroup Project
      * @apiPermission teacher
@@ -105,7 +104,6 @@ public class ProjectController {
      *      "projectTime":"2016-10-30",
      *      "master":"哈哈",
      *      "funds":"1231412314.11",
-     *      "publishTime":"2016-10-30",
      *      "introduction":"123"
      * }
      *
@@ -119,7 +117,7 @@ public class ProjectController {
     @RequestMapping(value = "/teacher/project/modify", method = RequestMethod.POST)
     public ResponseMessage modify(@Validated(ProjectGroup.modify.class) @RequestBody ProjectEntity projectEntity, BindingResult bindingResult, HttpServletRequest request) {
         ProjectStatus projectStatus;
-        String idTeacher = (String) request.getSession().getAttribute(teacherKey);
+        Integer idTeacher = (Integer) request.getSession().getAttribute(teacherKey);
         if (idTeacher == null) {
             logger.error("teacher is offline!");
             projectStatus = ProjectStatus.UN_LOGIN;
@@ -139,7 +137,7 @@ public class ProjectController {
     }
 
     /**
-     * @api {get} /teacher/project/delete/:id 删除论文
+     * @api {get} /teacher/project/delete/:id 删除项目
      * @apiName deleteProject
      * @apiGroup Project
      * @apiPermission teacher
@@ -154,7 +152,7 @@ public class ProjectController {
     @RequestMapping(value = "/teacher/project/delete/{id}", method = RequestMethod.GET)
     public ResponseMessage delete(@PathVariable("id") int id, HttpSession httpSession) {
         ProjectStatus projectStatus;
-        String idTeacher = (String) httpSession.getAttribute(teacherKey);
+        Integer idTeacher = (Integer) httpSession.getAttribute(teacherKey);
         if (idTeacher == null) {
             logger.error("teacher is offline!");
             projectStatus = ProjectStatus.UN_LOGIN;

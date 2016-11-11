@@ -83,7 +83,9 @@ public class PaperServiceImpl implements PaperService {
     @Override
     public void modifyPaper(PaperEntity paperEntity, HttpServletRequest request) {
         PaperEntity found = getPaperById(paperEntity.getIdPaper());
-        deleteFile(request, found.getContent());
+        if (!paperEntity.getContent().equals(found.getContent())) {
+            deleteFile(request, found.getContent());
+        }
         paperEntity.setPublishDate(found.getPublishDate());
         paperRepository.save(paperEntity);
     }
