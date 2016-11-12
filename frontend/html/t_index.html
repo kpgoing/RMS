@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title>科研管理系统</title>
 	<link rel="stylesheet" type="text/css" href="../css/t_index.css">
+	<link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
 </head>
 <body>
 	<div id="header">
@@ -45,36 +46,26 @@
 				</ul>
 			</div>
 		</div>
-		<div id="project">
+		<div id="project" ms-controller="initinfo">
 			<p id="pro_area">科研成果</p>
-			<div class="pro_box">
-				<a href="#">项目名称</a>
-				<p class="pro_intro">这是一段项目简介啦啦啦...</p>
-				<p class="pro_kind">项目</p>
-			</div>
-			<div class="pro_box">
-				<a href="#">项目名称</a>
-				<p class="pro_intro">这是一段论文简介啦啦啦...</p>
+			<div class="pro_box" ms-repeat="paper" ms-attr-data="el.idPaper">
+				<a href="#">{{ el.title }}</a>
+				<p class="pro_intro">{{ el.abstractContent|truncate(15) }}</p>
 				<p class="pro_kind">论文</p>
+				<p class="pro_time">{{ el.releaseDate }}</p>
 			</div>
-			<div class="pro_box">
-				<a href="#">项目名称</a>
-				<p class="pro_intro">这是一段项目简介啦啦啦...</p>
+			<div class="pro_box" ms-repeat="project" ms-attr-data="el.idProject">
+				<a href="#">{{ el.name }}</a>
+				<p class="pro_intro">{{ el.introduction|truncate(15) }}</p>
 				<p class="pro_kind">项目</p>
-			</div>
-			<div class="pro_box">
-				<a href="#">项目名称</a>
-				<p class="pro_intro">这是一段项目简介啦啦啦...</p>
-				<p class="pro_kind">项目</p>
-			</div>
-			<div class="pro_box">
-				<a href="#">项目名称</a>
-				<p class="pro_intro">这是一段论文简介啦啦啦...</p>
-				<p class="pro_kind">论文</p>
+				<p class="pro_time">{{ el.publishTime }}</p>
 			</div>
 		</div>
 	</div>
 </body>
 <script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="../js/avalon.js"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
 <script type="text/javascript" src="../js/t_index.js"></script>
 </html>

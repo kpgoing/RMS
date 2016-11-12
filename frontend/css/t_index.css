@@ -191,11 +191,19 @@ a:hover{
 }
 
 .pro_kind{
+	background:url('../img/branch.png') left no-repeat;
+}
+
+.pro_time{
+	background:url('../img/clock.png') left no-repeat;
+}
+
+.pro_kind,.pro_time{
 	margin-top: 15px;
 	font-size: 12px;
 	padding-left: 20px;
+	display: inline-block;
 	color: #767676;
-	background:url('../img/branch.png') left no-repeat;
 	background-size: 15px 15px;
 }
 

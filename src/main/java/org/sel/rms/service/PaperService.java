@@ -4,6 +4,7 @@ import org.sel.rms.status.PaperStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,15 +17,21 @@ public interface PaperService {
 
     void publishPaper(PaperEntity paperEntity);
 
+    @Transactional
     void modifyPaper(PaperEntity paperEntity, HttpServletRequest request);
 
+    @Transactional
     void deletePaper(int idPaper, int idTeacher, HttpServletRequest request);
 
     PaperEntity getPaperById(int id);
+
+    Page<PaperEntity> getPageEntitiesByTitle(String title, Pageable pageable);
 
     Page<PaperEntity> getPageEntitiesByIdOfTeacher(int id, Pageable pagea);
 
     String uploadFile(HttpServletRequest request, MultipartFile file);
 
     PaperStatus deleteFile(HttpServletRequest request, String oldPath);
+
+    public Page<PaperEntity> searchPaper(String keyWord, Pageable page);
 }

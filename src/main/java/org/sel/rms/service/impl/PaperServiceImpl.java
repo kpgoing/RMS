@@ -1,5 +1,6 @@
 package org.sel.rms.service.impl;
 import ch.qos.logback.core.status.Status;
+import org.apache.commons.lang3.StringUtils;
 import org.sel.rms.entity.PaperEntity;
 import org.sel.rms.exception.PaperException;
 import org.sel.rms.repository.PaperRepository;
@@ -16,9 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Arrays;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+import static com.sun.tools.doclint.Entity.nu;
+import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
 
 
 /**
@@ -36,6 +40,8 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
     public void publishPaper(PaperEntity paperEntity) {
+        LocalDate localDate = LocalDate.now();
+        paperEntity.setPublishDate(Date.valueOf(localDate));
         try {
             paperRepository.save(paperEntity);
         } catch (Exception ex) {
@@ -53,6 +59,17 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
+    public Page<PaperEntity> getPageEntitiesByTitle(String title, Pageable pageable) {
+        Page<PaperEntity> paperEntities = null;
+//        try {
+//            paperEntities = paperRepository.findLikeTitle(title, pageable);
+//        } catch (Exception ex) {
+//            throw new PaperException("get entities by paper title error who title like " + title, ex, PaperStatus.DATABASE_ERROR);
+//        }
+        return paperEntities;
+    }
+
+    @Override
     public Page<PaperEntity> getPageEntitiesByIdOfTeacher(int id, Pageable page) {
         Page<PaperEntity> paperEntities;
         try {
@@ -66,7 +83,10 @@ public class PaperServiceImpl implements PaperService {
     @Override
     public void modifyPaper(PaperEntity paperEntity, HttpServletRequest request) {
         PaperEntity found = getPaperById(paperEntity.getIdPaper());
-        deleteFile(request, found.getContent());
+        if (!paperEntity.getContent().equals(found.getContent())) {
+            deleteFile(request, found.getContent());
+        }
+        paperEntity.setPublishDate(found.getPublishDate());
         paperRepository.save(paperEntity);
     }
 
@@ -93,7 +113,7 @@ public class PaperServiceImpl implements PaperService {
         String fileName = file.getOriginalFilename();
         String extensionName = fileName.substring(fileName.indexOf("."));
         fileName = fileName.substring(0,fileName.indexOf("."));
-        fileName = fileName + new Date().getTime() + extensionName;
+        fileName = fileName + new java.util.Date().getTime() + extensionName;
         String path = request.getServletContext().getRealPath(File.separator + "upload") + File.separator + id ;
 
         File dir = new File(path);
@@ -127,5 +147,18 @@ public class PaperServiceImpl implements PaperService {
             throw new PaperException("delele the old file error!.", ex, PaperStatus.DELETE_OLD_FILE_ERROR);
         }
 
+    }
+
+    @Override
+    public Page<PaperEntity> searchPaper(String keyWord, Pageable page) {
+        Page<PaperEntity> paperEntities;
+        String[] keyWords = keyWord.split(" ");
+//        keyWord = StringUtils.join(keyWords, "|");
+//        keyWord = "(" + keyWord + ")";
+//        Arrays.fill(keyWords, keyWord);
+        keyWord = StringUtils.join(keyWords, "%");
+        keyWord = "%" + keyWord + "%";
+        paperEntities = paperRepository.search(keyWord, page);
+        return paperEntities;
     }
 }

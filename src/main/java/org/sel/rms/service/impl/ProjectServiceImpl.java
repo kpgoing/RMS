@@ -1,4 +1,5 @@
 package org.sel.rms.service.impl;
+import org.apache.commons.lang3.StringUtils;
 import org.sel.rms.entity.ProjectEntity;
 import org.sel.rms.exception.ProjectException;
 import org.sel.rms.repository.ProjectRepository;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.sql.Date;
+import java.time.LocalDate;
 
 
 /**
@@ -30,6 +34,8 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void publishProject(ProjectEntity projectEntity) {
         try {
+            LocalDate localDate = LocalDate.now();
+            projectEntity.setPublishTime(Date.valueOf(localDate));
             projectRepository.save(projectEntity);
         } catch (Exception ex) {
             throw new ProjectException("save paper error!", ex, ProjectStatus.DATABASE_ERROR);
@@ -39,6 +45,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void modifyProject(ProjectEntity projectEntity) {
         ProjectEntity found = getProjectById(projectEntity.getIdProject());
+        projectEntity.setPublishTime(found.getPublishTime());
         projectRepository.save(projectEntity);
 
     }
@@ -79,6 +86,19 @@ public class ProjectServiceImpl implements ProjectService {
         }
         return projectEntities;
         
+    }
+
+    @Override
+    public Page<ProjectEntity> searchProjects(String keyWord, Pageable page) {
+        Page<ProjectEntity> projectEntities;
+        String[] keyWords = keyWord.split(" ");
+//        keyWord = StringUtils.join(keyWords, "|");
+//        keyWord = "(" + keyWord + ")";
+//        Arrays.fill(keyWords, keyWord);
+        keyWord = StringUtils.join(keyWords, "%");
+        keyWord = "%" + keyWord + "%";
+        projectEntities = projectRepository.search(keyWord, page);
+        return projectEntities;
     }
 
 
