@@ -1,5 +1,9 @@
 package org.sel.rms.interceptor;
 
+import org.sel.rms.exception.PaperException;
+import org.sel.rms.exception.TeacherException;
+import org.sel.rms.status.PaperStatus;
+import org.sel.rms.status.TeacherStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -29,9 +33,14 @@ public class TeacherInterceptor extends HandlerInterceptorAdapter {
         System.out.println("teacherinter is begin!");
         System.out.println(servletPath);
         System.out.println(Arrays.toString(flag));
+        System.out.println("method: " + request.getMethod());
         if (teacherLogin) {
             if (flag[2].startsWith("login")) {
-                response.sendRedirect(request.getContextPath() + "/teacher/index.html");
+                if (request.getMethod().equals("GET")) {
+                    response.sendRedirect(request.getContextPath() + "/teacher/index.html");
+                } else {
+                    throw new TeacherException("logined!", TeacherStatus.LOGINED);
+                }
                 return false;
             } else {
                 return true;
@@ -40,7 +49,11 @@ public class TeacherInterceptor extends HandlerInterceptorAdapter {
             if (flag[2].startsWith("login")) {
                 return true;
             } else {
-                response.sendRedirect(request.getContextPath() + "/teacher/login.html");
+                if (request.getMethod().equals("GET")) {
+                    response.sendRedirect(request.getContextPath() + "/teacher/login.html");
+                } else {
+                    throw new PaperException("permission deny!", PaperStatus.PERMISSIOM_DENY);
+                }
                 return false;
             }
         }

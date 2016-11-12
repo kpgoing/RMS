@@ -158,7 +158,7 @@ public class PaperController {
             logger.error("teacher is offline!");
             paperStatus = PaperStatus.UN_LOGIN;
         } else {
-            paperService.deletePaper(id, Integer.parseInt(idTeacher), request);
+            paperService.deletePaper(id, idTeacher, request);
             paperStatus = PaperStatus.SUCCESS;
         }
         return new ResponseMessage(paperStatus);

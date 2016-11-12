@@ -1,5 +1,4 @@
 package org.sel.rms.service.impl;
-import ch.qos.logback.core.status.Status;
 import org.apache.commons.lang3.StringUtils;
 import org.sel.rms.entity.PaperEntity;
 import org.sel.rms.exception.PaperException;
@@ -19,10 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Arrays;
-
-import static com.sun.tools.doclint.Entity.nu;
-import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
 
 
 /**
