@@ -420,6 +420,14 @@ public class PaperController {
 //    }
 
 
+
+    @RequestMapping(value = "/paper/new/{page}/{size}", method = RequestMethod.GET)
+    public ResponseMessage search(@PathVariable("page") int page, @PathVariable("size") int size) {
+        Pageable pageable = new PageRequest(page, size, Sort.Direction.DESC, "publishDate");
+        Page<PaperEntity> paperEntities = paperService.getNewPapers(pageable);
+        return new ResponseMessage(PaperStatus.SUCCESS, paperEntities);
+    }
+
 //    @RequestMapping("/paper/search/{q}")
 //    public ResponseMessage search(@PathVariable("q") String q) {
 //        List searchResults = null;

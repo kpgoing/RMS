@@ -3,6 +3,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.sel.rms.entity.ProjectEntity;
 import org.sel.rms.exception.ProjectException;
 import org.sel.rms.repository.ProjectRepository;
+import org.sel.rms.service.DynamicStateService;
 import org.sel.rms.service.ProjectService;
 import org.sel.rms.status.ProjectStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     ProjectRepository projectRepository;
 
+    @Autowired
+    DynamicStateService dynamicStateService;
 
     @Value("config.teacher.key")
     String teacherKey;
@@ -36,7 +39,9 @@ public class ProjectServiceImpl implements ProjectService {
         try {
             LocalDate localDate = LocalDate.now();
             projectEntity.setPublishTime(Date.valueOf(localDate));
-            projectRepository.save(projectEntity);
+            projectEntity = projectRepository.save(projectEntity);
+            dynamicStateService.addProject(projectEntity);
+
         } catch (Exception ex) {
             throw new ProjectException("save paper error!", ex, ProjectStatus.DATABASE_ERROR);
         }

@@ -36,6 +36,7 @@ public class ProjectEntity {
     private String param2;
 
     @Id
+    @GeneratedValue
     @Column(name = "id_project", nullable = false)
     public int getIdProject() {
         return idProject;
