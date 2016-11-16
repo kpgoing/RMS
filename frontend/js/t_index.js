@@ -5,9 +5,12 @@ $(function(){
 		project:[]
 	});
 
+	teacherId = sessionStorage.getItem("teacherId");
+
 	var reqData = {
 		"page":0,
-		"size":5
+		"size":5,
+		"id":teacherId
 	}
 
 	var filters = avalon.filters = {
@@ -20,7 +23,7 @@ $(function(){
     }
 
 	function getInfo(data){
-    	postAjax("/teacher/paper/mypapers",data,function(data){
+    	getAjax("/paper/teacher/" + data.id +"/" + data.page + "/" + data.size,null,function(data){
     		if(data.code == 0){
     			initinfo.paper = data.content;
     			avalon.scan();
@@ -28,7 +31,7 @@ $(function(){
     			sweetAlert("Oops...", data.msg, "error");
     		}
     	});
-    	postAjax("/teacher/project/myprojects",data,function(data){
+    	getAjax("/project/teacher/" + data.id +"/" + data.page + "/" + data.size,null,function(data){
     		if(data.code == 0){
     			initinfo.project = data.content;
     			avalon.scan();

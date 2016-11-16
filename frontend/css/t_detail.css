@@ -236,3 +236,7 @@ a:hover{
 	padding: 5px 5px;
 	resize: none;
 }
+
+#thelist *{
+	font-family: "Microsoft YaHei Light";
+}
