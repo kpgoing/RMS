@@ -34,4 +34,6 @@ public interface PaperService {
     PaperStatus deleteFile(HttpServletRequest request, String oldPath);
 
     public Page<PaperEntity> searchPaper(String keyWord, Pageable page);
+
+    public Page<PaperEntity> getNewPapers(Pageable pageable);
 }
