@@ -10,6 +10,7 @@
 - 论文ID:paperId
 - 项目ID:projectId
 - 搜索string:searchStr
+- 修改标志位:isModify(true/false)
 
 # 编码规范
 

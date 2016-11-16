@@ -57,4 +57,25 @@ $(function(){
     $(document).click(function () {
        	$(".menu").hide();
     });
+
+    $(document).on("click",".menu_detail",function(){
+    	var _href = $(this).attr("data");
+    	window.location.href = "./" + _href;
+    });
+
+    $(document).on("click","#modify_personal_info",function(){
+    	window.location.href = "./t_setting.html";
+    });
+
+    $(document).on("click",".pro_box",function(){
+        var _kind = $(this).find("p.pro_kind:eq(0)").text();
+        var id = $(this).attr("data");
+        if(_kind == "论文"){
+            sessionStorage.setItem("paperId",id);
+            window.location.href = "./t_detail_paper.html";
+        }else{
+            sessionStorage.setItem("projectId",id);
+            window.location.href = "./t_detail_project.html";
+        }
+    })
 });

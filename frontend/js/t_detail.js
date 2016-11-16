@@ -2,7 +2,16 @@ $(function(){
   teacherId = sessionStorage.getItem("teacherId");
   paperId = sessionStorage.getItem("paperId");
   projectId = sessionStorage.getItem("projectId");
+  isModify = sessionStorage.getItem("isModify");
   uploadURL = null;
+
+  if(isModify && paperId){
+    $("title").text("修改论文");
+    $("#publish_paper").text("完成修改");
+  }else if(isModify && projectId){
+    $("title").text("修改项目");
+    $("#publish_project").text("完成修改");
+  }
   
 	$(".header_nav_link").click(function (e) {
 		var index = $(this).index();
