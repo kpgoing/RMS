@@ -1,4 +1,9 @@
 $(function(){
+  teacherId = sessionStorage.getItem("teacherId");
+  paperId = sessionStorage.getItem("paperId");
+  projectId = sessionStorage.getItem("projectId");
+  uploadURL = null;
+  
 	$(".header_nav_link").click(function (e) {
 		var index = $(this).index();
 		if(index-2 == 0){
@@ -10,15 +15,81 @@ $(function(){
        	e.stopPropagation();
    });
 
-    $(document).click(function () {
-       	$(".menu").hide();
-    });
+  $(document).click(function () {
+     	$(".menu").hide();
+  });
 
-    $(document).on("click","#uploadpdf",function(){
-    	$("#picker input").click();
-    });
+  $(document).on("click","#uploadpdf",function(){
+  	$("#picker input").click();
+  });
 
-    $(document).on("click","#confirmupload",function(){
-    	$("#ctlBtn").click();
-    })
+  $(document).on("click","#confirmupload",function(){
+  	$("#ctlBtn").click();
+  });
+
+  $(document).on("click","#cancel_publish",function(){
+    swal({   
+      title: "Are you sure?",   
+      text: "你确定要退出此次编辑吗？",   
+      type: "warning",   
+      showCancelButton: true,   
+      confirmButtonColor: "#DD6B55",   
+      confirmButtonText: "确定",   
+      cancelButtonText: "取消",   
+      closeOnConfirm: false,   
+      closeOnCancel: true 
+    }, 
+    function(isConfirm){   
+      if (isConfirm) {     
+        window.location.href = "./t_index.html";
+      } 
+    });
+  });
+
+  $(document).on("click","#publish_paper",function(){
+    var _value = $(".left > p.value");
+    var params = {
+      "idTeacher": teacherId,
+      "title": _value.eq(0).find("input:eq(0)").val(),
+      "releaseDate": _value.eq(2).find("input:eq(0)").val(),
+      "writer": _value.eq(1).find("input:eq(0)").val(),
+      "publishPlace": _value.eq(3).find("input:eq(0)").val(),
+      "keyWord": _value.eq(4).find("input:eq(0)").val(),
+      "abstractContent": _value.eq(5).find("textarea:eq(0)").val(),
+      "content": uploadURL
+    };
+    postAjax("/teacher/paper/publish",params,function(data){
+      if(data.code == 0){
+        sweetAlert("发表成功!", "3秒后将离开本页面!", "success");
+        setTimeout(function(){
+          window.location.href = "./t_index.html";
+        },3000);
+      }else{
+        swal("Oops...", data.msg, "error");
+      }
+    });
+  });
+
+  $(document).on("click","#publish_project",function(){
+    var _value = $(".left > p.value");
+    var params = {
+      "idTeacher": teacherId,
+      "name": _value.eq(0).find("input:eq(0)").val(),
+      "source": _value.eq(3).find("input:eq(0)").val(),
+      "projectTime": _value.eq(2).find("input:eq(0)").val(),
+      "master": _value.eq(1).find("input:eq(0)").val(),
+      "funds": _value.eq(4).find("input:eq(0)").val(),
+      "introduction": _value.eq(5).find("textarea:eq(0)").val()
+    };
+    postAjax("/teacher/project/publish",params,function(data){
+      if(data.code == 0){
+        sweetAlert("创建成功!", "3秒后将离开本页面!", "success");
+        setTimeout(function(){
+          window.location.href = "./t_index.html";
+        },3000);
+      }else{
+        swal("Oops...", data.msg, "error");
+      }
+    });
+  });
 });
