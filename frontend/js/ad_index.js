@@ -1,7 +1,3 @@
-
-/**
- * Created by 李悦 on 2016/10/28.
- */
 $(function () {
    $(".avatar_holder").click(function (e) {
        $(".menu").toggle();
@@ -10,5 +6,19 @@ $(function () {
     $(document).click(function () {
        $(".menu").hide();
     });
-    
+    $(document).on("keypress","#search",function (e) {
+       if(e.keyCode == 13)
+       {
+           if($("#search").val() == "")
+           {
+               sweetAlert("Oops...", "搜索内容不能为空", "error");
+           }
+       }
+       else
+       {
+           var temp = $("#search").val();
+           sessionStorage.setItem("searchStr",temp);
+           window.location.href = "search.html";
+       }
+    });
 });

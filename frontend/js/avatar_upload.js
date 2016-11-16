@@ -1,4 +1,4 @@
-// 文件上传
+// 头像上传
 jQuery(function() {
     var $ = jQuery,
         $list = $('#thelist'),
@@ -28,9 +28,9 @@ jQuery(function() {
         $list.append( '<div id="' + file.id + '" class="item">' +
             '<h4 class="info">' + file.name + '</h4>' +
             '<p class="state">等待上传...</p>' +
-        '</div>' );
-        $("#uploadpdf").text("开始上传");
-        $("#uploadpdf").attr("id","confirmupload");
+            '</div>' );
+        $("#avatar_upload").text("开始上传");
+        $("#avatar_upload").attr("id","confirmupload");
     });
 
     // 文件上传过程中创建进度条实时显示。
@@ -41,9 +41,9 @@ jQuery(function() {
         // 避免重复创建
         if ( !$percent.length ) {
             $percent = $('<div class="progress progress-striped active">' +
-              '<div class="progress-bar" role="progressbar" style="width: 0%">' +
-              '</div>' +
-            '</div>').appendTo( $li ).find('.progress-bar');
+                '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                '</div>' +
+                '</div>').appendTo( $li ).find('.progress-bar');
         }
 
         $li.find('p.state').text('上传中');
