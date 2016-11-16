@@ -17,5 +17,8 @@ public interface PaperRepository extends JpaRepository<PaperEntity,Integer> {
 //    @Query(value = "select * from PaperEntity where  UPPER(keyWord) like  UPPER(CONCAT('%',:kw,'%')) ",nativeQuery = true)
     Page<PaperEntity> search(@Param("kw") String keyword, Pageable pageable);
 
+//    @Query("select s from PaperEntity s where s.idPaper = ")
+//    PaperEntity findNewOne()
+
 
 }

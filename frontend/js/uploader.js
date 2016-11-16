@@ -20,12 +20,20 @@ jQuery(function() {
 
         // 选择文件的按钮。可选。
         // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-        pick: '#picker'
+        pick: '#picker',
+
+        fileNumLimit:1,
+
+        accept:{
+            title:"Adobe PDF-Dateien",
+            extensions:"pdf",
+            mimeTypes:"application/pdf"
+        }
     });
 
     // 当有文件添加进来的时候
     uploader.on( 'fileQueued', function( file ) {
-        $list.append( '<div id="' + file.id + '" class="item">' +
+        $list.html( '<div id="' + file.id + '" class="item">' +
             '<h4 class="info">' + file.name + '</h4>' +
             '<p class="state">等待上传...</p>' +
         '</div>' );
@@ -35,12 +43,12 @@ jQuery(function() {
 
     // 文件上传过程中创建进度条实时显示。
     uploader.on( 'uploadProgress', function( file, percentage ) {
-        var $li = $( '#'+file.id ),
+        var $li = $("#thelist"),
             $percent = $li.find('.progress .progress-bar');
 
         // 避免重复创建
         if ( !$percent.length ) {
-            $percent = $('<div class="progress progress-striped active">' +
+            $percent = $('<div class="progress progress-striped active" style="margin-top:10px">' +
               '<div class="progress-bar" role="progressbar" style="width: 0%">' +
               '</div>' +
             '</div>').appendTo( $li ).find('.progress-bar');
@@ -51,8 +59,12 @@ jQuery(function() {
         $percent.css( 'width', percentage * 100 + '%' );
     });
 
-    uploader.on( 'uploadSuccess', function( file ) {
-        $( '#'+file.id ).find('p.state').text('已上传');
+    uploader.on( 'uploadSuccess', function( file, response ) {
+        if(response.code == 0){
+            $( '#'+file.id ).find('p.state').text('已上传');
+        }else{
+            sweetAlert("Oops...", data.msg, "error");
+        }
     });
 
     uploader.on( 'uploadError', function( file ) {
@@ -61,6 +73,9 @@ jQuery(function() {
 
     uploader.on( 'uploadComplete', function( file ) {
         $( '#'+file.id ).find('.progress').fadeOut();
+        uploader.removeFile(file);
+        $("#confirmupload").text("重新上传");
+        $("#confirmupload").attr("id","uploadpdf");
     });
 
     uploader.on( 'all', function( type ) {

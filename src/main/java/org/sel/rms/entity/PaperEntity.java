@@ -7,8 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
-import static com.sun.tools.doclint.Entity.not;
-import static com.sun.tools.doclint.Entity.nu;
 
 
 /**
@@ -40,6 +38,7 @@ public class PaperEntity {
     private String param2;
 
     @Id
+    @GeneratedValue
     @Column(name = "id_paper", nullable = false)
     public int getIdPaper() {
         return idPaper;

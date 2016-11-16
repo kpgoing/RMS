@@ -1,14 +1,15 @@
 package org.sel.rms.service.impl;
-import ch.qos.logback.core.status.Status;
 import org.apache.commons.lang3.StringUtils;
 import org.sel.rms.entity.PaperEntity;
 import org.sel.rms.exception.PaperException;
 import org.sel.rms.repository.PaperRepository;
+import org.sel.rms.service.DynamicStateService;
 import org.sel.rms.service.PaperService;
 import org.sel.rms.status.PaperStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,10 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Arrays;
-
-import static com.sun.tools.doclint.Entity.nu;
-import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
 
 
 /**
@@ -34,6 +31,8 @@ public class PaperServiceImpl implements PaperService {
     @Autowired
     PaperRepository paperRepository;
 
+    @Autowired
+    DynamicStateService dynamicStateService;
 
     @Value("${config.teacher.key}")
     String teacherKey;
@@ -43,7 +42,8 @@ public class PaperServiceImpl implements PaperService {
         LocalDate localDate = LocalDate.now();
         paperEntity.setPublishDate(Date.valueOf(localDate));
         try {
-            paperRepository.save(paperEntity);
+            paperEntity = paperRepository.save(paperEntity);
+            dynamicStateService.addPaper(paperEntity);
         } catch (Exception ex) {
             throw new PaperException("save paper error!", ex, PaperStatus.DATABASE_ERROR);
         }
@@ -159,6 +159,12 @@ public class PaperServiceImpl implements PaperService {
         keyWord = StringUtils.join(keyWords, "%");
         keyWord = "%" + keyWord + "%";
         paperEntities = paperRepository.search(keyWord, page);
+        return paperEntities;
+    }
+
+    @Override
+    public Page<PaperEntity> getNewPapers(Pageable pageable) {
+        Page<PaperEntity> paperEntities = paperRepository.findAll(pageable);
         return paperEntities;
     }
 }

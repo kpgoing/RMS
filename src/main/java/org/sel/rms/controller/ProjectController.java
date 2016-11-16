@@ -157,7 +157,7 @@ public class ProjectController {
             logger.error("teacher is offline!");
             projectStatus = ProjectStatus.UN_LOGIN;
         } else {
-            projectService.deleteProject(id, Integer.parseInt(idTeacher));
+            projectService.deleteProject(id, idTeacher);
             projectStatus = ProjectStatus.SUCCESS;
         }
         return new ResponseMessage(projectStatus);

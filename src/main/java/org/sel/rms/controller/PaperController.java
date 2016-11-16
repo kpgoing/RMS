@@ -158,7 +158,7 @@ public class PaperController {
             logger.error("teacher is offline!");
             paperStatus = PaperStatus.UN_LOGIN;
         } else {
-            paperService.deletePaper(id, Integer.parseInt(idTeacher), request);
+            paperService.deletePaper(id, idTeacher, request);
             paperStatus = PaperStatus.SUCCESS;
         }
         return new ResponseMessage(paperStatus);
@@ -419,6 +419,14 @@ public class PaperController {
 //        return new ResponseMessage(PaperStatus.SUCCESS, paperEntities);
 //    }
 
+
+
+    @RequestMapping(value = "/paper/new/{page}/{size}", method = RequestMethod.GET)
+    public ResponseMessage search(@PathVariable("page") int page, @PathVariable("size") int size) {
+        Pageable pageable = new PageRequest(page, size, Sort.Direction.DESC, "publishDate");
+        Page<PaperEntity> paperEntities = paperService.getNewPapers(pageable);
+        return new ResponseMessage(PaperStatus.SUCCESS, paperEntities);
+    }
 
 //    @RequestMapping("/paper/search/{q}")
 //    public ResponseMessage search(@PathVariable("q") String q) {
