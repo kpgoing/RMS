@@ -21,53 +21,16 @@
                 <div class="menu_detail" id="reset_password">修改密码</div>
                 <div class="menu_detail" id="sign_out">退出登录</div>
             </div>
-            <div class="latest_info">
-                <span class = "info_holder">
+            <div class="latest_info" ms-controller = "newInfor">
+                <span class = "info_holder" ms-repeat = "content">
                     <img class="mark" src="../img/paper.png">
                     <span class="info_detail">
-                        <a>大大大</a>
-                        <span>创建</span>
-                        <a>工程</a>
-                        <span class="create_time">24天前</span>
+                        <a class="teacherName">{{el.teacherName}}</a>
+                        <span class="action">{{el.action}}</span>
+                        <a class="name">{{el.name}}</a>
+                        <span class="create_time">{{el.publishDate}}</span>
                     </span>
                 </span>
-                 <span class = "info_holder">
-                    <img class="mark" src="../img/paper.png"/>
-                     <span class="info_detail">
-                        <a>啊啊啊</a>
-                        <span>创建</span>
-                        <a>项目</a>
-                        <span class="create_time">24天前</span>
-                    </span>
-                </span>
-                <span class = "info_holder">
-                    <img class="mark" src="../img/paper.png"/>
-                     <span class="info_detail">
-                        <a>啊啊啊</a>
-                        <span>创建</span>
-                        <a>项目</a>
-                        <span class="create_time">24天前</span>
-                    </span>
-                </span>
-                <span class = "info_holder">
-                    <img class="mark" src="../img/paper.png"/>
-                     <span class="info_detail">
-                        <a>啊啊啊</a>
-                        <span>创建</span>
-                        <a>项目</a>
-                        <span class="create_time">24天前</span>
-                    </span>
-                </span>
-                <span class = "info_holder">
-                    <img class="mark" src="../img/paper.png"/>
-                     <span class="info_detail">
-                        <a>啊啊啊</a>
-                        <span>创建</span>
-                        <a>项目</a>
-                        <span class="create_time">24天前</span>
-                    </span>
-                </span>
-
             </div>
             <div class="message_box">
                 <div class="amount">当前有<span style="font-weight: bold">10</span>条待审核注册信息</div>
@@ -88,6 +51,7 @@
     <script type="text/javascript" src="../js/jquery.js"></script>
     <script type="text/javascript" src="../dist/sweetalert.min.js"></script>
     <script type="text/javascript" src="../js/avalon.js"></script>
+    <script type="text/javascript" src="../js/ajax.js"></script>
     <script type="text/javascript" src="../js/ad_index.js"></script>
 </body>
 </html>

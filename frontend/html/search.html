@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <title>Search</title>
     <link type="text/css" href="../css/search.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
             <img  class="logo" src="../img/logo.png"/>
-            <div class="header_nav_link">
+            <div class="header_nav_link" >
                 <img src="../img/avatar.png">
                 <span class="dropdown"></span>
             </div>
-            <div class="header_nav_link">
+            <div class="header_nav_link" id="change">
                 <img src="../img/plus.png">
                 <span class="dropdown"></span>
             </div>
@@ -35,23 +36,25 @@
             </div>
             <div class="result">
                 <div class="result_menu">
-                    <span class="paper choose">论文</span>
-                    <span class="proj">项目</span>
-                    <span class="user">用户</span>
+                    <span class="paper choose" id="paper">论文</span>
+                    <span class="proj" id="project">项目</span>
+                    <span class="user" id="user">用户</span>
                 </div>
-                <div class="result_detail">
-                    <p class="result_number">我们找到100条结果</p>
-                    <div class="result_blocks">
-                        <a class="headline" href="#">Huanpoo</a>
-                        <span class="update_time">Publish On <span>2016/02/24</span></span>
-                        <p class="abstract">这是摘要</p>
+                <div class="result_detail" ms-controller="detail">
+                    <p class="result_number">我们找到<span>{{number}}</span>条结果</p>
+                    <div class="result_blocks" ms-repeat = "content">
+                        <a class="headline" href="#" >{{el.headline}}</a>
+                        <span class="update_time">Publish On <span>{{el.time}}</span></span>
+                        <p class="abstract">{{el.sign}}</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../dist/sweetalert.min.js"></script>
     <script type="text/javascript" src="../js/avalon.js"></script>
+    <script type="text/javascript" src="../js/ajax.js"></script>
     <script type="text/javascript" src="../js/search.js"></script>
 </body>
 </html>

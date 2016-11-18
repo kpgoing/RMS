@@ -32,7 +32,7 @@ $(function(){
     		}
     	});
     	getAjax("/project/teacher/" + data.id +"/" + data.page + "/" + data.size,null,function(data){
-    		if(data.code == 0){
+    		if(data.code == 0){ 
     			initinfo.project = data.content;
     			avalon.scan();
     		}else{
