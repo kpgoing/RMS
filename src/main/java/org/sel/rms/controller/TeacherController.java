@@ -41,7 +41,7 @@ public class TeacherController {
      * @api {post} /teacher/login 教师登录
      * @apiName teacherLogin
      * @apiGroup teacher
-     * @apiversion 0.1.0
+     * @apiVersion 0.1.0
      * @apiParam {json} teacherEntity 教师账户信息
      * @apiParamExample {json} Request-Example:
      * {
@@ -160,6 +160,50 @@ public class TeacherController {
      * @apiParam {Number} page 页码（从0开始）
      * @apiParam {Number} size 每页数据数量
      * @apiSuccessExample {json} Success-Response:
+     * {
+     *     "code":0,
+     *     "msg":"SUCCESS",
+     *     "body":
+     *     {
+     *     "content":[
+     *     {
+     *     "idTeacher":1,
+     *     "account":"teaccher",
+     *     "password":null,
+     *     "birthday":"1980-10-01",
+     *     "educationBackground":"doctor",
+     *     "college":"uestc",
+     *     "name":"jack",
+     *     "id":"2",
+     *     "email":"123@123.com",
+     *     "phoneNumber":"12345678901",
+     *     "gender":0,
+     *     "workPlace":"uestc",
+     *     "title":"123",
+     *     "avatarUrl":null,
+     *     "param1":null,
+     *     "param2":null}],
+     *     "totalElements":1,
+     *     "totalPages":1,
+     *     "last":true,
+     *     "size":5,
+     *     "number":0,
+     *     "sort":[
+     *     {
+     *     "direction":"DESC",
+     *     "property":"idTeacher",
+     *     "ignoreCase":false,
+     *     "nullHandling":"NATIVE",
+     *     "ascending":false}],
+     *     "first":true,
+     *     "numberOfElements":1
+     *     }
+     * }
+     * @apiUse NormalErrorResponse
+     * @apiUse ArgumentsErrorResponse
+     * @apiUse NotFoundErrorResponse
+     * @apiUse UnLoginErrorResponse
+     * @apiUse UploadFileErrorResponse
      */
     @RequestMapping(value = "/teacher/search/{keyword}/{page}/{size}", method = RequestMethod.GET)
     public ResponseMessage searchTeacher(@PathVariable("keyword") String keyword, @PathVariable("page") int page, @PathVariable("size") int size) {

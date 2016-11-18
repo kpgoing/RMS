@@ -119,6 +119,9 @@ public class AdminServiceImpl implements AdminService {
         List<TeacherEntity> teacherEntities;
         try {
             teacherEntities = teacherRepository.findAll();
+            for(TeacherEntity t : teacherEntities) {
+                t.setPassword(null);
+            }
         } catch (Exception e) {
             throw new AdminException("get all teachers error", e, AdminStatus.GET_ALL_TEACHERS_ERROR);
         }
