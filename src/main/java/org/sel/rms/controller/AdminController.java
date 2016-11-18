@@ -3,6 +3,7 @@ package org.sel.rms.controller;
 import org.apache.log4j.Logger;
 import org.sel.rms.common.ResponseMessage;
 import org.sel.rms.entity.AdminEntity;
+import org.sel.rms.entity.TeacherEntity;
 import org.sel.rms.entity.ValidGroup.AdminGroup;
 import org.sel.rms.exception.AdminException;
 import org.sel.rms.service.AdminService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -187,5 +189,19 @@ public class AdminController {
             teacherStatus = teacherService.deleteTeacher(teacherId);
         }
         return new ResponseMessage(teacherStatus);
+    }
+
+    @RequestMapping(value = "/admin/getUncheck", method = RequestMethod.POST)
+    public ResponseMessage getUncheck() {
+        Map map = new HashMap<>();
+        map = adminService.getUncheck();
+        return new ResponseMessage(AdminStatus.SUCCESS, map);
+    }
+
+    @RequestMapping(value = "/admin/getAllTeachers", method = RequestMethod.POST)
+    public ResponseMessage getAllTeachers() {
+        List<TeacherEntity> teacherEntities;
+        teacherEntities = adminService.getAllTeachers();
+        return new ResponseMessage(AdminStatus.SUCCESS, teacherEntities);
     }
 }

@@ -16,7 +16,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
@@ -149,11 +151,41 @@ public class TeacherController {
         return new ResponseMessage(teacherStatus);
     }
 
-    @RequestMapping(value = "/teacher/search/{keyWord}/{page}/{size}", method = RequestMethod.POST)
-    public ResponseMessage searchTeacher(@PathVariable("keyWord") String keyWord, @PathVariable("page") int page, @PathVariable("size") int size) {
+    /**
+     * @api {get} /teacher/search/:keyword/:page/:size 查询某个老师
+     * @apiName searchTeacher
+     * @apiGroup teacher
+     * @apiVersion 0.1.0
+     * @apiParam {String} keyword 搜素关键字
+     * @apiParam {Number} page 页码（从0开始）
+     * @apiParam {Number} size 每页数据数量
+     * @apiSuccessExample {json} Success-Response:
+     */
+    @RequestMapping(value = "/teacher/search/{keyword}/{page}/{size}", method = RequestMethod.GET)
+    public ResponseMessage searchTeacher(@PathVariable("keyword") String keyword, @PathVariable("page") int page, @PathVariable("size") int size) {
         Pageable pageable = new PageRequest(page, size, Sort.Direction.DESC, "idTeacher");
-        Page<TeacherEntity> teacherEntities = teacherService.searchTeacher(keyWord, pageable);
+        Page<TeacherEntity> teacherEntities = teacherService.searchTeacher(keyword, pageable);
         return new ResponseMessage(TeacherStatus.SUCCESS, teacherEntities);
     }
 
+    /**
+     * @api {post} /teacher/uploadAvatar/:id 教师上传头像
+     * @apiName uploadAvatar
+     * @apiGroup teacher
+     * @apiPermssion teacher
+     * @apiVersion 0.1.0
+     * @apiParam {File} avatar 教师头像
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
+     * @apiUse ArgumentsErrorResponse
+     * @apiUse NotFoundErrorResponse
+     * @apiUse UnLoginErrorResponse
+     * @apiUse UploadFileErrorResponse
+     */
+    @RequestMapping(value = "/teacher/uploadAvatar/{id}", method = RequestMethod.POST)
+    public ResponseMessage uploadAvatar(@PathVariable("id") int id, HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar) {
+        TeacherStatus teacherStatus;
+        teacherStatus = teacherService.uploadAvatar(request, avatar, id);
+        return new ResponseMessage(teacherStatus);
+    }
 }

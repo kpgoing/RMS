@@ -7,7 +7,7 @@ import org.sel.rms.status.inter.Statusable;
  */
 public enum AdminStatus implements Statusable {
     SUCCESS(0),ERROR(1),USERNAME_ERROR_OR_EXIST(2),PASSWORD_ERROR(3),ARGUMENTS_ERROR(4),
-    CHECK_TEACHER_ERROR(5);
+    CHECK_TEACHER_ERROR(5),GET_UNCHECK_ERROR(6),GET_ALL_TEACHERS_ERROR(7);
 
     private int status;
 

@@ -5,7 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -27,4 +29,6 @@ public interface TeacherService {
     TeacherStatus deleteTeacher(int teacherId);
 
     Page<TeacherEntity> searchTeacher(String keyWord, Pageable page);
+
+    TeacherStatus uploadAvatar(HttpServletRequest request, MultipartFile file, int id);
 }
