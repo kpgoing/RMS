@@ -15,4 +15,6 @@ public interface AdminService {
     List getAdmin(AdminEntity adminEntity);
 
     AdminStatus checkTeacher(int teacherId);
+
+    AdminStatus unpassTeacher(int teacherId);
 }

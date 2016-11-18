@@ -7,8 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
-import static com.sun.tools.doclint.Entity.not;
-import static com.sun.tools.doclint.Entity.nu;
+//import static com.sun.tools.doclint.Entity.not;
+//import static com.sun.tools.doclint.Entity.nu;
 
 
 /**
