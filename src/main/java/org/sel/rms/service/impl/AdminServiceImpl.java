@@ -69,9 +69,23 @@ public class AdminServiceImpl implements AdminService {
         try {
             checkStatusOfTeacherEntity = checkStatusOfTeacherRepository.findByidTeacher(teacherId);
             checkStatusOfTeacherEntity.setCheckStatus((byte)1);
+            checkStatusOfTeacherRepository.save(checkStatusOfTeacherEntity);
             adminStatus = AdminStatus.SUCCESS;
         } catch (Exception e) {
             throw new AdminException("check teacher error", e, AdminStatus.CHECK_TEACHER_ERROR);
+        }
+        return adminStatus;
+    }
+
+    public AdminStatus unpassTeacher(int teacherId) {
+        AdminStatus adminStatus;
+        CheckStatusOfTeacherEntity checkStatusOfTeacherEntity;
+        try {
+            checkStatusOfTeacherEntity = checkStatusOfTeacherRepository.findByidTeacher(teacherId);
+            checkStatusOfTeacherRepository.delete(checkStatusOfTeacherEntity);
+            adminStatus = AdminStatus.SUCCESS;
+        } catch (Exception e) {
+            throw new AdminException("delete unpass teacher information error", e, AdminStatus.CHECK_TEACHER_ERROR);
         }
         return adminStatus;
     }

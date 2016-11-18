@@ -1,4 +1,5 @@
 package org.sel.rms.service.impl;
+import org.apache.commons.lang3.StringUtils;
 import org.sel.rms.entity.CheckStatusOfTeacherEntity;
 import org.sel.rms.entity.TeacherEntity;
 import org.sel.rms.exception.TeacherException;
@@ -8,6 +9,8 @@ import org.sel.rms.service.TeacherService;
 import org.sel.rms.status.TeacherStatus;
 import org.sel.rms.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -95,5 +98,27 @@ public class TeacherServiceImpl implements TeacherService {
             throw new TeacherException("modify password error", e, TeacherStatus.MODIFY_PASSWORD_ERROR);
         }
         return teacherStatus;
+    }
+
+    public TeacherStatus deleteTeacher(int teacherId) {
+        TeacherStatus teacherStatus;
+        TeacherEntity teacherEntity;
+        try {
+            teacherEntity = teacherRepository.findOne(teacherId);
+            teacherRepository.delete(teacherEntity);
+            teacherStatus = TeacherStatus.SUCCESS;
+        } catch (Exception e) {
+            throw new TeacherException("delete teacher error", e, TeacherStatus.DELETE_ERROR);
+        }
+        return teacherStatus;
+    }
+
+    public Page<TeacherEntity> searchTeacher(String keyWord, Pageable page) {
+        Page<TeacherEntity> teacherEntities;
+        String[] keyWords = keyWord.split(" ");
+        keyWord = StringUtils.join(keyWords, "%");
+        keyWord = "%" + keyWord + "%";
+        teacherEntities = teacherRepository.search(keyWord, page);
+        return teacherEntities;
     }
 }
