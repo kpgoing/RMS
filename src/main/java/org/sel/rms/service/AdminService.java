@@ -1,9 +1,11 @@
 package org.sel.rms.service;
 import org.sel.rms.entity.AdminEntity;
+import org.sel.rms.entity.TeacherEntity;
 import org.sel.rms.status.AdminStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -17,4 +19,8 @@ public interface AdminService {
     AdminStatus checkTeacher(int teacherId);
 
     AdminStatus unpassTeacher(int teacherId);
+
+    Map getUncheck();
+
+    List<TeacherEntity> getAllTeachers();
 }

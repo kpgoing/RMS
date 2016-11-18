@@ -3,6 +3,7 @@ package org.sel.rms.controller;
 import org.apache.log4j.Logger;
 import org.sel.rms.common.ResponseMessage;
 import org.sel.rms.entity.AdminEntity;
+import org.sel.rms.entity.TeacherEntity;
 import org.sel.rms.entity.ValidGroup.AdminGroup;
 import org.sel.rms.exception.AdminException;
 import org.sel.rms.service.AdminService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -82,7 +84,7 @@ public class AdminController {
     /**
      * @api {post} /admin/checkTeacher 审核通过教师
      * @apiName checkTeacher
-     * @apigroup admin
+     * @apiGroup admin
      * @apiPermission admin
      * @apiVersion 0.1.0
      * @apiParam {Number} teacherId 教师id
@@ -187,5 +189,110 @@ public class AdminController {
             teacherStatus = teacherService.deleteTeacher(teacherId);
         }
         return new ResponseMessage(teacherStatus);
+    }
+
+    /**
+     * @api {post} /admin/getUncheck 获取未审核教师信息及数目
+     * @apiName getUncheck
+     * @apiGroup admin
+     * @apiPermission admin
+     * @apiVersion 0.1.0
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "code":0,
+     *     "msg":"SUCCESS",
+     *     "body":
+     *     {
+     *     "teacher":
+     *     {
+     *     "idTeacher":1,
+     *     "account":"teaccher",
+     *     "password":null,
+     *     "birthday":"1980-10-01",
+     *     "educationBackground":"doctor",
+     *     "college":"uestc",
+     *     "name":"jack",
+     *     "id":"2",
+     *     "email":"123@123.com",
+     *     "phoneNumber":"12345678901",
+     *     "gender":0,
+     *     "workPlace":"uestc",
+     *     "title":"123",
+     *     "avatarUrl":null,
+     *     "param1":null,
+     *     "param2":null
+     *     },
+     *     "uncheckNum":1
+     *     }
+     * }
+     * @apiUse NormalErrorResponse
+     * @apiUse DataBaseErrorResponse
+     * @apiUse UnLoginErrorResponse
+     */
+    @RequestMapping(value = "/admin/getUncheck", method = RequestMethod.POST)
+    public ResponseMessage getUncheck() {
+        Map map = new HashMap<>();
+        map = adminService.getUncheck();
+        return new ResponseMessage(AdminStatus.SUCCESS, map);
+    }
+
+    /**
+     * @api {post} /admin/getAllTeachers 获取所有教师信息
+     * @apiName getAllTeachers
+     * @apiGroup admin
+     * @apiPermission admin
+     * @apiVersion 0.1.0
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "code":0,
+     *     "msg":"SUCCESS",
+     *     "body":[
+     *     {
+     *     "idTeacher":1,
+     *     "account":"teaccher",
+     *     "password":null,
+     *     "birthday":"1980-10-01",
+     *     "educationBackground":"doctor",
+     *     "college":"uestc",
+     *     "name":"jack",
+     *     "id":"2",
+     *     "email":"123@123.com",
+     *     "phoneNumber":"12345678901",
+     *     "gender":0,
+     *     "workPlace":"uestc",
+     *     "title":"123",
+     *     "avatarUrl":null
+     *     ,"param1":null,
+     *     "param2":null},
+     *     {
+     *     "idTeacher":2,
+     *     "account":"ttt",
+     *     "password":"111111",
+     *     "birthday":"1970-07-01",
+     *     "educationBackground":"11",
+     *     "college":"11",
+     *     "name":"a",
+     *     "id":"1",
+     *     "email":"123@123.com",
+     *     "phoneNumber":"12345678901",
+     *     "gender":1,
+     *     "workPlace":"uestc",
+     *     "title":"1",
+     *     "avatarUrl":null,
+     *     "param1":null,
+     *     "param2":null
+     *     }]
+     * }
+     * @apiUse NormalErrorResponse
+     * @apiUse DataBaseErrorResponse
+     * @apiUse UnLoginErrorResponse
+     */
+    @RequestMapping(value = "/admin/getAllTeachers", method = RequestMethod.POST)
+    public ResponseMessage getAllTeachers() {
+        List<TeacherEntity> teacherEntities;
+        teacherEntities = adminService.getAllTeachers();
+        return new ResponseMessage(AdminStatus.SUCCESS, teacherEntities);
     }
 }

@@ -2,17 +2,24 @@ package org.sel.rms.service.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.sel.rms.entity.CheckStatusOfTeacherEntity;
 import org.sel.rms.entity.TeacherEntity;
+import org.sel.rms.exception.PaperException;
 import org.sel.rms.exception.TeacherException;
 import org.sel.rms.repository.CheckStatusOfTeacherRepository;
 import org.sel.rms.repository.TeacherRepository;
 import org.sel.rms.service.TeacherService;
+import org.sel.rms.status.PaperStatus;
 import org.sel.rms.status.TeacherStatus;
 import org.sel.rms.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,6 +126,38 @@ public class TeacherServiceImpl implements TeacherService {
         keyWord = StringUtils.join(keyWords, "%");
         keyWord = "%" + keyWord + "%";
         teacherEntities = teacherRepository.search(keyWord, page);
+        for(TeacherEntity t : teacherEntities) {
+            t.setPassword(null);
+        }
         return teacherEntities;
+    }
+
+    public TeacherStatus uploadAvatar(HttpServletRequest request, MultipartFile file, int id) {
+        TeacherEntity teacherEntity;
+        TeacherStatus teacherStatus;
+        String sqPath;
+        String fileName = file.getOriginalFilename();
+        String extensionName = fileName.substring(fileName.indexOf("."));
+        fileName = fileName.substring(0,fileName.indexOf("."));
+        fileName = fileName + new java.util.Date().getTime() + extensionName;
+        String path = request.getServletContext().getRealPath(File.separator + "upload") + File.separator + id ;
+
+        File dir = new File(path);
+        if (!dir.exists())
+            dir.mkdirs();
+        try {
+            path = path + File.separator + fileName;
+            File realFile = new File(path);
+            realFile.createNewFile();
+            file.transferTo(realFile);
+            sqPath = path.substring(path.indexOf(File.separator + "upload"));
+            teacherEntity = teacherRepository.findOne(id);
+            teacherEntity.setAvatarUrl(sqPath);
+            teacherRepository.save(teacherEntity);
+            teacherStatus = TeacherStatus.SUCCESS;
+        } catch (IOException e) {
+            throw new TeacherException("upload file error!", e, TeacherStatus.UPLOAD_AVATAR_ERROR);
+        }
+        return teacherStatus;
     }
 }
