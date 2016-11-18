@@ -1,4 +1,4 @@
-// 文件上传
+// 头像上传
 jQuery(function() {
     var $ = jQuery,
         $list = $('#thelist'),
@@ -20,38 +20,30 @@ jQuery(function() {
 
         // 选择文件的按钮。可选。
         // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-        pick: '#picker',
-
-        fileNumLimit:1,
-
-        accept:{
-            title:"Adobe PDF-Dateien",
-            extensions:"pdf",
-            mimeTypes:"application/pdf"
-        }
+        pick: '#picker'
     });
 
     // 当有文件添加进来的时候
     uploader.on( 'fileQueued', function( file ) {
-        $list.html( '<div id="' + file.id + '" class="item">' +
+        $list.append( '<div id="' + file.id + '" class="item">' +
             '<h4 class="info">' + file.name + '</h4>' +
             '<p class="state">等待上传...</p>' +
-        '</div>' );
-        $("#uploadpdf").text("开始上传");
-        $("#uploadpdf").attr("id","confirmupload");
+            '</div>' );
+        $("#avatar_upload").text("开始上传");
+        $("#avatar_upload").attr("id","confirmupload");
     });
 
     // 文件上传过程中创建进度条实时显示。
     uploader.on( 'uploadProgress', function( file, percentage ) {
-        var $li = $("#thelist"),
+        var $li = $( '#'+file.id ),
             $percent = $li.find('.progress .progress-bar');
 
         // 避免重复创建
         if ( !$percent.length ) {
-            $percent = $('<div class="progress progress-striped active" style="margin-top:10px">' +
-              '<div class="progress-bar" role="progressbar" style="width: 0%">' +
-              '</div>' +
-            '</div>').appendTo( $li ).find('.progress-bar');
+            $percent = $('<div class="progress progress-striped active">' +
+                '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                '</div>' +
+                '</div>').appendTo( $li ).find('.progress-bar');
         }
 
         $li.find('p.state').text('上传中');
@@ -59,12 +51,8 @@ jQuery(function() {
         $percent.css( 'width', percentage * 100 + '%' );
     });
 
-    uploader.on( 'uploadSuccess', function( file, response ) {
-        if(response.code == 0){
-            $( '#'+file.id ).find('p.state').text('已上传');
-        }else{
-            sweetAlert("Oops...", data.msg, "error");
-        }
+    uploader.on( 'uploadSuccess', function( file ) {
+        $( '#'+file.id ).find('p.state').text('已上传');
     });
 
     uploader.on( 'uploadError', function( file ) {
@@ -73,9 +61,6 @@ jQuery(function() {
 
     uploader.on( 'uploadComplete', function( file ) {
         $( '#'+file.id ).find('.progress').fadeOut();
-        uploader.removeFile(file);
-        $("#confirmupload").text("重新上传");
-        $("#confirmupload").attr("id","uploadpdf");
     });
 
     uploader.on( 'all', function( type ) {

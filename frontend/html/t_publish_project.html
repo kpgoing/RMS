@@ -2,8 +2,9 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>发布项目</title>
+	<title>创建项目</title>
 	<link rel="stylesheet" type="text/css" href="../css/t_detail.css">
+	<link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
 </head>
 <body>
 	<div id="header">
@@ -34,16 +35,15 @@
     	<a class="proj_name" href="#">项目名字</a>
     </div>
     <div id="button_group">
-    	<button class="operate">取消</button>
-    	<button class="operate">发布</button>
+    	<button class="operate" id="cancel_publish">取消</button>
+    	<button class="operate" id="publish_project">发布</button>
     </div>
     <div id="content">
     	<div class="left">
     		<p class="key">名称</p><p class="value"><input type="text" name="title" placeholder="项目名称"></p><br>
 	    	<p class="key">负责人</p><p class="value"><input type="text" name="author" placeholder="若有多个负责人则以逗号隔开"></p><br>
-	    	<p class="key">项目时间</p><p class="value"><input type="date" name="start" style="width:150px;">
-	    	到
-	    	<input type="date" name="end" style="width:150px;"></p><br>
+	    	<p class="key">项目时间</p><p class="value"><input type="date" name="start">
+	    	</p><br>
 	    	<p class="key">来源</p><p class="value"><input type="text" name="source" placeholder="项目来源"></p><br>
 	    	<p class="key">经费</p><p class="value"><input type="text" name="money" placeholder="项目经费">
 	    	元</p><br>
@@ -55,5 +55,7 @@
     </div>
 </body>
 <script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
 <script type="text/javascript" src="../js/t_detail.js"></script>
 </html>

@@ -15,4 +15,11 @@ $(function(){
     $(document).click(function () {
         $(".menu").hide();
     });
-})
+    $(document).on("click","#avatar_upload",function(){
+        $("#picker input").click();
+    });
+
+    $(document).on("click","#confirmupload",function(){
+        $("#ctlBtn").click();
+    })
+});

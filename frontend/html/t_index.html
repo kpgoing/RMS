@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>科研管理系统</title>
+	<title>个人主页</title>
 	<link rel="stylesheet" type="text/css" href="../css/t_index.css">
 	<link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
 </head>
@@ -20,13 +20,13 @@
 		</div>
 	</div>
     <div class="menu" style="right:10%">
-		<div class="menu_detail">个人主页</div>
-        <div class="menu_detail" id="reset_password">修改密码</div>
-        <div class="menu_detail" id="sign_out">退出登录</div>
+		<div class="menu_detail" data="t_index.html">个人主页</div>
+        <div class="menu_detail" id="reset_password" data="ad_modify_passwd.html">修改密码</div>
+        <div class="menu_detail" id="sign_out" data="login.html">退出登录</div>
     </div>
     <div class="menu" style="right:14%">
-	    <div class="menu_detail">发布项目</div>
-	    <div class="menu_detail">发布论文</div>
+	    <div class="menu_detail" data="t_publish_project.html">创建项目</div>
+	    <div class="menu_detail" data="t_publish_paper.html">发表论文</div>
     </div>
 	<div id="container">
 		<div id="person">
@@ -35,7 +35,7 @@
 				<p id="name">某老师</p>
 				<p id="loginname">5060024</p>
 				<p id="intro">这是一段自我介绍自我介绍</p>
-				<button>修改个人信息</button>
+				<button id="modify_personal_info">修改个人信息</button>
 			</div>
 			<div id="intro_detail">
 				<ul>
