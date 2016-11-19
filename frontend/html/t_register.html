@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Register</title>
+	<title>新用户注册</title>
 	<link rel="stylesheet" type="text/css" href="../css/t_register.css">
+	<link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
 </head>
 <body>
 	<div id="header">
@@ -49,7 +50,7 @@
 					<p class="explain">填写您常用的邮箱，我们确保不会泄露您的信息</p>
 					<p class="min_title">密码</p>
 					<input type="password" name="passwd">
-					<p class="explain">密码长度至少八位，不能包含空格字符</p>
+					<p class="explain">密码长度位于8位~16位，不能包含空格字符</p>
 					<i></i>
 					<button id="create_account">创建账户</button>
 				</div>
@@ -75,7 +76,7 @@
 					<input type="text" name="IDCard">
 					<p class="explain">填写您的居民身份证号</p>
 					<p class="min_title">手机号</p>
-					<input type="password" name="passwd">
+					<input type="text" name="phone">
 					<p class="explain">请确保手机号真实有效，我们不会泄露您的个人信息</p>
 					<p class="min_title">工作单位</p>
 					<input type="text" name="company">
@@ -96,5 +97,7 @@
 	</div>
 </body>
 <script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
 <script type="text/javascript" src="../js/t_register.js"></script>
 </html>
