@@ -41,9 +41,8 @@ public class PaperController {
 
     @RequestMapping(value = "/test")
     public void addSessionKey(HttpSession httpSession) {
-        httpSession.setAttribute(teacherKey,1);
+        httpSession.setAttribute(teacherKey, 1);
     }
-
 
 
     /**
@@ -303,101 +302,99 @@ public class PaperController {
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
-     *   "code": 0,
-     *   "msg": "SUCCESS",
-     *   "body": {
-     *     "content": [
-     *       {
-     *         "idPaper": 15,
-     *         "idTeacher": 1,
-     *         "title": "aaaaaaaaaaaaaaa",
-     *         "releaseDate": "2016-10-30",
-     *         "writer": "xbw",
-     *         "publishDate": "2016-10-30",
-     *         "publishPlace": "aaa",
-     *         "keyWord": "123",
-     *         "abstractContent": "123",
-     *         "content": "123",
-     *         "param1": null,
-     *         "param2": null
-     *       },
-     *       {
-     *         "idPaper": 14,
-     *         "idTeacher": 1,
-     *         "title": "aaaaaaaaaaaaaaa",
-     *         "releaseDate": "2016-10-30",
-     *         "writer": "xbw",
-     *         "publishDate": "2016-10-30",
-     *         "publishPlace": "aaa",
-     *         "keyWord": "123",
-     *         "abstractContent": "123",
-     *         "content": "123",
-     *         "param1": null,
-     *         "param2": null
-     *       },
-     *       {
-     *         "idPaper": 13,
-     *         "idTeacher": 1,
-     *         "title": "aaaaaaaaaaaaaaa",
-     *         "releaseDate": "2016-10-30",
-     *         "writer": "xbw",
-     *         "publishDate": "2016-10-30",
-     *         "publishPlace": "aaa",
-     *         "keyWord": "123",
-     *         "abstractContent": "123",
-     *         "content": "123",
-     *         "param1": null,
-     *         "param2": null
-     *       },
-     *       {
-     *         "idPaper": 12,
-     *         "idTeacher": 1,
-     *         "title": "aaaaaaaaaaaaaaa",
-     *         "releaseDate": "2016-10-30",
-     *         "writer": "xbw",
-     *         "publishDate": "2016-10-30",
-     *         "publishPlace": "aaa",
-     *         "keyWord": "123",
-     *         "abstractContent": "123",
-     *         "content": "123",
-     *         "param1": null,
-     *         "param2": null
-     *       },
-     *       {
-     *         "idPaper": 11,
-     *         "idTeacher": 1,
-     *         "title": "aaaaaaaaaaaaaaa",
-     *         "releaseDate": "2016-10-30",
-     *         "writer": "xbw",
-     *         "publishDate": "2016-10-30",
-     *         "publishPlace": "aaa",
-     *         "keyWord": "123",
-     *         "abstractContent": "123",
-     *         "content": "123",
-     *         "param1": null,
-     *         "param2": null
-     *       }
-     *     ],
-     *     "last": false,
-     *     "totalPages": 3,
-     *     "totalElements": 12,
-     *     "size": 5,
-     *     "number": 0,
-     *     "sort": [
-     *       {
-     *         "direction": "DESC",
-     *         "property": "idPaper",
-     *         "ignoreCase": false,
-     *         "nullHandling": "NATIVE",
-     *         "ascending": false
-     *       }
-     *     ],
-     *     "first": true,
-     *     "numberOfElements": 5
-     *   }
+     * "code": 0,
+     * "msg": "SUCCESS",
+     * "body": {
+     * "content": [
+     * {
+     * "idPaper": 15,
+     * "idTeacher": 1,
+     * "title": "aaaaaaaaaaaaaaa",
+     * "releaseDate": "2016-10-30",
+     * "writer": "xbw",
+     * "publishDate": "2016-10-30",
+     * "publishPlace": "aaa",
+     * "keyWord": "123",
+     * "abstractContent": "123",
+     * "content": "123",
+     * "param1": null,
+     * "param2": null
+     * },
+     * {
+     * "idPaper": 14,
+     * "idTeacher": 1,
+     * "title": "aaaaaaaaaaaaaaa",
+     * "releaseDate": "2016-10-30",
+     * "writer": "xbw",
+     * "publishDate": "2016-10-30",
+     * "publishPlace": "aaa",
+     * "keyWord": "123",
+     * "abstractContent": "123",
+     * "content": "123",
+     * "param1": null,
+     * "param2": null
+     * },
+     * {
+     * "idPaper": 13,
+     * "idTeacher": 1,
+     * "title": "aaaaaaaaaaaaaaa",
+     * "releaseDate": "2016-10-30",
+     * "writer": "xbw",
+     * "publishDate": "2016-10-30",
+     * "publishPlace": "aaa",
+     * "keyWord": "123",
+     * "abstractContent": "123",
+     * "content": "123",
+     * "param1": null,
+     * "param2": null
+     * },
+     * {
+     * "idPaper": 12,
+     * "idTeacher": 1,
+     * "title": "aaaaaaaaaaaaaaa",
+     * "releaseDate": "2016-10-30",
+     * "writer": "xbw",
+     * "publishDate": "2016-10-30",
+     * "publishPlace": "aaa",
+     * "keyWord": "123",
+     * "abstractContent": "123",
+     * "content": "123",
+     * "param1": null,
+     * "param2": null
+     * },
+     * {
+     * "idPaper": 11,
+     * "idTeacher": 1,
+     * "title": "aaaaaaaaaaaaaaa",
+     * "releaseDate": "2016-10-30",
+     * "writer": "xbw",
+     * "publishDate": "2016-10-30",
+     * "publishPlace": "aaa",
+     * "keyWord": "123",
+     * "abstractContent": "123",
+     * "content": "123",
+     * "param1": null,
+     * "param2": null
      * }
-     *
-     *
+     * ],
+     * "last": false,
+     * "totalPages": 3,
+     * "totalElements": 12,
+     * "size": 5,
+     * "number": 0,
+     * "sort": [
+     * {
+     * "direction": "DESC",
+     * "property": "idPaper",
+     * "ignoreCase": false,
+     * "nullHandling": "NATIVE",
+     * "ascending": false
+     * }
+     * ],
+     * "first": true,
+     * "numberOfElements": 5
+     * }
+     * }
      * @apiUse NormalErrorResponse
      * @apiUse DataBaseErrorResponse
      */
@@ -418,7 +415,6 @@ public class PaperController {
 //        Page<PaperEntity> paperEntities = paperService.searchPaper(keyWord, pageable);
 //        return new ResponseMessage(PaperStatus.SUCCESS, paperEntities);
 //    }
-
 
 
     @RequestMapping(value = "/paper/new/{page}/{size}", method = RequestMethod.GET)
@@ -454,4 +450,39 @@ public class PaperController {
 //        return new ResponseMessage(PaperStatus.SUCCESS, data);
 //    }
 
+    /**
+     * @api {get} /paper/:id 获取单条论文信息
+     * @apiName findPaperById
+     * @apiGroup Paper
+     * @apiVersion 0.1.0
+     * @apiParam {Number} id 论文id
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *   "code": 0,
+     *   "msg": "SUCCESS",
+     *   "body": {
+     *     "idPaper": 7,
+     *     "idTeacher": 1,
+     *     "title": "aaaaaaaaaaaaaaa",
+     *     "releaseDate": "2016-10-30",
+     *     "writer": "xbw",
+     *     "publishDate": "2016-10-30",
+     *     "publishPlace": "aaa",
+     *     "keyWord": "123",
+     *     "abstractContent": "123",
+     *     "content": "123",
+     *     "param1": null,
+     *     "param2": null
+     *   }
+     * }
+     * @apiUse NormalErrorResponse
+     * @apiUse NotFoundErrorResponse
+     */
+    @RequestMapping(value = "/paper/{id}", method = RequestMethod.GET)
+    public ResponseMessage findOne(@PathVariable("id") int id){
+        PaperEntity paperById = paperService.getPaperById(id);
+        return new ResponseMessage(PaperStatus.SUCCESS, paperById);
+    }
 }
+
