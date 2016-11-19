@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -18,17 +19,19 @@ import java.util.List;
 public interface TeacherService {
     TeacherStatus teacherAuth(TeacherEntity teacherEntity);
 
-    List getTeacher(TeacherEntity teacherEntity);
+    int getTeacherId(TeacherEntity teacherEntity);
 
     TeacherStatus teacherRegister(TeacherEntity teacherEntity);
 
     void saveCheckStatus(TeacherEntity teacherEntity);
 
-    TeacherStatus modifyPassword(int teacherId, String newPassword);
+    TeacherStatus modifyPassword(int teacherId, String oldPassword, String newPassword);
 
     TeacherStatus deleteTeacher(int teacherId);
 
     Page<TeacherEntity> searchTeacher(String keyWord, Pageable page);
 
     TeacherStatus uploadAvatar(HttpServletRequest request, MultipartFile file, int id);
+
+    TeacherStatus modifyTeacherInfo(TeacherEntity teacherEntity);
 }
