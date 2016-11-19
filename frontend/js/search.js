@@ -42,7 +42,7 @@ $(function () {
     }
     //查询项目
     function project(searchData) {
-        getAjax("/project/search/"+searchData.string+"/"+ searchData.size + "/"+searchData.size,null,function (data) {
+        getAjax("/project/search/"+searchData.string+"/"+ searchData.page + "/"+searchData.size,null,function (data) {
             if(data.code == 0)
             {
                 detail.content = data.body.content;
@@ -62,7 +62,7 @@ $(function () {
     }
     //查询教师信息
     function teacher(searchData) {
-        getAjax("/project/search/"+searchData.string+"/"+ searchData.size + "/"+searchData.size,null,function (data) {
+        getAjax("/teacher/search/"+searchData.string+"/"+ searchData.page + "/"+searchData.size,null,function (data) {
             if(data.code == 0)
             {
                 detail.content = data.body.content;
@@ -70,7 +70,7 @@ $(function () {
                 for(var i=0;i<detail.content.length;i++)
                 {
                     detail.content[i].headline = detail.content[i].name;
-                    detail.content[i].sign = detail.content[i].introduction;
+                    detail.content[i].sign = detail.content[i].college;
                     detail.content[i].time = detail.content[i].publishDate;
                 }
                 avalon.scan();
@@ -115,6 +115,22 @@ $(function () {
         }
         e.stopPropagation();
     });
+    $(document).on("click","#user",function (e) {
+       var temp = $(".input_search").val();
+        if(temp == "")
+        {
+            sweetAlert("Oops...", "搜索内容不能为空", "error");
+        }
+        else{
+            var userStr = {
+                "string":temp,
+                "page":0,
+                "size":10
+            };
+            teacher(userStr);
+        }
+        e.stopPropagation();
+    });
     //点击搜索模拟点击论文
     $(document).on("click",".button_search",function (e) {
         $("#paper").click();
@@ -137,6 +153,13 @@ $(function () {
             sessionStorage.setItem("teacherId",detail.content[index].idTeacher);
             sessionStorage.removeItem("paperId");
             window.location.href = "t_detail_project.html";
+        }
+        else
+        {
+            sessionStorage.setItem("teacherId",detail.content[index].idTeacher);
+            sessionStorage.removeItem("paperId");
+            sessionStorage.removeItem("projectId");
+            window.location.href = "t_index.html";
         }
     });
     $(document).on("click",".result_menu > span",function (e) {

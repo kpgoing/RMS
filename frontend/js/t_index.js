@@ -11,7 +11,7 @@ $(function(){
 		"page":0,
 		"size":5,
 		"id":teacherId
-	}
+	};
 
 	var filters = avalon.filters = {
 	    truncate: function(str, length, truncation) { //用法： {{aaa|truncate(20, '***')}}

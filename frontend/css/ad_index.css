@@ -97,6 +97,7 @@ body{
     border-radius: 6px;
     background: url(../img/review.png) no-repeat 10px 10px;
     background-size: 37px;
+    display: none;
 }
 .content{
     padding:23px 13.1%;
