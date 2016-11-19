@@ -19,7 +19,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 /**
  * Created by xubowei on 01/11/2016.
@@ -296,5 +295,39 @@ public class ProjectController {
         return new ResponseMessage(PaperStatus.SUCCESS, projectEntities);
     }
 
+    /**
+     * @api {get} /project/:id 获取单条项目信息
+     * @apiName findProjectById
+     * @apiGroup Project
+     * @apiVersion 0.1.0
+     * @apiParam {Number} id 项目id
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *   "code": 0,
+     *   "msg": "SUCCESS",
+     *   "body": {
+     *     "idProject": 7,
+     *     "idTeacher": 1,
+     *     "name": "ds",
+     *     "source": "计算机学院",
+     *     "projectTime": "2016-10-30",
+     *     "master": "哈哈",
+     *     "funds": 1231412314.11,
+     *     "publishTime": "2016-11-15",
+     *     "introduction": "123",
+     *     "param1": null,
+     *     "param2": null
+     *   }
+     * }
+     *
+     * @apiUse NormalErrorResponse
+     * @apiUse NotFoundErrorResponse
+     */
+    @RequestMapping(value = "/project/{id}", method = RequestMethod.GET)
+    public ResponseMessage findOne(@PathVariable("id") int id){
+        ProjectEntity projectById = projectService.getProjectById(id);
+        return new ResponseMessage(ProjectStatus.SUCCESS, projectById);
+    }
 
 }
