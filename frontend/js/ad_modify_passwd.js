@@ -1,4 +1,5 @@
 var isAdmin = sessionStorage.getItem("isAdmin");
+var userId = sessionStorage.getItem("userId");
 $(function () {
     if(isAdmin == true)
     {
@@ -108,8 +109,47 @@ $(function () {
         }
         else
         {
-                
+            var params = {
+                "teacherId": userId,
+                "oldPassword":$("#old_password").val(),
+                "newPassword":$("#new_password").val()
+            };
+            postAjax("/teacher/modifyPassword",params,function (data) {
+              if(data.code == 0)
+              {
+                  swal("Oops...","修改密码成功","success");
+              }
+              else
+              {
+                  swal("Oops...",data.msg,"error");
+              }
+            })
         }
-    })
-    
+    });
+    $(document).on("click","#personal_index",function (e) {
+        if(isAdmin == true)
+        {
+            window.location.href = "ad_index.html";
+        }
+        else {
+            sessionStorage.setItem("teacherId",sessionStorage.getItem("userId"));
+            window.location.href = "t_index.html";
+        }
+        e.stopPropagation();
+    });
+    $(document).on("click","#reset_password",function (e) {
+        window.location.href = "ad_modify_passwd.html";
+        e.stopPropagation();
+    });
+    $(document).on("click","#sign_out",function (e) {
+        if(isAdmin == true)
+        {
+            window.location.href = "ad_login.html"
+        }
+        else
+        {
+            window.location.href = "login.html";
+        }
+        e.stopPropagation();
+    });
 });
