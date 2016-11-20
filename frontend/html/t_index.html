@@ -30,7 +30,8 @@
     </div>
 	<div id="container" ms-controller="initinfo">
 		<div id="person">
-			<img src="../img/big_avatar.png">
+			<img ms-if="teacherInfo.avatarUrl == null" src="../img/big_avatar.png">
+			<img ms-if="teacherInfo.avatarUrl != null" ms-attr-src="teacherInfo.avatarUrl">
 			<div class="profile_area">
 				<p id="name">{{teacherInfo.name}}</p>
 				<p id="loginname">{{teacherInfo.account}}</p>

@@ -1,7 +1,7 @@
 var isAdmin = sessionStorage.getItem("isAdmin");
 var userId = sessionStorage.getItem("userId");
 $(function () {
-    if(isAdmin == true)
+    if(isAdmin)
     {
         $("#change").hide();
     }
@@ -127,7 +127,7 @@ $(function () {
         }
     });
     $(document).on("click","#personal_index",function (e) {
-        if(isAdmin == true)
+        if(isAdmin)
         {
             window.location.href = "ad_index.html";
         }
@@ -142,7 +142,7 @@ $(function () {
         e.stopPropagation();
     });
     $(document).on("click","#sign_out",function (e) {
-        if(isAdmin == true)
+        if(isAdmin)
         {
             window.location.href = "ad_login.html"
         }

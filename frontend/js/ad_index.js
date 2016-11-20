@@ -13,13 +13,11 @@ $(function () {
            if($("#search").val() == "")
            {
                sweetAlert("Oops...", "搜索内容不能为空", "error");
+           }else{
+               var temp = $("#search").val();
+               sessionStorage.setItem("searchStr",temp);
+               window.location.href = "search.html";
            }
-       }
-       else
-       {
-           var temp = $("#search").val();
-           sessionStorage.setItem("searchStr",temp);
-           window.location.href = "search.html";
        }
     });
     var newInfor = avalon.define({
@@ -157,7 +155,7 @@ $(function () {
         e.stopPropagation();
     });
     $(document).on("click","#sign_out",function (e) {
-        window.location.href = "login.html";
+        window.location.href = "ad_login.html";
         e.stopPropagation();
     });
 

@@ -1,7 +1,7 @@
-var searchStr = sessionStorage.getItem("searchStr");
-var isAdmin = sessionStorage.getItem("isAdmin");
 $(function () {
-    if(isAdmin == true)
+    var searchStr = sessionStorage.getItem("searchStr");
+    var isAdmin = sessionStorage.getItem("isAdmin");
+    if(isAdmin)
     {
         $("#change").hide();
     }
@@ -189,7 +189,7 @@ $(function () {
         $(".menu").hide();
     });
     $(document).on("click","#personal_index",function (e) {
-        if(isAdmin == true)
+        if(isAdmin)
         {
             window.location.href = "ad_index.html";
         }
@@ -204,8 +204,9 @@ $(function () {
         e.stopPropagation();
     });
     $(document).on("click","#sign_out",function (e) {
-        if(isAdmin == true)
+        if(isAdmin)
         {
+            sessionStorage.removeItem("isAdmin");
             window.location.href = "ad_login.html"
         }
         else
