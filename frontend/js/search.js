@@ -136,6 +136,12 @@ $(function () {
         $("#paper").click();
         e.stopPropagation();
     });
+    $(document).on("keypress",".input_search",function (e) {
+        if (e.keyCode == 13) {
+            $("#paper").click();
+            e.stopPropagation();
+        }
+    });
     //点击标题进入详情
     $(document).on("click",".headline",function (e) {
         var index = $(this).closest(".result_blocks").index();
@@ -181,5 +187,31 @@ $(function () {
     });
     $(document).click(function () {
         $(".menu").hide();
+    });
+    $(document).on("click","#personal_index",function (e) {
+        if(isAdmin == true)
+        {
+            window.location.href = "ad_index.html";
+        }
+        else {
+            sessionStorage.setItem("teacherId",sessionStorage.getItem("userId"));
+            window.location.href = "t_index.html";
+        }
+        e.stopPropagation();
+    });
+    $(document).on("click","#reset_password",function (e) {
+        window.location.href = "ad_modify_passwd.html";
+        e.stopPropagation();
+    });
+    $(document).on("click","#sign_out",function (e) {
+        if(isAdmin == true)
+        {
+            window.location.href = "ad_login.html"
+        }
+        else
+        {
+            window.location.href = "login.html";
+        }
+        e.stopPropagation();
     });
 });

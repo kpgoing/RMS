@@ -114,7 +114,7 @@ $(function () {
     getCheck();
     $(document).on("click",".pass",function (e) {
         var params = {
-            "teacherId":$("#idTeacher").text(),
+            "teacherId":$("#idTeacher").attr("data"),
             "teacherMail":$("#email").text()
         };
         postAjax("/admin/checkTeacher",params,function (data) {
@@ -132,7 +132,7 @@ $(function () {
     });
     $(document).on("click",".refuse",function (e) {
         var params = {
-            "teacherId":$("#idTeacher").text(),
+            "teacherId":$("#idTeacher").attr("data"),
             "teacherMail":$("#email").text()
         };
         postAjax("/admin/teacherUnpass",params,function (data) {
@@ -148,5 +148,18 @@ $(function () {
         });
         e.stopPropagation();
     });
-    
+    $(document).on("click","#ad_index",function (e) {
+        window.location.href = "ad_index.html";
+        e.stopPropagation();
+    });
+    $(document).on("click","#reset_password",function (e) {
+        window.location.href = "ad_modify_passwd.html";
+        e.stopPropagation();
+    });
+    $(document).on("click","#sign_out",function (e) {
+        window.location.href = "login.html";
+        e.stopPropagation();
+    });
+
+
 });

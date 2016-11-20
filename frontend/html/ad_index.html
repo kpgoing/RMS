@@ -33,7 +33,7 @@
                 </span>
             </div>
             <div class="message_box" ms-controller = "checkInfor">
-                <div class="amount">当前有<span  id="number"style="font-weight: bold">{{checkNum}}</span>条待审核注册信息</div>
+                <div class="amount">当前有<span  id="number" style="font-weight: bold">{{checkNum}}</span>条待审核注册信息</div>
                 <div class="message">
                     <p class="headline">注册信息审核</p>
                     <span class="review_holder">姓名：<span>{{mainInfor.name}}</span></span>
@@ -42,7 +42,9 @@
                     <span class="review_holder" >邮箱账号：<span id="email">{{mainInfor.email}}</span></span>
                     <span class="review_holder">工作单位：<span>{{mainInfor.workPlace}}</span></span>
                     <span class="review_holder">学院：<span>{{mainInfor.college}}</span></span>
-                    <span class="review_holder">教师工号：<span id="idTeacher">{{mainInfor.idTeacher}}</span></span>
+                    <span class="review_holder">教师工号：
+                        <span id="idTeacher" ms-attr-data = "mainInfor.idTeacher">{{mainInfor.account}}</span>
+                    </span>
                     <button class="pass">通过</button>
                     <button class="refuse">拒绝</button>
                 </div>

@@ -2,10 +2,11 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>XX论文</title>
+	<title>论文详情</title>
 	<link rel="stylesheet" type="text/css" href="../css/t_detail.css">
+    <link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
 </head>
-<body>
+<body ms-controller="paper">
 	<div id="header">
 		<img src="../img/logo.png">
 		<input type="text" name="search" class="search" placeholder="搜索">
@@ -31,21 +32,21 @@
         <img src="../img/mark.png">
     	<a class="owner" href="#">拥有者</a>
     	<span>/</span>
-    	<a class="proj_name" href="#">论文名字</a>
+    	<a class="proj_name" href="#">{{content.title}}</a>
     </div>
-    <div id="button_group">
+    <div id="button_group" ms-attr-data="content.idPaper">
     	<button class="operate">删除</button>
     	<button class="operate">编辑</button>
     </div>
     <div id="content">
     	<div class="left">
-    		<p class="key">题目</p><p class="value">xxx</p><br>
-	    	<p class="key">作者</p><p class="value">huangjunqin</p><br>
-	    	<p class="key">发表时间</p><p class="value">2014/6/6</p><br>
-	    	<p class="key">发表期刊/会议名称</p><p class="value">《新青年杂志》2016期6月6号</p><br>
-	    	<p class="key">关键字</p><p class="value">tag,tag,tag</p><br>
+    		<p class="key">题目</p><p class="value">{{content.title}}</p><br>
+	    	<p class="key">作者</p><p class="value">{{content.writer}}</p><br>
+	    	<p class="key">发表时间</p><p class="value">{{content.publishDate}}</p><br>
+	    	<p class="key">发表期刊/会议名称</p><p class="value">{{content.publishPlace}}</p><br>
+	    	<p class="key">关键字</p><p class="value">{{content.keyWord}}</p><br>
 	    	<p class="key">论文摘要</p><br>
-	    	<p class="value" style="margin-left:15px">这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要这是论文摘要</p>
+	    	<p class="value" style="margin-left:15px">{{content.abstractContent}}</p>
     	</div>
     	<div class="right">
     		<img src="../img/pdf.png"><br>
@@ -54,5 +55,8 @@
     </div>
 </body>
 <script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="../js/avalon.js"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
 <script type="text/javascript" src="../js/t_detail.js"></script>
 </html>

@@ -13,7 +13,9 @@ $(function(){
 		}else{
 			postAjax("/teacher/login",reqData,function(data){
 				if(data.code == 0){
+					sessionStorage.removeItem("isAdmin");
 					sessionStorage.setItem("userId",data.body.idTeacher);
+					sessionStorage.setItem("teacherId",data.body.idTeacher);
 					window.location.href = "./t_index.html";
 				}else{
 					swal("Oops...", data.msg, "error");
@@ -36,6 +38,7 @@ $(function(){
 		}else{
 			postAjax("/teacher/login",reqData,function(data){
 				if(data.code == 0){
+					sessionStorage.removeItem("userId");
 					sessionStorage.setItem("isAdmin",true);
 					window.location.href = "./ad_index.html";
 				}else{
