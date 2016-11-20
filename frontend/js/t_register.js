@@ -70,9 +70,9 @@ $(function(){
 	};
 
 	$(document).on("click","#create_account",function(){
-		regData.account = $("#board input[name=username]").val();
-		regData.email = $("#board input[name=email]").val();
-		regData.password = $("#board input[name=passwd]").val();
+		regData.account = $("#board input[name=username]").val().replace(/(^\s*)|(\s*$)/g,"");
+		regData.email = $("#board input[name=email]").val().replace(/(^\s*)|(\s*$)/g,"");
+		regData.password = $("#board input[name=passwd]").val().replace(/(^\s*)|(\s*$)/g,"");
 		if(regData.account == ""){
 			swal("Oops...","工号不能为空！","error");
 		}else if(regData.email == ""){
@@ -94,7 +94,7 @@ $(function(){
 	});
 
 	$(document).on("click","#complete_reg",function(){
-		regData.name = $("#board input[name=name]").val();
+		regData.name = $("#board input[name=name]").val().replace(/(^\s*)|(\s*$)/g,"");
 		if($("#board select:eq(0)").val() == "男"){
 			regData.gender = 0;
 		}else{
@@ -102,10 +102,10 @@ $(function(){
 		}
 		regData.title = $("#board select:eq(1)").val();
 		regData.birthday = $("#board input[name=birth]").val();
-		regData.id = $("#board input[name=IDCard]").val();
-		regData.phoneNumber = $("#board input[name=phone]").val();
-		regData.workPlace = $("#board input[name=company]").val();
-		regData.college = $("#board input[name=college]").val();
+		regData.id = $("#board input[name=IDCard]").val().replace(/(^\s*)|(\s*$)/g,"");
+		regData.phoneNumber = $("#board input[name=phone]").val().replace(/(^\s*)|(\s*$)/g,"");
+		regData.workPlace = $("#board input[name=company]").val().replace(/(^\s*)|(\s*$)/g,"");
+		regData.college = $("#board input[name=college]").val().replace(/(^\s*)|(\s*$)/g,"");
 		if(regData.name == ""){
 			swal("Oops...","姓名不能为空！","error");
 		}else if(regData.birthday == ""){

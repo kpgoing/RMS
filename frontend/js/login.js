@@ -1,8 +1,8 @@
 $(function(){
 	$(document).on("click","#user_login",function(){
 		var reqData = {
-			"account":$(".menu > input[type=text]").val(),
-			"password":$(".menu > input[type=password]").val()
+			"account":$(".menu > input[type=text]").val().replace(/(^\s*)|(\s*$)/g,""),
+			"password":$(".menu > input[type=password]").val().replace(/(^\s*)|(\s*$)/g,"")
 		}
 		if(reqData.account == ""){
 			swal("Oops...", "用户名不能为空", "error");
@@ -26,8 +26,8 @@ $(function(){
 
 	$(document).on("click","#ad_login",function(){
 		var reqData = {
-			"account":$(".menu > input[type=text]").val(),
-			"password":$(".menu > input[type=password]").val()
+			"account":$(".menu > input[type=text]").val().replace(/(^\s*)|(\s*$)/g,""),
+			"password":$(".menu > input[type=password]").val().replace(/(^\s*)|(\s*$)/g,"")
 		}
 		if(reqData.account == ""){
 			swal("Oops...", "用户名不能为空", "error");

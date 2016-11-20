@@ -223,7 +223,7 @@ $(function(){
   $(document).on("keyup",".search",function(e){
         if(e.keyCode == 13)
         {
-            if($(".search").val() == "")
+            if($(".search").val().replace(/(^\s*)|(\s*$)/g,"") == "")
             {
                sweetAlert("Oops...", "搜索内容不能为空", "error");
             }
@@ -241,7 +241,7 @@ $(function(){
               }, 
               function(isConfirm){
                 if(isConfirm){
-                  var temp = $(".search").val();
+                  var temp = $(".search").val().replace(/(^\s*)|(\s*$)/g,"");
                   sessionStorage.setItem("searchStr",temp);
                   window.location.href = "./search.html";
                 }
