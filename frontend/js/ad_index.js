@@ -30,7 +30,7 @@ $(function () {
         "size":10
     };
     function formateTime(timestamp) {
-        format_stamp = new Date(timestamp);
+        var format_stamp = new Date(timestamp);
         return format_stamp.getFullYear() + "-" + format_stamp.getMonth() + 1 + "-" + format_stamp.getDate();
     }
     function getInfor(data) {
@@ -46,7 +46,7 @@ $(function () {
                     }
                     else 
                     {
-                        newInfor.action = "项目";
+                        newInfor.content[i].action = "项目";
                     }
                 }
                 avalon.scan();
@@ -61,21 +61,21 @@ $(function () {
     $(document).on("click",".teacherName",function (e) {
         var temp = $(this).closest(".info_holder").index();
         sessionStorage.setItem("teacherId",newInfor.content[temp].idTeacher);
-        window.location.href = "t_index..html";
+        window.location.href = "t_index.html";
     });
     $(document).on("click",".name",function (e) {
        var temp = $(this).closest(".info_holder") .index();
         if(newInfor.content[temp].kind == "paper")
         {
             sessionStorage.setItem("paperId",newInfor.content[temp].idContent);
-            sessionStorage.setItem("teacherId",detail.content[temp].idTeacher);
+            sessionStorage.setItem("teacherId",newInfor.content[temp].idTeacher);
             sessionStorage.removeItem("projectId");
             window.location.href = "t_detail_paper.html";
         }
         else
         {
             sessionStorage.setItem("projectId",newInfor.content[temp].idContent);
-            sessionStorage.setItem("teacherId",detail.content[temp].idTeacher);
+            sessionStorage.setItem("teacherId",newInfor.content[temp].idTeacher);
             sessionStorage.removeItem("paperId");
             window.location.href = "t_detail_project.html";
         }
@@ -111,6 +111,7 @@ $(function () {
     }
     getCheck();
     $(document).on("click",".pass",function (e) {
+        
         var params = {
             "teacherId":$("#idTeacher").attr("data"),
             "teacherMail":$("#email").text()
@@ -118,7 +119,6 @@ $(function () {
         postAjax("/admin/checkTeacher",params,function (data) {
             if(data.code == 0)
             {
-                sweetAlert("Oops...", "结果已反馈到邮箱", "success");
                 getCheck();
             }
             else
@@ -128,23 +128,38 @@ $(function () {
         });
         e.stopPropagation();
     });
-    $(document).on("click",".refuse",function (e) {
-        var params = {
-            "teacherId":$("#idTeacher").attr("data"),
-            "teacherMail":$("#email").text()
-        };
-        postAjax("/admin/teacherUnpass",params,function (data) {
-            if(data.code == 0)
-            {
-                sweetAlert("Oops...", "结果已反馈到邮箱", "success");
-                getCheck();
-            }
-            else
-            {
-                sweetAlert("Oops...", data.msg, "error");
-            }
-        });
-        e.stopPropagation();
+    
+    $(document).on("click",".refuse",function () {
+        swal({
+            title: "Are you sure?",
+            text: "确定不通过吗？",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确定",
+            cancelButtonText: "我再看看",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+            function(isConfirm){
+                if (isConfirm) {
+                    var params = {
+                        "teacherId":$("#idTeacher").attr("data"),
+                        "teacherMail":$("#email").text()
+                    };
+                    postAjax("/admin/teacherUnpass",params,function (data) {
+                        if(data.code == 0)
+                        {
+                            sweetAlert("Oops...", "结果已反馈到邮箱", "success");
+                            getCheck();
+                        }
+                        else
+                        {
+                            sweetAlert("Oops...", data.msg, "error");
+                        }
+                    });
+                }
+            });
     });
     $(document).on("click","#ad_index",function (e) {
         window.location.href = "ad_index.html";
@@ -155,6 +170,7 @@ $(function () {
         e.stopPropagation();
     });
     $(document).on("click","#sign_out",function (e) {
+        sessionStorage.removeItem("isAdmin");
         window.location.href = "ad_login.html";
         e.stopPropagation();
     });

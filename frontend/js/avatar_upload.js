@@ -17,7 +17,7 @@ jQuery(function() {
         swf: BASE_URL + '/Uploader.swf',
 
         // 文件接收服务端。
-        server: '/teacher/uploadAvatar/'+userId,
+        server: '/teacher/uploadAvatar/'+ userId,
 
         // 选择文件的按钮。可选。
         // 内部根据当前运行是创建，可能是input元素，也可能是flash.
@@ -61,13 +61,13 @@ jQuery(function() {
         if(response.code == 0)
         {
             $( '#'+file.id ).find('p.state').text('已上传');
-            sessionStorage.setItem("avatar","")
+            sweetAlert("Good job!","上传成功" , "success");
+            $(".big_avatar").attr("src",response.body);
         }
         else 
         {
-            
+            sweetAlert("Oops...", data.msg, "error");
         }
-        
     });
 
     uploader.on( 'uploadError', function( file ) {
@@ -76,6 +76,9 @@ jQuery(function() {
 
     uploader.on( 'uploadComplete', function( file ) {
         $( '#'+file.id ).find('.progress').fadeOut();
+        uploader.removeFile(file);
+        $("#confirmupload").text("重新上传");
+        $("#confirmupload").attr("id","avatar_upload");
     });
 
     uploader.on( 'all', function( type ) {

@@ -123,20 +123,19 @@ $(function(){
 		}else if(regData.college == ""){
 			swal("Oops...","所属院系不能为空！","error");
 		}else{
-			swal({   
-		      title: "Are you sure?",   
-		      text: "确定您的注册信息无误吗？",   
-		      type: "warning",   
-		      showCancelButton: true,   
-		      confirmButtonColor: "#DD6B55",   
-		      confirmButtonText: "确定",   
-		      cancelButtonText: "我再看看",   
-		      closeOnConfirm: false,   
-		      closeOnCancel: true 
-		    }, 
-		    function(isConfirm){   
+			swal({
+					title: "Are you sure?",
+					text: "确定您的注册信息无误吗？",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "确定",
+					cancelButtonText: "我再看看",
+					closeOnConfirm: false,
+					closeOnCancel: true
+				},
+				function(isConfirm){   
 		      if (isConfirm) {     
-		      	console.log(regData);
 		        postAjax("/teacher/register",regData,function(data){
 		        	if(data.code == 0){
 		        		$(".block").removeClass("active").eq(2).addClass("active");
