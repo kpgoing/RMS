@@ -60,6 +60,11 @@ $(function(){
   	$("#ctlBtn").click();
   });
 
+  $(".left input[name=title]").keyup(function(){
+    var _value = $(this).val();
+    $(".proj_name").text(_value);
+  });
+
   $(document).on("click","#cancel_publish",function(){
     swal({   
       title: "Are you sure?",   
@@ -96,6 +101,7 @@ $(function(){
       postAjax("/teacher/paper/modify",params,function(data){
         if(data.code == 0){
           sweetAlert("修改成功!", "3秒后将离开本页面!", "success");
+          sessionStorage.removeItem("isModify");
           setTimeout(function(){
             window.location.href = "./t_index.html";
           },3000);
@@ -103,7 +109,6 @@ $(function(){
           swal("Oops...", data.msg, "error");
         }
       });
-      sessionStorage.removeItem("isModify");
     }else{
       postAjax("/teacher/paper/publish",params,function(data){
         if(data.code == 0){
@@ -129,12 +134,12 @@ $(function(){
       "funds": _value.eq(4).find("input:eq(0)").val(),
       "introduction": _value.eq(5).find("textarea:eq(0)").val()
     };
-    console.log(params);
     if(isModify){
       params.idProject = projectId;
       postAjax("/teacher/project/modify",params,function(data){
         if(data.code == 0){
           sweetAlert("修改成功!", "3秒后将离开本页面!", "success");
+          sessionStorage.removeItem("isModify");
           setTimeout(function(){
             window.location.href = "./t_index.html";
           },3000);
@@ -142,7 +147,6 @@ $(function(){
           swal("Oops...", data.msg, "error");
         }
       });
-      sessionStorage.removeItem("isModify");
     }else{
       postAjax("/teacher/project/publish",params,function(data){
         if(data.code == 0){

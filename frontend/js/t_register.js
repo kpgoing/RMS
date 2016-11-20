@@ -64,7 +64,7 @@ $(function(){
 	    "id":"",
 	    "email":"",
 	    "phoneNumber":"",
-	    "byte":null,
+	    "gender":null,
 	    "workPlace":"",
 	    "title":""
 	};
@@ -96,9 +96,9 @@ $(function(){
 	$(document).on("click","#complete_reg",function(){
 		regData.name = $("#board input[name=name]").val();
 		if($("#board select:eq(0)").val() == "男"){
-			regData.byte = 0;
+			regData.gender = 0;
 		}else{
-			regData.byte = 1;
+			regData.gender = 1;
 		}
 		regData.title = $("#board select:eq(1)").val();
 		regData.birthday = $("#board input[name=birth]").val();
