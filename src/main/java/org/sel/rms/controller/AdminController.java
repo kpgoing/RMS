@@ -295,4 +295,30 @@ public class AdminController {
         teacherEntities = adminService.getAllTeachers();
         return new ResponseMessage(AdminStatus.SUCCESS, teacherEntities);
     }
+
+    /**
+     * @api {get} /admin/getTeacher/:id 获取单个教师信息
+     * @apiName getTeacher
+     * @apiGroup admin
+     * @apiPermission admin
+     * @apiVersion 0.1.0
+     * @apiParam {Number} id 教师id
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
+     * @apiUse ArgumentsErrorResponse
+     * @apiUse DataBaseErrorResponse
+     * @apiUse UnLoginErrorResponse
+     */
+    @RequestMapping(value = "/admin/getTeacher/{id}", method = RequestMethod.GET)
+    public ResponseMessage getTeacher(@PathVariable("id") int id) {
+        TeacherEntity teacherEntity;
+        if(0 == id) {
+            logger.error("check teacher arguments error");
+            throw new AdminException("check teacher arguments error", AdminStatus.ARGUMENTS_ERROR);
+        } else {
+            teacherEntity = adminService.getTeacher(id);
+        }
+        return new ResponseMessage(AdminStatus.SUCCESS, teacherEntity);
+    }
+
 }

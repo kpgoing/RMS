@@ -21,7 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -56,16 +58,14 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherStatus;
     }
 
-    public List getTeacher(TeacherEntity teacherEntity) {
-        List list = new ArrayList<>();
+    public int getTeacherId(TeacherEntity teacherEntity) {
         TeacherEntity teacherResult;
         try {
             teacherResult = teacherRepository.findByAccount(teacherEntity.getAccount());
         } catch (Exception e) {
             throw new TeacherException("find teacher by account error", TeacherStatus.ERROR);
         }
-        list.add(teacherResult.getIdTeacher());
-        return list;
+        return teacherResult.getIdTeacher();
     }
 
     public TeacherStatus teacherRegister(TeacherEntity teacherEntity) {
@@ -93,11 +93,15 @@ public class TeacherServiceImpl implements TeacherService {
         }
     }
 
-    public TeacherStatus modifyPassword(int teacherId, String newPassword) {
+    public TeacherStatus modifyPassword(int teacherId, String oldPassword, String newPassword) {
         TeacherStatus teacherStatus;
         TeacherEntity teacherEntity;
         try {
             teacherEntity = teacherRepository.findOne(teacherId);
+            if(!(oldPassword.equals(MD5Util.calc(teacherEntity.getPassword())))) {
+                teacherStatus = TeacherStatus.OLDPASSWORD_ERROR;
+                return teacherStatus;
+            }
             teacherEntity.setPassword(newPassword);
             teacherRepository.save(teacherEntity);
             teacherStatus = TeacherStatus.SUCCESS;
@@ -157,6 +161,17 @@ public class TeacherServiceImpl implements TeacherService {
             teacherStatus = TeacherStatus.SUCCESS;
         } catch (IOException e) {
             throw new TeacherException("upload file error!", e, TeacherStatus.UPLOAD_AVATAR_ERROR);
+        }
+        return teacherStatus;
+    }
+
+    public TeacherStatus modifyTeacherInfo(TeacherEntity teacherEntity) {
+        TeacherStatus teacherStatus;
+        try {
+            teacherRepository.save(teacherEntity);
+            teacherStatus = TeacherStatus.SUCCESS;
+        } catch (Exception e) {
+            throw new TeacherException("modify teacher information error", e, TeacherStatus.MODIFY_TEACHER_INFO_ERROR);
         }
         return teacherStatus;
     }
