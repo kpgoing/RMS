@@ -83,6 +83,9 @@ $(function(){
         }else if(_href == "login.html" && isAdmin){
             _href = "ad_login.html";
         }
+        if(_href == "t_index.html")
+            sessionStorage.setItem("teacherId",userId);
+        sessionStorage.removeItem("isModify");
     	window.location.href = "./" + _href;
     });
 

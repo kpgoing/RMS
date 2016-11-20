@@ -6,6 +6,8 @@ jQuery(function() {
         state = 'pending',
         uploader;
     BASE_URL = "../webuploader";
+    uploadURL = null;
+
 
     uploader = WebUploader.create({
 
@@ -39,6 +41,7 @@ jQuery(function() {
         '</div>' );
         $("#uploadpdf").text("开始上传");
         $("#uploadpdf").attr("id","confirmupload");
+        uploadURL = null;
     });
 
     // 文件上传过程中创建进度条实时显示。
@@ -62,7 +65,10 @@ jQuery(function() {
     uploader.on( 'uploadSuccess', function( file, response ) {
         if(response.code == 0){
             $( '#'+file.id ).find('p.state').text('已上传');
+            uploadURL = response.body;
+            swal("Good job!", "上传成功！", "success");
         }else{
+            $( '#'+file.id ).find('p.state').text('上传出错');
             sweetAlert("Oops...", data.msg, "error");
         }
     });

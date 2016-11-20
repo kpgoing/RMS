@@ -20,13 +20,13 @@
 		</div>
 	</div>
     <div class="menu" style="right:10%">
-		<div class="menu_detail">个人主页</div>
-        <div class="menu_detail" id="reset_password">修改密码</div>
-        <div class="menu_detail" id="sign_out">退出登录</div>
+        <div class="menu_detail" data="t_index.html">个人主页</div>
+        <div class="menu_detail" id="reset_password" data="ad_modify_passwd.html">修改密码</div>
+        <div class="menu_detail" id="sign_out" data="login.html">退出登录</div>
     </div>
     <div class="menu" style="right:14%">
-	    <div class="menu_detail">发布项目</div>
-	    <div class="menu_detail">发布论文</div>
+        <div class="menu_detail" data="t_publish_project.html">创建项目</div>
+        <div class="menu_detail" data="t_publish_paper.html">发表论文</div>
     </div>
     <div id="sub_header">
         <img src="../img/mark.png">
@@ -42,7 +42,7 @@
     	<div class="left">
     		<p class="key">题目</p><p class="value">{{content.title}}</p><br>
 	    	<p class="key">作者</p><p class="value">{{content.writer}}</p><br>
-	    	<p class="key">发表时间</p><p class="value">{{content.publishDate}}</p><br>
+	    	<p class="key">发表时间</p><p class="value">{{content.releaseDate}}</p><br>
 	    	<p class="key">发表期刊/会议名称</p><p class="value">{{content.publishPlace}}</p><br>
 	    	<p class="key">关键字</p><p class="value">{{content.keyWord}}</p><br>
 	    	<p class="key">论文摘要</p><br>
