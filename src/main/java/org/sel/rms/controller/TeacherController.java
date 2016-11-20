@@ -49,6 +49,14 @@ public class TeacherController {
      *     "account"："abc",
      *     "password":"123"
      * }
+     * @apiSuccessExample {json} Success_Response:
+     * {
+     *     "code": 0,
+     *     "msg": "SUCCESS",
+     *     "body": {
+     *     "IdTeacher": 2
+     *     }
+     * }
      * @apiUse NormalSuccessResponse
      * @apiUse NormalErrorResponse
      * @apiUse ArgumentsErrorResponse
