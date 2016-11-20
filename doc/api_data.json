@@ -1112,49 +1112,6 @@
     }
   },
   {
-    "type": "post",
-    "url": "/admin/getAllTeachers",
-    "title": "获取所有教师信息",
-    "name": "getAllTeachers",
-    "group": "admin",
-    "permission": [
-      {
-        "name": "admin"
-      }
-    ],
-    "version": "0.1.0",
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n    \"code\":0,\n    \"msg\":\"SUCCESS\",\n    \"body\":[\n    {\n    \"idTeacher\":1,\n    \"account\":\"teaccher\",\n    \"password\":null,\n    \"birthday\":\"1980-10-01\",\n    \"educationBackground\":\"doctor\",\n    \"college\":\"uestc\",\n    \"name\":\"jack\",\n    \"id\":\"2\",\n    \"email\":\"123@123.com\",\n    \"phoneNumber\":\"12345678901\",\n    \"gender\":0,\n    \"workPlace\":\"uestc\",\n    \"title\":\"123\",\n    \"avatarUrl\":null\n    ,\"param1\":null,\n    \"param2\":null},\n    {\n    \"idTeacher\":2,\n    \"account\":\"ttt\",\n    \"password\":\"111111\",\n    \"birthday\":\"1970-07-01\",\n    \"educationBackground\":\"11\",\n    \"college\":\"11\",\n    \"name\":\"a\",\n    \"id\":\"1\",\n    \"email\":\"123@123.com\",\n    \"phoneNumber\":\"12345678901\",\n    \"gender\":1,\n    \"workPlace\":\"uestc\",\n    \"title\":\"1\",\n    \"avatarUrl\":null,\n    \"param1\":null,\n    \"param2\":null\n    }]\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "./src/main/java/org/sel/rms/controller/AdminController.java",
-    "groupTitle": "admin",
-    "error": {
-      "examples": [
-        {
-          "title": "NormalErrorResponse:",
-          "content": "\n{\n  \"code\": 1,\n  \"msg\": \"ERROR(:...some err info)\",\n  \"body\": null\n}",
-          "type": "json"
-        },
-        {
-          "title": "DataBaseErrorResponse:",
-          "content": "\n{\n  \"code\": 3,\n  \"msg\": \"DATABASE_ERROR\",\n  \"body\": null\n}",
-          "type": "json"
-        },
-        {
-          "title": "UnLoginErrorResponse:",
-          "content": "\n{\n  \"code\": 5,\n  \"msg\": \"UN_LOGIN\",\n  \"body\": null\n}",
-          "type": "json"
-        }
-      ]
-    }
-  },
-  {
     "type": "get",
     "url": "/admin/getTeacher/:id",
     "title": "获取单个教师信息",
@@ -1179,10 +1136,13 @@
         ]
       }
     },
-    "filename": "./src/main/java/org/sel/rms/controller/AdminController.java",
-    "groupTitle": "admin",
     "success": {
       "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"code\":0,\n    \"msg\":\"SUCCESS\",\n    \"body\":\n    {\n    \"idTeacher\":1,\n    \"account\":\"teaccher\",\n    \"password\":\"111111\",\n    \"birthday\":\"1980-10-01\",\n    \"educationBackground\":\"doctor\",\n    \"college\":\"uestc\",\n    \"name\":\"jack\",\n    \"id\":\"2\",\n    \"email\":\"123@123.com\",\n    \"phoneNumber\":\"12345678901\",\n    \"gender\":0,\n    \"workPlace\":\"uestc\",\n    \"title\":\"123\",\n    \"avatarUrl\":null,\n    \"param1\":null,\n    \"param2\":null\n    }\n}",
+          "type": "json"
+        },
         {
           "title": "Success-Response:",
           "content": "HTTP/1.1 200 OK\n{\n  \"code\": 0,\n  \"msg\": \"SUCCESS\",\n  \"body\": null\n}",
@@ -1190,6 +1150,8 @@
         }
       ]
     },
+    "filename": "./src/main/java/org/sel/rms/controller/AdminController.java",
+    "groupTitle": "admin",
     "error": {
       "examples": [
         {
@@ -1243,6 +1205,88 @@
         {
           "title": "NormalErrorResponse:",
           "content": "\n{\n  \"code\": 1,\n  \"msg\": \"ERROR(:...some err info)\",\n  \"body\": null\n}",
+          "type": "json"
+        },
+        {
+          "title": "DataBaseErrorResponse:",
+          "content": "\n{\n  \"code\": 3,\n  \"msg\": \"DATABASE_ERROR\",\n  \"body\": null\n}",
+          "type": "json"
+        },
+        {
+          "title": "UnLoginErrorResponse:",
+          "content": "\n{\n  \"code\": 5,\n  \"msg\": \"UN_LOGIN\",\n  \"body\": null\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "post",
+    "url": "/admin/modifyPassword",
+    "title": "管理员修改密码",
+    "name": "modifyPassword",
+    "group": "admin",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "adminId",
+            "description": "<p>管理员ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "oldPassword",
+            "description": "<p>管理员旧密码</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "newPassword",
+            "description": "<p>管理员新密码</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example",
+          "content": "{\n    \"adminId\":1,\n    \"oldPassword\":\"111\",\n    \"newPassword\":\"123\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./src/main/java/org/sel/rms/controller/AdminController.java",
+    "groupTitle": "admin",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\": 0,\n  \"msg\": \"SUCCESS\",\n  \"body\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "NormalErrorResponse:",
+          "content": "\n{\n  \"code\": 1,\n  \"msg\": \"ERROR(:...some err info)\",\n  \"body\": null\n}",
+          "type": "json"
+        },
+        {
+          "title": "ArgumentsErrorResponse",
+          "content": "\n{\n  \"code\": 2,\n  \"msg\": \"ARGUMENTS_ERROR\",\n  \"body\": null\n}",
           "type": "json"
         },
         {
@@ -1355,7 +1399,7 @@
       "examples": [
         {
           "title": "Request-Example",
-          "content": "{\n    \"IdTeacher\":1,\n    \"birthday\":\"yyyy-mm-dd\",\n    \"educationBackground\":\"abc\",\n    \"college\":\"abc\",\n    \"name\":\"abc\",\n    \"id\":\"123\",\n    \"email\":\"123@123.com\"\n    \"phoneNumber\":\"13000000000\",\n    \"byte\":0(male)/1(female),\n    \"workPlace\":\"abc\",\n    \"title\":\"abc\"\n}",
+          "content": "{\n    \"IdTeacher\":1,\n    \"birthday\":\"yyyy-mm-dd\",\n    \"educationBackground\":\"abc\",\n    \"college\":\"abc\",\n    \"email\":\"123@123.com\"\n    \"phoneNumber\":\"13000000000\",\n    \"workPlace\":\"abc\",\n    \"title\":\"abc\"\n}",
           "type": "json"
         }
       ]
@@ -1392,7 +1436,7 @@
     }
   },
   {
-    "type": "json",
+    "type": "post",
     "url": "/teacher/modifyPassword",
     "title": "教师修改密码",
     "name": "modifyPassword",
@@ -1659,7 +1703,7 @@
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n    \"account\":\"abc\",\n    \"password\":\"123\",\n    \"birthday\":\"yyyy-mm-dd\",\n    \"educationBackground\":\"abc\",\n    \"college\":\"abc\",\n    \"name\":\"abc\",\n    \"id\":\"123\",\n    \"email\":\"123@123.com\"\n    \"phoneNumber\":\"13000000000\",\n    \"byte\":0(male)/1(female),\n    \"workPlace\":\"abc\",\n    \"title\":\"abc\"\n}",
+          "content": "{\n    \"account\":\"abc\",\n    \"password\":\"123\",\n    \"birthday\":\"yyyy-mm-dd\",\n    \"educationBackground\":\"abc\",\n    \"college\":\"abc\",\n    \"name\":\"abc\",\n    \"id\":\"123\",\n    \"email\":\"123@123.com\"\n    \"phoneNumber\":\"13000000000\",\n    \"gender\":0(male)/1(female),\n    \"workPlace\":\"abc\",\n    \"title\":\"abc\"\n}",
           "type": "json"
         }
       ]
@@ -1720,10 +1764,13 @@
         ]
       }
     },
-    "filename": "./src/main/java/org/sel/rms/controller/TeacherController.java",
-    "groupTitle": "teacher",
     "success": {
       "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"code\":0,\n    \"msg\":\"SUCCESS\",\n    \"body\":\"\\\\upload\\\\1\\\\1231479614806368.jpg\"\n}",
+          "type": "json"
+        },
         {
           "title": "Success-Response:",
           "content": "HTTP/1.1 200 OK\n{\n  \"code\": 0,\n  \"msg\": \"SUCCESS\",\n  \"body\": null\n}",
@@ -1731,6 +1778,8 @@
         }
       ]
     },
+    "filename": "./src/main/java/org/sel/rms/controller/TeacherController.java",
+    "groupTitle": "teacher",
     "error": {
       "examples": [
         {

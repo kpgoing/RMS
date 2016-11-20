@@ -138,4 +138,22 @@ public class AdminServiceImpl implements AdminService {
         }
         return teacherEntity;
     }
+
+    public AdminStatus modifyPassword(int adminId, String oldPassword, String newPassword){
+        AdminStatus adminStatus;
+        AdminEntity adminEntity;
+        try {
+            adminEntity = adminRepository.findOne(adminId);
+            if(!(oldPassword.equals(MD5Util.calc(adminEntity.getPassword())))) {
+                adminStatus = AdminStatus.OLDPASSWORD_ERROR;
+                return adminStatus;
+            }
+            adminEntity.setPassword(newPassword);
+            adminRepository.save(adminEntity);
+            adminStatus = AdminStatus.SUCCESS;
+        } catch (Exception e) {
+            throw new AdminException("modify password error", e, AdminStatus.MODIFY_PASSWORD_ERROR);
+        }
+        return adminStatus;
+    }
 }

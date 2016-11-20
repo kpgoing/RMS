@@ -136,9 +136,8 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherEntities;
     }
 
-    public TeacherStatus uploadAvatar(HttpServletRequest request, MultipartFile file, int id) {
+    public String uploadAvatar(HttpServletRequest request, MultipartFile file, int id) {
         TeacherEntity teacherEntity;
-        TeacherStatus teacherStatus;
         String sqPath;
         String fileName = file.getOriginalFilename();
         String extensionName = fileName.substring(fileName.indexOf("."));
@@ -158,11 +157,10 @@ public class TeacherServiceImpl implements TeacherService {
             teacherEntity = teacherRepository.findOne(id);
             teacherEntity.setAvatarUrl(sqPath);
             teacherRepository.save(teacherEntity);
-            teacherStatus = TeacherStatus.SUCCESS;
         } catch (IOException e) {
             throw new TeacherException("upload file error!", e, TeacherStatus.UPLOAD_AVATAR_ERROR);
         }
-        return teacherStatus;
+        return sqPath;
     }
 
     public TeacherStatus modifyTeacherInfo(TeacherEntity teacherEntity) {

@@ -97,7 +97,7 @@ public class TeacherController {
      *     "id":"123",
      *     "email":"123@123.com"
      *     "phoneNumber":"13000000000",
-     *     "byte":0(male)/1(female),
+     *     "gender":0(male)/1(female),
      *     "workPlace":"abc",
      *     "title":"abc"
      * }
@@ -121,7 +121,7 @@ public class TeacherController {
     }
 
     /**
-     * @api {json} /teacher/modifyPassword 教师修改密码
+     * @api {post} /teacher/modifyPassword 教师修改密码
      * @apiName modifyPassword
      * @apiGroup teacher
      * @apiPermission teacher
@@ -224,6 +224,12 @@ public class TeacherController {
      * @apiPermssion teacher
      * @apiVersion 0.1.0
      * @apiParam {File} avatar 教师头像
+     * @apiSuccessExample {json} Success-Response:
+     * {
+     *     "code":0,
+     *     "msg":"SUCCESS",
+     *     "body":"\\upload\\1\\1231479614806368.jpg"
+     * }
      * @apiUse NormalSuccessResponse
      * @apiUse NormalErrorResponse
      * @apiUse ArgumentsErrorResponse
@@ -233,9 +239,9 @@ public class TeacherController {
      */
     @RequestMapping(value = "/teacher/uploadAvatar/{id}", method = RequestMethod.POST)
     public ResponseMessage uploadAvatar(@PathVariable("id") int id, HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar) {
-        TeacherStatus teacherStatus;
-        teacherStatus = teacherService.uploadAvatar(request, avatar, id);
-        return new ResponseMessage(teacherStatus);
+        String avatarPath;
+        avatarPath = teacherService.uploadAvatar(request, avatar, id);
+        return new ResponseMessage(TeacherStatus.SUCCESS, avatarPath);
     }
 
     /**
@@ -250,11 +256,8 @@ public class TeacherController {
      *     "birthday":"yyyy-mm-dd",
      *     "educationBackground":"abc",
      *     "college":"abc",
-     *     "name":"abc",
-     *     "id":"123",
      *     "email":"123@123.com"
      *     "phoneNumber":"13000000000",
-     *     "byte":0(male)/1(female),
      *     "workPlace":"abc",
      *     "title":"abc"
      * }

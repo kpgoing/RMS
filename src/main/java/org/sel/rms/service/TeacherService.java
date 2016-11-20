@@ -31,7 +31,7 @@ public interface TeacherService {
 
     Page<TeacherEntity> searchTeacher(String keyWord, Pageable page);
 
-    TeacherStatus uploadAvatar(HttpServletRequest request, MultipartFile file, int id);
+    String uploadAvatar(HttpServletRequest request, MultipartFile file, int id);
 
     TeacherStatus modifyTeacherInfo(TeacherEntity teacherEntity);
 }
