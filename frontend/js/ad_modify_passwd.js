@@ -254,7 +254,7 @@ $(function () {
                 },
                 function(isConfirm){
                     if (isConfirm) {
-                        if($(".search").val() == "")
+                        if(($(".search").val().replace(/(^\s*)|(\s*$)/g,"")) == "")
                         {
                             sweetAlert("Oops...", "搜索内容不能为空", "error");
                         }else{

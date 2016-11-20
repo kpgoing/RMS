@@ -83,7 +83,7 @@ $(function () {
     paper(nowData);
 //点击菜单中的论文，拉取项目信息
     $(document).on("click","#paper",function (e) {
-       var temp = $(".input_search").val();
+       var temp = $(".input_search").val().replace(/(^\s*)|(\s*$)/g,"");
         if(temp == "")
         {
             sweetAlert("Oops...", "搜索内容不能为空", "error");
@@ -100,7 +100,7 @@ $(function () {
     });
     //点击菜单中的项目，拉取项目信息
     $(document).on("click","#project",function (e) {
-        var temp = $(".input_search").val();
+        var temp = $(".input_search").val().replace(/(^\s*)|(\s*$)/g,"");
         if(temp == "")
         {
             sweetAlert("Oops...", "搜索内容不能为空", "error");
@@ -116,7 +116,7 @@ $(function () {
         e.stopPropagation();
     });
     $(document).on("click","#user",function (e) {
-       var temp = $(".input_search").val();
+       var temp = $(".input_search").val().replace(/(^\s*)|(\s*$)/g,"");
         if(temp == "")
         {
             sweetAlert("Oops...", "搜索内容不能为空", "error");

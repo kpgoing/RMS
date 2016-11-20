@@ -1,6 +1,14 @@
 var teacherId = sessionStorage.getItem("teacherId");
 var userId = sessionStorage.getItem("userId");
 $(function(){
+    function checkEmail(str)
+    {
+        var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+        return reg.test(str);
+    }
+    function checkPhone(phone){
+        return /^1[34578]\d{9}$/.test(phone);
+    }
     $(".header_nav_link").click(function (e) {
         var index = $(this).index();
         if(index-2 == 0){
@@ -39,26 +47,46 @@ $(function(){
     $(document).on("click","#update",function (e) {
         var param ={
             "IdTeacher":userId,
-            "birthday":$(".input_detail").eq(3).val(),
-            "educationBackground":$(".edu_detail").val(),
-            "college":$(".input_detail").eq(7).val(),
-            "email":$(".input_detail").eq(5).val(),
-            "phoneNumber":$(".input_detail").eq(4).val(),
-            "workPlace":$(".input_detail").eq(6).val(),
+            "birthday":$(".input_detail").eq(3).val().replace(/(^\s*)|(\s*$)/g,""),
+            "educationBackground":$(".edu_detail").val().replace(/(^\s*)|(\s*$)/g,""),
+            "college":$(".input_detail").eq(7).val().replace(/(^\s*)|(\s*$)/g,""),
+            "email":$(".input_detail").eq(5).val().replace(/(^\s*)|(\s*$)/g,""),
+            "phoneNumber":$(".input_detail").eq(4).val().replace(/(^\s*)|(\s*$)/g,""),
+            "workPlace":$(".input_detail").eq(6).val().replace(/(^\s*)|(\s*$)/g,""),
             "title":teacherInfor.mainInfor.title
         };
-        postAjax("/teacher/modifyInfo",param,function (data) {
-            if(data.code == 0)
-            {
-                sweetAlert("Oops...", "修改信息成功", "success");
-                sessionStorage.setItem("teacherId",userId);
-                window.location.href = "t_setting.html";
-            }
-            else
-            {
-                sweetAlert("Oops...", data.msg, "error");
-            }
-        });
+        if(param.email == "")
+        {
+            swal("Oops...","邮箱地址不能为空！","error");
+        }
+        else if(param.phoneNumber == "")
+        {
+            swal("Oops...","手机号码不能为空！","error");
+        }
+        else if(!checkPhone(param.phoneNumber))
+        {
+            swal("Oops...","请输入正确格式的手机号码！","error");
+        }
+        else if (!checkEmail(param.email))
+        {
+            swal("Oops...","请输入正确格式的邮箱地址！","error");
+        }
+        else 
+        {
+            postAjax("/teacher/modifyInfo",param,function (data) {
+                if(data.code == 0)
+                {
+                    sweetAlert("Oops...", "修改信息成功", "success");
+                    sessionStorage.setItem("teacherId",userId);
+                    window.location.href = "t_setting.html";
+                }
+                else
+                {
+                    sweetAlert("Oops...", data.msg, "error");
+                }
+            }); 
+        }
+        
         e.stopPropagation();
     });
     $(document).on("click","#personal_index",function (e) {
@@ -174,7 +202,7 @@ $(function(){
                 },
                 function(isConfirm){
                     if (isConfirm) {
-                        if($(".search").val() == "")
+                        if($(".search").val().replace(/(^\s*)|(\s*$)/g,"") == "")
                         {
                             sweetAlert("Oops...", "搜索内容不能为空", "error");
                         }else{
