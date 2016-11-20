@@ -132,7 +132,7 @@ $(function () {
     });
     $(document).on("click",".refuse",function (e) {
         var params = {
-            "teacherId":$("#idTeacher").text(),
+            "teacherId":$("#idTeacher").attr("data"),
             "teacherMail":$("#email").text()
         };
         postAjax("/admin/teacherUnpass",params,function (data) {
@@ -148,5 +148,7 @@ $(function () {
         });
         e.stopPropagation();
     });
-    
+    $(document).on("click","#ad_index",function (e) {
+        window.location.href = "ad_index.html";
+    });
 });
