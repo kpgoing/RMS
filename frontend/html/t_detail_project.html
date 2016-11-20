@@ -2,10 +2,11 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>XX项目</title>
+	<title>项目详情</title>
 	<link rel="stylesheet" type="text/css" href="../css/t_detail.css">
+	<link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
 </head>
-<body>
+<body ms-controller="project">
 	<div id="header">
 		<img src="../img/logo.png">
 		<input type="text" name="search" class="search" placeholder="搜索">
@@ -31,24 +32,27 @@
         <img src="../img/mark.png">
     	<a class="owner" href="#">拥有者</a>
     	<span>/</span>
-    	<a class="proj_name" href="#">项目名字</a>
+    	<a class="proj_name" href="#">{{content.name}}</a>
     </div>
-    <div id="button_group">
+    <div id="button_group" ms-attr-data="content.idProject">
     	<button class="operate">删除</button>
     	<button class="operate">编辑</button>
     </div>
     <div id="content">
     	<div class="left">
-    		<p class="key">名称</p><p class="value">xxx</p><br>
-	    	<p class="key">负责人</p><p class="value">huangjunqin</p><br>
-	    	<p class="key">项目时间</p><p class="value">2014/6/6——2016/6/6</p><br>
-	    	<p class="key">来源</p><p class="value">红红火火恍恍惚惚</p><br>
-	    	<p class="key">经费</p><p class="value">1000000元</p><br>
+    		<p class="key">名称</p><p class="value">{{content.name}}</p><br>
+	    	<p class="key">负责人</p><p class="value">{{content.master}}</p><br>
+	    	<p class="key">项目时间</p><p class="value">{{content.projectTime}}</p><br>
+	    	<p class="key">来源</p><p class="value">{{content.source}}</p><br>
+	    	<p class="key">经费</p><p class="value">{{content.funds}}元</p><br>
 	    	<p class="key">项目介绍</p><br>
-	    	<p class="value" style="margin-left:15px">项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍</p>
+	    	<p class="value" style="margin-left:15px">{{content.introduction}}</p>
     	</div>
     </div>
 </body>
 <script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="../js/avalon.js"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
 <script type="text/javascript" src="../js/t_detail.js"></script>
 </html>

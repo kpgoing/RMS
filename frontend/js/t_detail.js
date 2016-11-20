@@ -1,18 +1,114 @@
 $(function(){
-  teacherId = sessionStorage.getItem("teacherId");
-  paperId = sessionStorage.getItem("paperId");
-  projectId = sessionStorage.getItem("projectId");
-  isModify = sessionStorage.getItem("isModify");
-  uploadURL = null;
+	paperId = sessionStorage.getItem("paperId");
+	projectId = sessionStorage.getItem("projectId");
+	userId = sessionStorage.getItem("userId");
+	teacherId = sessionStorage.getItem("teacherId");
+	isAdmin = sessionStorage.getItem("isAdmin");
 
-  if(isModify && paperId){
-    $("title").text("修改论文");
-    $("#publish_paper").text("完成修改");
-  }else if(isModify && projectId){
-    $("title").text("修改项目");
-    $("#publish_project").text("完成修改");
-  }
-  
+	if(isAdmin && userId == null){
+		$("#button_group > .operate:eq(1)").remove();
+	}else if(isAdmin == null && userId != null && userId != teacherId){
+		$("#button_group").remove();
+	}
+
+	if(paperId != null && projectId == null){
+		var paper = avalon.define({
+			$id:"paper",
+			content:""
+		});
+		getAjax("/paper/"+paperId,null,function(data){
+			if(data.code == 0){
+				paper.content = data.body;
+				avalon.scan();
+			}else{
+				swal("Oops...",data.msg,"error");
+			}
+		});
+
+		$("#button_group > .operate:eq(1)").click(function(){
+			sessionStorage.setItem("isModify",true);
+			window.location.href = "./t_publish_paper.html";
+		});
+
+		$("#button_group > .operate:eq(0)").click(function(){
+			swal({   
+		      title: "Are you sure?",   
+		      text: "你确定要删除此论文吗？",   
+		      type: "warning",   
+		      showCancelButton: true,   
+		      confirmButtonColor: "#DD6B55",   
+		      confirmButtonText: "确定",   
+		      cancelButtonText: "取消",   
+		      closeOnConfirm: false,   
+		      closeOnCancel: true 
+		    }, 
+		    function(isConfirm){   
+		      if (isConfirm) {     
+		        getAjax("/teacher/paper/delete/"+paperId,null,function(data){
+		        	if(data.code == 0){
+		        		sweetAlert("删除成功!", "3秒后将离开本页面!", "success");
+				        setTimeout(function(){
+				          window.location.href = "./t_index.html";
+				        },3000);
+		        	}else{
+		        		swal("Oops...",data.msg,"error");
+		        	}
+		        })
+		      } 
+		    });
+		});
+	}else if(paperId == null && projectId != null){
+		var project = avalon.define({
+			$id:"project",
+			content:""
+		});
+		getAjax("/project/"+projectId,null,function(data){
+			if(data.code == 0){
+				project.content = data.body;
+				avalon.scan();
+			}else{
+				swal("Oops...",data.msg,"error");
+			}
+		});
+
+		$("#button_group > .operate:eq(1)").click(function(){
+			sessionStorage.setItem("isModify",true);
+			window.location.href = "./t_publish_project.html";
+		});
+
+		$("#button_group > .operate:eq(0)").click(function(){
+			swal({   
+		      title: "Are you sure?",   
+		      text: "你确定要删除此项目吗？",   
+		      type: "warning",   
+		      showCancelButton: true,   
+		      confirmButtonColor: "#DD6B55",   
+		      confirmButtonText: "确定",   
+		      cancelButtonText: "取消",   
+		      closeOnConfirm: false,   
+		      closeOnCancel: true 
+		    }, 
+		    function(isConfirm){   
+		      if (isConfirm) {     
+		        getAjax("/teacher/project/delete/"+projectId,null,function(data){
+		        	if(data.code == 0){
+		        		sweetAlert("删除成功!", "3秒后将离开本页面!", "success");
+				        setTimeout(function(){
+				          window.location.href = "./t_index.html";
+				        },3000);
+		        	}else{
+		        		swal("Oops...",data.msg,"error");
+		        	}
+		        })
+		      } 
+		    });
+		});
+	}
+
+	$(".right > button").click(function(){
+		window.location.href = paper.content.content;
+	});
+
 	$(".header_nav_link").click(function (e) {
 		var index = $(this).index();
 		if(index-2 == 0){
@@ -22,83 +118,9 @@ $(function(){
 		}
        	$(".menu").eq(index-2).toggle();
        	e.stopPropagation();
-   });
+   	});
 
-  $(document).click(function () {
+  	$(document).click(function () {
      	$(".menu").hide();
-  });
-
-  $(document).on("click","#uploadpdf",function(){
-  	$("#picker input").click();
-  });
-
-  $(document).on("click","#confirmupload",function(){
-  	$("#ctlBtn").click();
-  });
-
-  $(document).on("click","#cancel_publish",function(){
-    swal({   
-      title: "Are you sure?",   
-      text: "你确定要退出此次编辑吗？",   
-      type: "warning",   
-      showCancelButton: true,   
-      confirmButtonColor: "#DD6B55",   
-      confirmButtonText: "确定",   
-      cancelButtonText: "取消",   
-      closeOnConfirm: false,   
-      closeOnCancel: true 
-    }, 
-    function(isConfirm){   
-      if (isConfirm) {     
-        window.location.href = "./t_index.html";
-      } 
-    });
-  });
-
-  $(document).on("click","#publish_paper",function(){
-    var _value = $(".left > p.value");
-    var params = {
-      "idTeacher": teacherId,
-      "title": _value.eq(0).find("input:eq(0)").val(),
-      "releaseDate": _value.eq(2).find("input:eq(0)").val(),
-      "writer": _value.eq(1).find("input:eq(0)").val(),
-      "publishPlace": _value.eq(3).find("input:eq(0)").val(),
-      "keyWord": _value.eq(4).find("input:eq(0)").val(),
-      "abstractContent": _value.eq(5).find("textarea:eq(0)").val(),
-      "content": uploadURL
-    };
-    postAjax("/teacher/paper/publish",params,function(data){
-      if(data.code == 0){
-        sweetAlert("发表成功!", "3秒后将离开本页面!", "success");
-        setTimeout(function(){
-          window.location.href = "./t_index.html";
-        },3000);
-      }else{
-        swal("Oops...", data.msg, "error");
-      }
-    });
-  });
-
-  $(document).on("click","#publish_project",function(){
-    var _value = $(".left > p.value");
-    var params = {
-      "idTeacher": teacherId,
-      "name": _value.eq(0).find("input:eq(0)").val(),
-      "source": _value.eq(3).find("input:eq(0)").val(),
-      "projectTime": _value.eq(2).find("input:eq(0)").val(),
-      "master": _value.eq(1).find("input:eq(0)").val(),
-      "funds": _value.eq(4).find("input:eq(0)").val(),
-      "introduction": _value.eq(5).find("textarea:eq(0)").val()
-    };
-    postAjax("/teacher/project/publish",params,function(data){
-      if(data.code == 0){
-        sweetAlert("创建成功!", "3秒后将离开本页面!", "success");
-        setTimeout(function(){
-          window.location.href = "./t_index.html";
-        },3000);
-      }else{
-        swal("Oops...", data.msg, "error");
-      }
-    });
-  });
+  	});
 });

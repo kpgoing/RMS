@@ -1,4 +1,5 @@
 // 头像上传
+var userId = sessionStorage.getItem("userId");
 jQuery(function() {
     var $ = jQuery,
         $list = $('#thelist'),
@@ -16,11 +17,16 @@ jQuery(function() {
         swf: BASE_URL + '/Uploader.swf',
 
         // 文件接收服务端。
-        server: '/teacher/paper/uploadfile',
+        server: '/teacher/uploadAvatar/'+userId,
 
         // 选择文件的按钮。可选。
         // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-        pick: '#picker'
+        pick: '#picker',
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        }
     });
 
     // 当有文件添加进来的时候
@@ -51,8 +57,17 @@ jQuery(function() {
         $percent.css( 'width', percentage * 100 + '%' );
     });
 
-    uploader.on( 'uploadSuccess', function( file ) {
-        $( '#'+file.id ).find('p.state').text('已上传');
+    uploader.on( 'uploadSuccess', function( file ,response) {
+        if(response.code == 0)
+        {
+            $( '#'+file.id ).find('p.state').text('已上传');
+            sessionStorage.setItem("avatar","")
+        }
+        else 
+        {
+            
+        }
+        
     });
 
     uploader.on( 'uploadError', function( file ) {

@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +58,7 @@ public class TeacherController {
     @RequestMapping(value = "/teacher/login", method = RequestMethod.POST)
     public ResponseMessage teacherLogin(@Validated(TeacherGroup.login.class) @RequestBody TeacherEntity teacherEntity, HttpSession httpSession, BindingResult bindingResult) {
         TeacherStatus teacherStatus;
+        Map map = new HashMap<>();
         if(bindingResult.hasErrors()) {
             logger.error("teacher login arguments error");
             teacherStatus = TeacherStatus.ARGUMENTS_ERROR;
@@ -66,12 +68,12 @@ public class TeacherController {
                 TeacherEntity anotherEntity = new TeacherEntity();
                 anotherEntity.setAccount(teacherEntity.getAccount());
                 anotherEntity.setPassword(teacherEntity.getPassword());
-                List list = teacherService.getTeacher(anotherEntity);
-                int tid = (int)list.get(1);
+                int tid = teacherService.getTeacherId(anotherEntity);
                 httpSession.setAttribute(teacherKey, tid);
+                map.put("IdTeacher", tid);
             }
         }
-        return new ResponseMessage(teacherStatus);
+        return new ResponseMessage(teacherStatus, map);
     }
 
     /**
@@ -95,7 +97,7 @@ public class TeacherController {
      *     "id":"123",
      *     "email":"123@123.com"
      *     "phoneNumber":"13000000000",
-     *     "byte":0(male)/1(female),
+     *     "gender":0(male)/1(female),
      *     "workPlace":"abc",
      *     "title":"abc"
      * }
@@ -119,16 +121,18 @@ public class TeacherController {
     }
 
     /**
-     * @api {json} /teacher/modifyPassword 教师修改密码
+     * @api {post} /teacher/modifyPassword 教师修改密码
      * @apiName modifyPassword
      * @apiGroup teacher
      * @apiPermission teacher
      * @apiVersion 0.1.0
      * @apiParam {Number} teacherId 教师ID
+     * @apiParam {String} oldPassword 教师旧密码
      * @apiParam {String} newPassword 教师新密码
      * @apiParamExample {json} Request-Example
      * {
      *     "teacherId":1,
+     *     "oldPassword":"111",
      *     "newPassword":"123"
      * }
      * @apiUse NormalSuccessResponse
@@ -141,18 +145,19 @@ public class TeacherController {
     public ResponseMessage modifyPassword(@RequestBody Map map) {
         TeacherStatus teacherStatus;
         int teacherId = (int)map.get("teacherId");
+        String oldPassword = (String)map.get("oldPassword");
         String newPassword = (String)map.get("newPassword");
         if(0 == teacherId || null == newPassword) {
             logger.error("teacher modify password arguments error");
             throw new TeacherException("teacher modify password arguments error", TeacherStatus.ARGUMENTS_ERROR);
         } else {
-            teacherStatus = teacherService.modifyPassword(teacherId, newPassword);
+            teacherStatus = teacherService.modifyPassword(teacherId, oldPassword, newPassword);
         }
         return new ResponseMessage(teacherStatus);
     }
 
     /**
-     * @api {get} /teacher/search/:keyword/:page/:size 查询某个老师
+     * @api {get} /teacher/search/:keyword/:page/:size 搜索老师
      * @apiName searchTeacher
      * @apiGroup teacher
      * @apiVersion 0.1.0
@@ -219,6 +224,12 @@ public class TeacherController {
      * @apiPermssion teacher
      * @apiVersion 0.1.0
      * @apiParam {File} avatar 教师头像
+     * @apiSuccessExample {json} Success-Response:
+     * {
+     *     "code":0,
+     *     "msg":"SUCCESS",
+     *     "body":"\\upload\\1\\1231479614806368.jpg"
+     * }
      * @apiUse NormalSuccessResponse
      * @apiUse NormalErrorResponse
      * @apiUse ArgumentsErrorResponse
@@ -228,8 +239,37 @@ public class TeacherController {
      */
     @RequestMapping(value = "/teacher/uploadAvatar/{id}", method = RequestMethod.POST)
     public ResponseMessage uploadAvatar(@PathVariable("id") int id, HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar) {
+        String avatarPath;
+        avatarPath = teacherService.uploadAvatar(request, avatar, id);
+        return new ResponseMessage(TeacherStatus.SUCCESS, avatarPath);
+    }
+
+    /**
+     * @api {post} /teacher/modifyInfo 修改教师个人信息
+     * @apiName modifyInfo
+     * @apiGroup teacher
+     * @apiVersion 0.1.0
+     * @apiParam {json} TeacherEntity 教师信息
+     * @apiParamExample {json} Request-Example
+     * {
+     *     "IdTeacher":1,
+     *     "birthday":"yyyy-mm-dd",
+     *     "educationBackground":"abc",
+     *     "college":"abc",
+     *     "email":"123@123.com"
+     *     "phoneNumber":"13000000000",
+     *     "workPlace":"abc",
+     *     "title":"abc"
+     * }
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
+     * @apiUse NotFoundErrorResponse
+     * @apiUse UnLoginErrorResponse
+     */
+    @RequestMapping(value = "/teacher/modifyInfo", method = RequestMethod.POST)
+    public ResponseMessage modifyInfo(@RequestBody TeacherEntity teacherEntity) {
         TeacherStatus teacherStatus;
-        teacherStatus = teacherService.uploadAvatar(request, avatar, id);
+        teacherStatus = teacherService.modifyTeacherInfo(teacherEntity);
         return new ResponseMessage(teacherStatus);
     }
 }

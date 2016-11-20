@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>个人主页</title>
+	<title>教师主页</title>
 	<link rel="stylesheet" type="text/css" href="../css/t_index.css">
 	<link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
 </head>
@@ -28,25 +28,26 @@
 	    <div class="menu_detail" data="t_publish_project.html">创建项目</div>
 	    <div class="menu_detail" data="t_publish_paper.html">发表论文</div>
     </div>
-	<div id="container">
+	<div id="container" ms-controller="initinfo">
 		<div id="person">
-			<img src="../img/big_avatar.png">
+			<img ms-if="teacherInfo.avatarUrl == null" src="../img/big_avatar.png">
+			<img ms-if="teacherInfo.avatarUrl != null" ms-attr-src="teacherInfo.avatarUrl">
 			<div class="profile_area">
-				<p id="name">某老师</p>
-				<p id="loginname">5060024</p>
-				<p id="intro">这是一段自我介绍自我介绍</p>
+				<p id="name">{{teacherInfo.name}}</p>
+				<p id="loginname">{{teacherInfo.account}}</p>
+				<p id="intro">{{teacherInfo.phoneNumber}}</p>
 				<button id="modify_personal_info">修改个人信息</button>
 			</div>
 			<div id="intro_detail">
 				<ul>
-					<li><img src="../img/people.png"><span>UESTC</span></li>
-					<li><img src="../img/location.png"><span>China</span></li>
-					<li><img src="../img/email.png"><a href="#">uestc_ccse@uestc.edu.cn</a></li>
-					<li><img src="../img/associate.png"><a href="#">http://www.uestc.edu.cn</a></li>
+					<li><img src="../img/people.png"><span>{{teacherInfo.title}}</span></li>
+					<li><img src="../img/location.png"><span>{{teacherInfo.workPlace}}</span></li>
+					<li><img src="../img/email.png"><a href="#">{{teacherInfo.email}}</a></li>
+					<li><img src="../img/associate.png">{{teacherInfo.college}}</li>
 				</ul>
 			</div>
 		</div>
-		<div id="project" ms-controller="initinfo">
+		<div id="project">
 			<p id="pro_area">科研成果</p>
 			<div class="pro_box" ms-repeat="paper" ms-attr-data="el.idPaper">
 				<a href="#">{{ el.title }}</a>

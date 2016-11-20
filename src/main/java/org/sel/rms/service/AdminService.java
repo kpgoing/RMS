@@ -23,4 +23,8 @@ public interface AdminService {
     Map getUncheck();
 
     List<TeacherEntity> getAllTeachers();
+
+    TeacherEntity getTeacher(int idTeacher);
+
+    AdminStatus modifyPassword(int adminId, String oldPassword, String newPassword);
 }

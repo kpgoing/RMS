@@ -237,18 +237,27 @@ public class AdminController {
         return new ResponseMessage(AdminStatus.SUCCESS, map);
     }
 
+
+//    @RequestMapping(value = "/admin/getAllTeachers", method = RequestMethod.POST)
+//    public ResponseMessage getAllTeachers() {
+//        List<TeacherEntity> teacherEntities;
+//        teacherEntities = adminService.getAllTeachers();
+//        return new ResponseMessage(AdminStatus.SUCCESS, teacherEntities);
+//    }
+
     /**
-     * @api {post} /admin/getAllTeachers 获取所有教师信息
-     * @apiName getAllTeachers
+     * @api {get} /admin/getTeacher/:id 获取单个教师信息
+     * @apiName getTeacher
      * @apiGroup admin
      * @apiPermission admin
      * @apiVersion 0.1.0
+     * @apiParam {Number} id 教师id
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
      *     "code":0,
      *     "msg":"SUCCESS",
-     *     "body":[
+     *     "body":
      *     {
      *     "idTeacher":1,
      *     "account":"teaccher",
@@ -263,36 +272,63 @@ public class AdminController {
      *     "gender":0,
      *     "workPlace":"uestc",
      *     "title":"123",
-     *     "avatarUrl":null
-     *     ,"param1":null,
-     *     "param2":null},
-     *     {
-     *     "idTeacher":2,
-     *     "account":"ttt",
-     *     "password":"111111",
-     *     "birthday":"1970-07-01",
-     *     "educationBackground":"11",
-     *     "college":"11",
-     *     "name":"a",
-     *     "id":"1",
-     *     "email":"123@123.com",
-     *     "phoneNumber":"12345678901",
-     *     "gender":1,
-     *     "workPlace":"uestc",
-     *     "title":"1",
      *     "avatarUrl":null,
      *     "param1":null,
      *     "param2":null
-     *     }]
+     *     }
      * }
+     *
+     * @apiUse NormalSuccessResponse
      * @apiUse NormalErrorResponse
+     * @apiUse ArgumentsErrorResponse
      * @apiUse DataBaseErrorResponse
      * @apiUse UnLoginErrorResponse
      */
-    @RequestMapping(value = "/admin/getAllTeachers", method = RequestMethod.POST)
-    public ResponseMessage getAllTeachers() {
-        List<TeacherEntity> teacherEntities;
-        teacherEntities = adminService.getAllTeachers();
-        return new ResponseMessage(AdminStatus.SUCCESS, teacherEntities);
+    @RequestMapping(value = "/admin/getTeacher/{id}", method = RequestMethod.GET)
+    public ResponseMessage getTeacher(@PathVariable("id") int id) {
+        TeacherEntity teacherEntity;
+        if(0 == id) {
+            logger.error("check teacher arguments error");
+            throw new AdminException("check teacher arguments error", AdminStatus.ARGUMENTS_ERROR);
+        } else {
+            teacherEntity = adminService.getTeacher(id);
+        }
+        return new ResponseMessage(AdminStatus.SUCCESS, teacherEntity);
+    }
+
+    /**
+     * @api {post} /admin/modifyPassword 管理员修改密码
+     * @apiName modifyPassword
+     * @apiGroup admin
+     * @apiPermission admin
+     * @apiVersion 0.1.0
+     * @apiParam {Number} adminId 管理员ID
+     * @apiParam {String} oldPassword 管理员旧密码
+     * @apiParam {String} newPassword 管理员新密码
+     * @apiParamExample {json} Request-Example
+     * {
+     *     "adminId":1,
+     *     "oldPassword":"111",
+     *     "newPassword":"123"
+     * }
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
+     * @apiUse ArgumentsErrorResponse
+     * @apiUse DataBaseErrorResponse
+     * @apiUse UnLoginErrorResponse
+     */
+    @RequestMapping(value = "/admin/modifyPassword", method = RequestMethod.POST)
+    public ResponseMessage modifyPassword(@RequestBody Map map) {
+        AdminStatus adminStatus;
+        int adminId = (int)map.get("adminId");
+        String oldPassword = (String)map.get("oldPassword");
+        String newPassword = (String)map.get("newPassword");
+        if(0 == adminId || null == newPassword) {
+            logger.error("teacher modify password arguments error");
+            throw new AdminException("admin modify password arguments error", AdminStatus.ARGUMENTS_ERROR);
+        } else {
+            adminStatus = adminService.modifyPassword(adminId, oldPassword, newPassword);
+        }
+        return new ResponseMessage(adminStatus);
     }
 }

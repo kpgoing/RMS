@@ -3,6 +3,7 @@ import org.sel.rms.entity.AdminEntity;
 import org.sel.rms.entity.CheckStatusOfTeacherEntity;
 import org.sel.rms.entity.TeacherEntity;
 import org.sel.rms.exception.AdminException;
+import org.sel.rms.exception.TeacherException;
 import org.sel.rms.repository.AdminRepository;
 import org.sel.rms.repository.CheckStatusOfTeacherRepository;
 import org.sel.rms.repository.TeacherRepository;
@@ -126,5 +127,34 @@ public class AdminServiceImpl implements AdminService {
             throw new AdminException("get all teachers error", e, AdminStatus.GET_ALL_TEACHERS_ERROR);
         }
         return teacherEntities;
+    }
+
+    public TeacherEntity getTeacher(int idTeacher) {
+        TeacherEntity teacherEntity;
+        try {
+            teacherEntity = teacherRepository.findOne(idTeacher);
+            teacherEntity.setPassword(null);
+        } catch (Exception e) {
+            throw new AdminException("get a teacher error", e, AdminStatus.GET_A_TEACHER_ERROR);
+        }
+        return teacherEntity;
+    }
+
+    public AdminStatus modifyPassword(int adminId, String oldPassword, String newPassword){
+        AdminStatus adminStatus;
+        AdminEntity adminEntity;
+        try {
+            adminEntity = adminRepository.findOne(adminId);
+            if(!(oldPassword.equals(MD5Util.calc(adminEntity.getPassword())))) {
+                adminStatus = AdminStatus.OLDPASSWORD_ERROR;
+                return adminStatus;
+            }
+            adminEntity.setPassword(newPassword);
+            adminRepository.save(adminEntity);
+            adminStatus = AdminStatus.SUCCESS;
+        } catch (Exception e) {
+            throw new AdminException("modify password error", e, AdminStatus.MODIFY_PASSWORD_ERROR);
+        }
+        return adminStatus;
     }
 }

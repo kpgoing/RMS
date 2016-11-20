@@ -28,77 +28,80 @@
         <div class="menu_detail">发布项目</div>
         <div class="menu_detail">发布论文</div>
     </div>
-    <div class="boxed">
-        <h3>个人基本信息</h3>
-        <div class="change_info">
-            <div class="info_detail">
-                <p>头像</p>
-                <img src="../img/big_avatar.png" class="big_avatar"/>
+    <div>
+        <div class="boxed">
+            <h3>个人基本信息</h3>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>头像</p>
+                    <img src="../img/big_avatar.png" class="big_avatar"/>
                 <span class="upload">
                     <button id="avatar_upload">上传头像</button>
                     <div id="thelist" class="uploader-list"></div>
                 </span>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>姓名</p>
+                    <input class="input_detail disabled" value="李悦" type="text" disabled="disabled"/>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>账号</p>
+                    <input class="input_detail disabled" value="123456" type="text" disabled="disabled"/>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>身份证号</p>
+                    <input class="input_detail disabled" disabled="disabled"  value="14232619974632671882" type="text"/>
+                </div>
             </div>
         </div>
-        <div class="change_info">
-            <div class="info_detail">
-                <p>姓名</p>
-                <input class="input_detail disabled" value="李悦" type="text" disabled="disabled"/>
+        <div class="boxed">
+            <h3>个人详细信息</h3>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>出生年月</p>
+                    <input class="input_detail" type="date"/>
+                </div>
             </div>
-        </div>
-        <div class="change_info">
-            <div class="info_detail">
-                <p>账号</p>
-                <input class="input_detail disabled" value="123456" type="text" disabled="disabled"/>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>手机号</p>
+                    <input class="input_detail" type="text"/>
+                </div>
             </div>
-        </div>
-        <div class="change_info">
-            <div class="info_detail">
-                <p>身份证号</p>
-                <input class="input_detail disabled" disabled="disabled"  value="14232619974632671882" type="text"/>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>邮箱地址</p>
+                    <input class="input_detail" type="text"/>
+                </div>
             </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>工作单位</p>
+                    <input class="input_detail" type="text" ms-attr-value=""/>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>学院</p>
+                    <input class="input_detail" type="text"/>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>教育经历</p>
+                    <textarea class="edu_detail"></textarea>
+                </div>
+            </div>
+            <input type="button" name="send" value="更新信息"/>
         </div>
     </div>
-    <div class="boxed">
-        <h3>个人详细信息</h3>
-        <div class="change_info">
-            <div class="info_detail">
-                <p>出生年月</p>
-                <input class="input_detail" type="date"/>
-            </div>
-        </div>
-        <div class="change_info">
-            <div class="info_detail">
-                <p>手机号</p>
-                <input class="input_detail" type="text"/>
-            </div>
-        </div>
-        <div class="change_info">
-            <div class="info_detail">
-                <p>邮箱地址</p>
-                <input class="input_detail" type="text"/>
-            </div>
-        </div>
-        <div class="change_info">
-            <div class="info_detail">
-                <p>工作单位</p>
-                <input class="input_detail" type="text"/>
-            </div>
-        </div>
-        <div class="change_info">
-            <div class="info_detail">
-                <p>学院</p>
-                <input class="input_detail" type="text"/>
-            </div>
-        </div>
-        <div class="change_info">
-            <div class="info_detail">
-                <p>教育经历</p>
-                <textarea class="edu_detail"></textarea>
-            </div>
-        </div>
-        <input type="button" name="send" value="更新信息"/>
-    </div>
+
     <div id="uploader" class="wu-example" style="position: absolute;bottom:0;opacity:0">
         <!--用来存放文件信息-->
         <div class="btns">

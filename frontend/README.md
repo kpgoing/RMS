@@ -10,12 +10,10 @@
 - 论文ID:paperId
 - 项目ID:projectId
 - 搜索string:searchStr
-<<<<<<< HEAD
-- 是否为管理员:isAdmin(true/false)
+- 是否为管理员:isAdmin(true/null)
 - 用户ID:userId
-=======
-- 修改标志位:isModify(true/false)
->>>>>>> 9da0f451d0fcafe8788799f861627dfae37c2832
+- 修改论文/项目标志位:isModify(true/null)
+- 用户头像链接:avatar
 
 # 编码规范
 
