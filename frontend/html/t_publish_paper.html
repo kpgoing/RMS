@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="../webuploader/webuploader.css">
 	<link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
 </head>
-<body>
+<body ms-controller="paper">
 	<div id="header">
 		<img src="../img/logo.png">
 		<input type="text" name="search" class="search" placeholder="搜索">
@@ -29,20 +29,26 @@
 	    <div class="menu_detail">发布项目</div>
 	    <div class="menu_detail">发布论文</div>
     </div>
+    <div id="sub_header">
+        <img src="../img/mark.png">
+        <a class="owner" href="#">拥有者</a>
+        <span>/</span>
+        <a class="proj_name" href="#">论文标题</a>
+    </div>
     <div id="button_group" style="margin-top:25px;">
     	<button class="operate" id="cancel_publish">取消</button>
     	<button class="operate" id="publish_paper">发布</button>
     </div>
     <div id="content">
     	<div class="left">
-    		<p class="key">题目</p><p class="value"><input type="text" name="title" placeholder="论文标题"></p><br>
-	    	<p class="key">作者</p><p class="value"><input type="text" name="author" placeholder="格式：作者1，作者2..."></p><br>
-	    	<p class="key">发表时间</p><p class="value"><input type="date" name="date"></p><br>
-	    	<p class="key">发表期刊/会议名称</p><p class="value"><input type="text" name="publish" placeholder="例如：《新青年杂志》2016期6月6号"></p><br>
-	    	<p class="key">关键字</p><p class="value"><input type="text" name="keywords" placeholder="格式：tag1,tag2..."></p><br>
+    		<p class="key">题目</p><p class="value"><input type="text" name="title" placeholder="论文标题" ms-attr-value="content.title"></p><br>
+	    	<p class="key">作者</p><p class="value"><input type="text" name="author" placeholder="格式：作者1，作者2..." ms-attr-value="content.writer"></p><br>
+	    	<p class="key">发表时间</p><p class="value"><input type="date" name="date" ms-attr-value="content.publishDate"></p><br>
+	    	<p class="key">发表期刊/会议名称</p><p class="value"><input type="text" name="publish" placeholder="例如：《新青年杂志》2016期6月6号" ms-attr-value="content.publishPlace"></p><br>
+	    	<p class="key">关键字</p><p class="value"><input type="text" name="keywords" placeholder="格式：tag1,tag2..." ms-attr-value="content.keyWord"></p><br>
 	    	<p class="key">论文摘要</p><br>
 	    	<p class="value" style="margin-left:15px">
-                <textarea placeholder="填写您要发布的论文摘要内容"></textarea>
+                <textarea placeholder="填写您要发布的论文摘要内容" ms-attr-value="content.abstractContent"></textarea>
             </p>
     	</div>
     	<div class="right">

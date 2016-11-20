@@ -2,10 +2,21 @@ $(function(){
 	var initinfo = avalon.define({
 		$id:"initinfo",
 		paper:[],
-		project:[]
+		project:[],
+        teacherInfo:"",
 	});
 
 	teacherId = sessionStorage.getItem("teacherId");
+    userId = sessionStorage.getItem("userId");
+    isAdmin = sessionStorage.getItem("isAdmin");
+
+    if(isAdmin){
+        $("#modify_personal_info").attr("id","delete_account");
+        $("#delete_account").text("删除该教师户头").show();
+        $(".header_nav_link:eq(1)").remove();
+    }else if(teacherId == userId && userId != null){
+        $("#modify_personal_info").show();
+    }
 
 	var reqData = {
 		"page":0,
@@ -23,6 +34,13 @@ $(function(){
     }
 
 	function getInfo(data){
+        getAjax("/admin/getTeacher/"+data.id,null,function(data){
+            if(data.code == 0){
+                initinfo.teacherInfo = data.body;
+            }else{
+                sweetAlert("Oops...", data.msg, "error");
+            }
+        });
     	getAjax("/paper/teacher/" + data.id +"/" + data.page + "/" + data.size,null,function(data){
     		if(data.code == 0){
     			initinfo.paper = data.content;
@@ -60,6 +78,11 @@ $(function(){
 
     $(document).on("click",".menu_detail",function(){
     	var _href = $(this).attr("data");
+        if(_href == "t_index.html" && isAdmin){
+            _href = "ad_index.html";
+        }else if(_href == "login.html" && isAdmin){
+            _href = "ad_login.html";
+        }
     	window.location.href = "./" + _href;
     });
 
@@ -78,4 +101,32 @@ $(function(){
             window.location.href = "./t_detail_project.html";
         }
     })
+
+    $(document).on("click","#delete_account",function(){
+        swal({   
+              title: "Are you sure?",   
+              text: "你确定要删除该教师户头吗？",   
+              type: "warning",   
+              showCancelButton: true,   
+              confirmButtonColor: "#DD6B55",   
+              confirmButtonText: "确定",   
+              cancelButtonText: "请三思啊",   
+              closeOnConfirm: false,   
+              closeOnCancel: true 
+            }, 
+            function(isConfirm){   
+              if (isConfirm) {     
+                getAjax("/admin/deleteTeacher/"+teacherId,null,function(data){
+                    if(data.code == 0){
+                        sweetAlert("删除成功!", "3秒后将离开本页面!", "success");
+                        setTimeout(function(){
+                          window.location.href = "./ad_index.html";
+                        },3000);
+                    }else{
+                        swal("Oops...",data.msg,"error");
+                    }
+                })
+              } 
+            });
+    });
 });

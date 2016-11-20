@@ -15,6 +15,7 @@ $(function(){
 				if(data.code == 0){
 					sessionStorage.removeItem("isAdmin");
 					sessionStorage.setItem("userId",data.body.idTeacher);
+					sessionStorage.setItem("teacherId",data.body.idTeacher);
 					window.location.href = "./t_index.html";
 				}else{
 					swal("Oops...", data.msg, "error");

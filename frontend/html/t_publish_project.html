@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/t_detail.css">
 	<link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
 </head>
-<body>
+<body ms-controller="project">
 	<div id="header">
 		<img src="../img/logo.png">
 		<input type="text" name="search" class="search" placeholder="搜索">
@@ -40,16 +40,16 @@
     </div>
     <div id="content">
     	<div class="left">
-    		<p class="key">名称</p><p class="value"><input type="text" name="title" placeholder="项目名称"></p><br>
-	    	<p class="key">负责人</p><p class="value"><input type="text" name="author" placeholder="若有多个负责人则以逗号隔开"></p><br>
-	    	<p class="key">项目时间</p><p class="value"><input type="date" name="start">
+    		<p class="key">名称</p><p class="value"><input type="text" name="title" placeholder="项目名称" ms-attr-value="content.name"></p><br>
+	    	<p class="key">负责人</p><p class="value"><input type="text" name="author" placeholder="若有多个负责人则以逗号隔开" ms-attr-value="content.master"></p><br>
+	    	<p class="key">项目时间</p><p class="value"><input type="date" name="start" ms-attr-value="content.projectTime">
 	    	</p><br>
-	    	<p class="key">来源</p><p class="value"><input type="text" name="source" placeholder="项目来源"></p><br>
-	    	<p class="key">经费</p><p class="value"><input type="text" name="money" placeholder="项目经费">
+	    	<p class="key">来源</p><p class="value"><input type="text" name="source" placeholder="项目来源" ms-attr-value="content.source"></p><br>
+	    	<p class="key">经费</p><p class="value"><input type="text" name="money" placeholder="项目经费" ms-attr-value="content.funds">
 	    	元</p><br>
 	    	<p class="key">项目介绍</p><br>
 	    	<p class="value" style="margin-left:15px">
-	    		<textarea placeholder="项目详情介绍"></textarea>
+	    		<textarea placeholder="项目详情介绍" ms-attr-value="content.introduction"></textarea>
 	    	</p>
     	</div>
     </div>
