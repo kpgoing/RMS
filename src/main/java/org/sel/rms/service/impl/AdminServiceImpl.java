@@ -133,6 +133,7 @@ public class AdminServiceImpl implements AdminService {
         TeacherEntity teacherEntity;
         try {
             teacherEntity = teacherRepository.findOne(idTeacher);
+            teacherEntity.setPassword(null);
         } catch (Exception e) {
             throw new AdminException("get a teacher error", e, AdminStatus.GET_A_TEACHER_ERROR);
         }

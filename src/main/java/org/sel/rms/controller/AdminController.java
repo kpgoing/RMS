@@ -261,7 +261,7 @@ public class AdminController {
      *     {
      *     "idTeacher":1,
      *     "account":"teaccher",
-     *     "password":"111111",
+     *     "password":null,
      *     "birthday":"1980-10-01",
      *     "educationBackground":"doctor",
      *     "college":"uestc",
