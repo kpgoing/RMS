@@ -65,7 +65,7 @@ jQuery(function() {
     uploader.on( 'uploadSuccess', function( file, response ) {
         if(response.code == 0){
             $( '#'+file.id ).find('p.state').text('已上传');
-            //uploadURL = response.body.
+            uploadURL = response.body;
             swal("Good job!", "上传成功！", "success");
         }else{
             $( '#'+file.id ).find('p.state').text('上传出错');
