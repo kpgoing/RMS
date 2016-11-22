@@ -5,8 +5,15 @@ $(function(){
 	teacherId = sessionStorage.getItem("teacherId");
 	isAdmin = sessionStorage.getItem("isAdmin");
 
+	getAjax("/admin/getTeacher/"+teacherId,null,function(data){
+	    if(data.code == 0){
+	      $(".owner").text(data.body.name);
+	    }
+	});
+
 	if(isAdmin && userId == null){
 		$("#button_group > .operate:eq(1)").remove();
+		$(".header_nav_link:eq(1)").remove();
 	}else if(isAdmin == null && userId != null && userId != teacherId){
 		$("#button_group").remove();
 	}
@@ -123,4 +130,32 @@ $(function(){
   	$(document).click(function () {
      	$(".menu").hide();
   	});
+
+  	$(document).on("keyup",".search",function(e){
+        if(e.keyCode == 13)
+        {
+            if($(".search").val().replace(/(^\s*)|(\s*$)/g,"") == "")
+            {
+               sweetAlert("Oops...", "搜索内容不能为空", "error");
+            }
+            else{
+               var temp = $(".search").val().replace(/(^\s*)|(\s*$)/g,"");
+               sessionStorage.setItem("searchStr",temp);
+               window.location.href = "./search.html";
+            }
+        }
+    });
+
+    $(document).on("click",".menu_detail",function(){
+    	var _href = $(this).attr("data");
+        if(_href == "t_index.html" && isAdmin){
+            _href = "ad_index.html";
+        }else if(_href == "login.html" && isAdmin){
+            _href = "ad_login.html";
+        }
+        if(_href == "t_index.html")
+            sessionStorage.setItem("teacherId",userId);
+        sessionStorage.removeItem("isModify");
+    	window.location.href = "./" + _href;
+    });
 });

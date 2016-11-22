@@ -83,6 +83,9 @@ $(function(){
         }else if(_href == "login.html" && isAdmin){
             _href = "ad_login.html";
         }
+        if(_href == "t_index.html")
+            sessionStorage.setItem("teacherId",userId);
+        sessionStorage.removeItem("isModify");
     	window.location.href = "./" + _href;
     });
 
@@ -133,12 +136,12 @@ $(function(){
     $(document).on("keyup",".search",function(e){
         if(e.keyCode == 13)
         {
-            if($(".search").val() == "")
+            if($(".search").val().replace(/(^\s*)|(\s*$)/g,"") == "")
             {
                sweetAlert("Oops...", "搜索内容不能为空", "error");
             }
             else{
-               var temp = $(".search").val();
+               var temp = $(".search").val().replace(/(^\s*)|(\s*$)/g,"");
                sessionStorage.setItem("searchStr",temp);
                window.location.href = "./search.html";
             }

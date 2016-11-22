@@ -3,7 +3,12 @@ $(function(){
   paperId = sessionStorage.getItem("paperId");
   projectId = sessionStorage.getItem("projectId");
   isModify = sessionStorage.getItem("isModify");
-  uploadURL = null;
+
+  getAjax("/admin/getTeacher/"+teacherId,null,function(data){
+    if(data.code == 0){
+      $(".owner").text(data.body.name);
+    }
+  });
 
   if(isModify && paperId != null && projectId == null){
     $("title").text("修改论文");
@@ -16,6 +21,9 @@ $(function(){
       if(data.code == 0){
         paper.content = data.body;
         avalon.scan();
+        setTimeout(function(){
+          $(".proj_name").text($(".left input[name=title]").val());
+        },0);
       }else{
         swal("Oops...",data.msg,"error");
       }
@@ -31,6 +39,9 @@ $(function(){
       if(data.code == 0){
         project.content = data.body;
         avalon.scan();
+        setTimeout(function(){
+          $(".proj_name").text($(".left input[name=title]").val());
+        },0);
       }else{
         swal("Oops...",data.msg,"error");
       }
@@ -88,14 +99,38 @@ $(function(){
     var _value = $(".left > p.value");
     var params = {
       "idTeacher": teacherId,
-      "title": _value.eq(0).find("input:eq(0)").val(),
+      "title": _value.eq(0).find("input:eq(0)").val().replace(/(^\s*)|(\s*$)/g,""),
       "releaseDate": _value.eq(2).find("input:eq(0)").val(),
-      "writer": _value.eq(1).find("input:eq(0)").val(),
-      "publishPlace": _value.eq(3).find("input:eq(0)").val(),
-      "keyWord": _value.eq(4).find("input:eq(0)").val(),
-      "abstractContent": _value.eq(5).find("textarea:eq(0)").val(),
+      "writer": _value.eq(1).find("input:eq(0)").val().replace(/(^\s*)|(\s*$)/g,""), //trim
+      "publishPlace": _value.eq(3).find("input:eq(0)").val().replace(/(^\s*)|(\s*$)/g,""),
+      "keyWord": _value.eq(4).find("input:eq(0)").val().replace(/(^\s*)|(\s*$)/g,""),
+      "abstractContent": _value.eq(5).find("textarea:eq(0)").val().replace(/(^\s*)|(\s*$)/g,""),
       "content": uploadURL
     };
+    var completed = true;
+    if(params.title == ""){
+      swal("Oops...","论文标题不能为空！","error");
+      completed = false;
+    }else if(params.releaseDate == ""){
+      swal("Oops...","请选择论文发表时间！","error");
+      completed = false;
+    }else if(params.writer == ""){
+      swal("Oops...","你连作者都不想写了吗？","error");
+      completed = false;
+    }else if(params.publishPlace == ""){
+      swal("Oops...","请填写发表期刊！","error");
+      completed = false;
+    }else if(params.keyWord == ""){
+      swal("Oops...","请填写论文关键词！","error");
+      completed = false;
+    }else if(params.abstractContent == ""){
+      swal("Oops...","请填写论文摘要！","error");
+      completed = false;
+    }else if(params.content == null){
+      swal("Oops...","请上传你的论文pdf！","error");
+      completed = false;
+    }
+    if(completed == false) return false;
     if(isModify){
       params.idPaper = paperId;
       postAjax("/teacher/paper/modify",params,function(data){
@@ -127,13 +162,37 @@ $(function(){
     var _value = $(".left > p.value");
     var params = {
       "idTeacher": teacherId,
-      "name": _value.eq(0).find("input:eq(0)").val(),
-      "source": _value.eq(3).find("input:eq(0)").val(),
+      "name": _value.eq(0).find("input:eq(0)").val().replace(/(^\s*)|(\s*$)/g,""),
+      "source": _value.eq(3).find("input:eq(0)").val().replace(/(^\s*)|(\s*$)/g,""),
       "projectTime": _value.eq(2).find("input:eq(0)").val(),
-      "master": _value.eq(1).find("input:eq(0)").val(),
-      "funds": _value.eq(4).find("input:eq(0)").val(),
-      "introduction": _value.eq(5).find("textarea:eq(0)").val()
+      "master": _value.eq(1).find("input:eq(0)").val().replace(/(^\s*)|(\s*$)/g,""),
+      "funds": _value.eq(4).find("input:eq(0)").val().replace(/(^\s*)|(\s*$)/g,""),
+      "introduction": _value.eq(5).find("textarea:eq(0)").val().replace(/(^\s*)|(\s*$)/g,"")
     };
+    var completed = true;
+    if(params.name == ""){
+      swal("Oops...","项目名称不能为空！","error");
+      completed = false;
+    }else if(params.source == ""){
+      swal("Oops...","请填写项目来源！","error");
+      completed = false;
+    }else if(params.master == ""){
+      swal("Oops...","请填写项目负责人！","error");
+      completed = false;
+    }else if(params.projectTime == ""){
+      swal("Oops...","请填写项目开始时间！","error");
+      completed = false;
+    }else if(params.funds == ""){
+      swal("Oops...","请填写项目投资金额！","error");
+      completed = false;
+    }else if(!(/^[0-9]*$/g.test(params.funds)) || params.funds <= 0){
+      swal("Oops...","项目投资金额必须是〇以上的阿拉伯数字！","error");
+      completed = false;
+    }else if(params.introduction == ""){
+      swal("Oops...","请填写项目介绍！","error");
+      completed = false;
+    }
+    if(completed == false) return false;
     if(isModify){
       params.idProject = projectId;
       postAjax("/teacher/project/modify",params,function(data){
@@ -160,4 +219,57 @@ $(function(){
       });
     }
   });
+
+  $(document).on("keyup",".search",function(e){
+        if(e.keyCode == 13)
+        {
+            if($(".search").val().replace(/(^\s*)|(\s*$)/g,"") == "")
+            {
+               sweetAlert("Oops...", "搜索内容不能为空", "error");
+            }
+            else{
+              swal({
+                title: "Are you sure?",   
+                text: "你确定要放弃此次编辑吗？",   
+                type: "warning",   
+                showCancelButton: true,   
+                confirmButtonColor: "#DD6B55",   
+                confirmButtonText: "确定",   
+                cancelButtonText: "我手滑了",   
+                closeOnConfirm: false,   
+                closeOnCancel: true 
+              }, 
+              function(isConfirm){
+                if(isConfirm){
+                  var temp = $(".search").val().replace(/(^\s*)|(\s*$)/g,"");
+                  sessionStorage.setItem("searchStr",temp);
+                  window.location.href = "./search.html";
+                }
+              });
+            }
+        }
+    });
+
+    $(document).on("click",".menu_detail",function(){
+      var _href = $(this).attr("data");
+      swal({
+        title: "Are you sure?",   
+          text: "你确定要放弃此次编辑吗？",   
+          type: "warning",   
+          showCancelButton: true,   
+          confirmButtonColor: "#DD6B55",   
+          confirmButtonText: "确定",   
+          cancelButtonText: "我手滑了",   
+          closeOnConfirm: false,   
+          closeOnCancel: true 
+        }, 
+        function(isConfirm){
+          if(isConfirm){
+            if(_href == "t_index.html")
+                  sessionStorage.setItem("teacherId",userId);
+            sessionStorage.removeItem("isModify");
+            window.location.href = "./" + _href;
+          }
+        });
+    });
 });
