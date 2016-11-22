@@ -71,6 +71,8 @@ public class TeacherServiceImpl implements TeacherService {
     public TeacherStatus teacherRegister(TeacherEntity teacherEntity) {
         TeacherStatus teacherStatus;
         try {
+            String password = teacherEntity.getPassword();
+            teacherEntity.setPassword(MD5Util.calc(password));
             teacherRepository.save(teacherEntity);
             teacherStatus = TeacherStatus.SUCCESS;
         } catch (Exception e) {
@@ -172,5 +174,31 @@ public class TeacherServiceImpl implements TeacherService {
             throw new TeacherException("modify teacher information error", e, TeacherStatus.MODIFY_TEACHER_INFO_ERROR);
         }
         return teacherStatus;
+    }
+
+    public TeacherStatus resetPassword(int id, String newPassword) {
+        TeacherStatus teacherStatus;
+        TeacherEntity teacherEntity;
+        try {
+            teacherEntity = teacherRepository.findOne(id);
+            teacherEntity.setPassword(MD5Util.calc(newPassword));
+            teacherRepository.save(teacherEntity);
+            teacherStatus = TeacherStatus.SUCCESS;
+        } catch (Exception e) {
+            throw new TeacherException("reset new password error", e, TeacherStatus.RESET_PASSWORD_ERROR);
+        }
+        return teacherStatus;
+    }
+
+    public int forgetPassword(String email) {
+        int teacherId;
+        TeacherEntity teacherEntity;
+        try {
+            teacherEntity = teacherRepository.findByEmail(email);
+            teacherId = teacherEntity.getIdTeacher();
+        } catch (Exception e) {
+            throw new TeacherException("forget password error", e, TeacherStatus.FORGET_PASSWORD_ERROR);
+        }
+        return teacherId;
     }
 }

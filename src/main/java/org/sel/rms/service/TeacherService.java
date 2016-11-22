@@ -34,4 +34,8 @@ public interface TeacherService {
     String uploadAvatar(HttpServletRequest request, MultipartFile file, int id);
 
     TeacherStatus modifyTeacherInfo(TeacherEntity teacherEntity);
+
+    TeacherStatus resetPassword(int id, String newPassword);
+
+    int forgetPassword(String email);
 }

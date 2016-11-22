@@ -15,4 +15,6 @@ public interface TeacherRepository extends JpaRepository<TeacherEntity,Integer> 
 
     @Query("select s from TeacherEntity s where  s.name like :kw")
     Page<TeacherEntity> search(@Param("kw") String kw, Pageable pageable);
+
+    TeacherEntity findByEmail(String email);
 }

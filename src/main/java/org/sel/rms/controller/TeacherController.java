@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +36,9 @@ public class TeacherController {
 
     @Autowired
     TeacherService teacherService;
+
+    @Autowired
+    JavaMailSender mailSender;
 
     @Value("config.teacher.key")
     String teacherKey;
@@ -280,4 +285,73 @@ public class TeacherController {
         teacherStatus = teacherService.modifyTeacherInfo(teacherEntity);
         return new ResponseMessage(teacherStatus);
     }
+
+    /**
+     * @qpi {post} /teacher/forgetPassword 忘记密码
+     * @apiName forgetPassword
+     * @apiGroup teacher
+     * @apiVersion 0.1.0
+     * @apiParam {json} teacherEmail 教师邮箱
+     * @apiParamExample {json} Request-Example
+     * {
+     *     "teacherEmail":"123@123.com"
+     * }
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
+     * @apiUse NotFoundErrorResponse
+     * @apiUse UnLoginErrorResponse
+     */
+    @RequestMapping(value = "/teacher/forgetPassword", method = RequestMethod.POST)
+    public ResponseMessage forgetPassword(@RequestBody Map map, HttpServletRequest request) {
+        int teacherId;
+        String email = (String)map.get("teacherEmail");
+        teacherId = teacherService.forgetPassword(email);
+        if(0 == teacherId) {
+            throw new TeacherException("find teacher by email error", TeacherStatus.FORGET_PASSWORD_ERROR);
+        } else {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("15528359737@163.com");
+            message.setTo(email);
+            message.setSubject("重置密码");
+            message.setText("请点击此连接重置密码：" + request.getContextPath() + "/html/reset_passwd.html?id=" + teacherId);
+
+            mailSender.send(message);
+        }
+        return new ResponseMessage(TeacherStatus.SUCCESS);
+    }
+
+    /**
+     * @api {post} /teacher/resetPassword 教师修改密码
+     * @apiName resetPassword
+     * @apiGroup teacher
+     * @apiPermission teacher
+     * @apiVersion 0.1.0
+     * @apiParam {Number} teacherId 教师ID
+     * @apiParam {String} newPassword 教师新密码
+     * @apiParamExample {json} Request-Example
+     * {
+     *     "teacherId":1,
+     *     "newPassword":"123"
+     * }
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
+     * @apiUse ArgumentsErrorResponse
+     * @apiUse DataBaseErrorResponse
+     * @apiUse UnLoginErrorResponse
+     */
+    @RequestMapping(value = "/teacher/resetPassword", method = RequestMethod.POST)
+    public ResponseMessage resetPassword(@RequestBody Map map) {
+        TeacherStatus teacherStatus;
+        int teacherId = (int)map.get("teacherId");
+        String newPassword = (String)map.get("newPassword");
+        if(0 == teacherId || null == newPassword) {
+            logger.error("teacher modify password arguments error");
+            throw new TeacherException("teacher modify password arguments error", TeacherStatus.ARGUMENTS_ERROR);
+        } else {
+            teacherStatus = teacherService.resetPassword(teacherId, newPassword);
+        }
+        return new ResponseMessage(teacherStatus);
+    }
+
+
 }
