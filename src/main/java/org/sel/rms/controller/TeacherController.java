@@ -287,7 +287,7 @@ public class TeacherController {
     }
 
     /**
-     * @qpi {post} /teacher/forgetPassword 忘记密码
+     * @api {post} /teacher/forgetPassword 忘记密码
      * @apiName forgetPassword
      * @apiGroup teacher
      * @apiVersion 0.1.0
@@ -321,7 +321,7 @@ public class TeacherController {
     }
 
     /**
-     * @api {post} /teacher/resetPassword 教师修改密码
+     * @api {post} /teacher/resetPassword 教师重置密码
      * @apiName resetPassword
      * @apiGroup teacher
      * @apiPermission teacher
