@@ -110,6 +110,28 @@ $(function () {
         })
     }
     getCheck();
+
+    var allteacher = avalon.define({
+        $id:"allteacher",
+        num:0,
+        content:[]
+    });
+
+    postAjax("/admin/getAllTeachers",null,function(data){
+        if(data.code == 0){
+            allteacher.num = data.body.length;
+            allteacher.content = data.body;
+        }else{
+            sweetAlert("Oops...", data.msg, "error");
+        }
+    });
+
+    $(document).on("click",".muser > a",function(){
+        var idTeacher = $(this).attr("data");
+        sessionStorage.setItem("teacherId",idTeacher);
+        window.location.href = "./t_index.html";
+    });
+
     $(document).on("click",".pass",function (e) {
         
         var params = {

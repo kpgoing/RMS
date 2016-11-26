@@ -195,7 +195,7 @@ body{
     display: inline-block;
 }
 .amount{
-    width: 91%;
+    width: 312px;
     margin-bottom: 20px;
     background-color: #f2dede;
     border-color: #f2dede;
@@ -203,4 +203,49 @@ body{
     padding: 15px;
     border-radius: 3px;
     text-align: center;
+}
+
+.allteacher{
+    width: 342px;
+    border-radius: 3px;
+    border:1px solid #d8d8d8;
+    float: right;
+    clear: both;
+}
+
+.mtitle{
+    color: #333;
+    font-size: 14px;
+    padding: 10px;
+    background-color: #f5f5f5;
+}
+
+.counter{
+    display: inline-block;
+    padding: 2px 5px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    background-color: #babec0;
+    border-radius: 20px;
+}
+
+.muser{
+    border-top: 1px solid #d8d8d8;
+    font-size: 14px;
+    padding: 5px 10px;
+
+}
+
+.muser > img{
+    float: left;
+    width: 20px;
+    padding-right: 10px;
+}
+
+.muser > span{
+    color: #767676;
+    font-size: 12px;
+    float: right;
 }
