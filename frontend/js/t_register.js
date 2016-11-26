@@ -72,7 +72,7 @@ $(function(){
 	$(document).on("click","#create_account",function(){
 		regData.account = $("#board input[name=username]").val().replace(/(^\s*)|(\s*$)/g,"");
 		regData.email = $("#board input[name=email]").val().replace(/(^\s*)|(\s*$)/g,"");
-		regData.password = $("#board input[name=passwd]").val().replace(/(^\s*)|(\s*$)/g,"");
+		regData.password = $("#board input[name=passwd]").val();
 		if(regData.account == ""){
 			swal("Oops...","工号不能为空！","error");
 		}else if(regData.email == ""){
