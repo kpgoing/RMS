@@ -237,13 +237,64 @@ public class AdminController {
         return new ResponseMessage(AdminStatus.SUCCESS, map);
     }
 
-
-//    @RequestMapping(value = "/admin/getAllTeachers", method = RequestMethod.POST)
-//    public ResponseMessage getAllTeachers() {
-//        List<TeacherEntity> teacherEntities;
-//        teacherEntities = adminService.getAllTeachers();
-//        return new ResponseMessage(AdminStatus.SUCCESS, teacherEntities);
-//    }
+    /**
+     * @api {post} /admin/getAllTeachers 获取所有教师信息
+     * @apiName getAllTeachers
+     * @apiGroup admin
+     * @apiPermission admin
+     * @apiVersion 0.1.0
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "code":0,
+     *     "msg":"SUCCESS",
+     *     "body":[
+     *     {
+     *     "idTeacher":1,
+     *     "account":"teaccher",
+     *     "password":null,
+     *     "birthday":"1980-10-01",
+     *     "educationBackground":"doctor",
+     *     "college":"uestc",
+     *     "name":"jack",
+     *     "id":"2",
+     *     "email":"123@123.com",
+     *     "phoneNumber":"12345678901",
+     *     "gender":0,
+     *     "workPlace":"uestc",
+     *     "title":"123",
+     *     "avatarUrl":null
+     *     ,"param1":null,
+     *     "param2":null},
+     *     {
+     *     "idTeacher":2,
+     *     "account":"ttt",
+     *     "password":"111111",
+     *     "birthday":"1970-07-01",
+     *     "educationBackground":"11",
+     *     "college":"11",
+     *     "name":"a",
+     *     "id":"1",
+     *     "email":"123@123.com",
+     *     "phoneNumber":"12345678901",
+     *     "gender":1,
+     *     "workPlace":"uestc",
+     *     "title":"1",
+     *     "avatarUrl":null,
+     *     "param1":null,
+     *     "param2":null
+     *     }]
+     * }
+     * @apiUse NormalErrorResponse
+     * @apiUse DataBaseErrorResponse
+     * @apiUse UnLoginErrorResponse
+     */
+    @RequestMapping(value = "/admin/getAllTeachers", method = RequestMethod.POST)
+    public ResponseMessage getAllTeachers() {
+        List<TeacherEntity> teacherEntities;
+        teacherEntities = adminService.getAllTeachers();
+        return new ResponseMessage(AdminStatus.SUCCESS, teacherEntities);
+    }
 
     /**
      * @api {get} /admin/getTeacher/:id 获取单个教师信息

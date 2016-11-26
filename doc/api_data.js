@@ -85,6 +85,34 @@ define({ "api": [
     "type": "",
     "url": "",
     "version": "0.0.0",
+    "filename": "./doc/doc/doc/main.js",
+    "group": "E__Workbench_RMS_doc_doc_doc_main_js",
+    "groupTitle": "E__Workbench_RMS_doc_doc_doc_main_js",
+    "name": ""
+  },
+  {
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "varname1",
+            "description": "<p>No type.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "varname2",
+            "description": "<p>With type.</p>"
+          }
+        ]
+      }
+    },
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
     "filename": "./doc/doc/main.js",
     "group": "E__Workbench_RMS_doc_doc_main_js",
     "groupTitle": "E__Workbench_RMS_doc_doc_main_js",
@@ -1134,6 +1162,49 @@ define({ "api": [
         {
           "title": "PermissionDenyErrorResponse:",
           "content": "\n{\n  \"code\": 6,\n  \"msg\": \"PERMISSIOM_DENY\",\n  \"body\": null\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "post",
+    "url": "/admin/getAllTeachers",
+    "title": "获取所有教师信息",
+    "name": "getAllTeachers",
+    "group": "admin",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "version": "0.1.0",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"code\":0,\n    \"msg\":\"SUCCESS\",\n    \"body\":[\n    {\n    \"idTeacher\":1,\n    \"account\":\"teaccher\",\n    \"password\":null,\n    \"birthday\":\"1980-10-01\",\n    \"educationBackground\":\"doctor\",\n    \"college\":\"uestc\",\n    \"name\":\"jack\",\n    \"id\":\"2\",\n    \"email\":\"123@123.com\",\n    \"phoneNumber\":\"12345678901\",\n    \"gender\":0,\n    \"workPlace\":\"uestc\",\n    \"title\":\"123\",\n    \"avatarUrl\":null\n    ,\"param1\":null,\n    \"param2\":null},\n    {\n    \"idTeacher\":2,\n    \"account\":\"ttt\",\n    \"password\":\"111111\",\n    \"birthday\":\"1970-07-01\",\n    \"educationBackground\":\"11\",\n    \"college\":\"11\",\n    \"name\":\"a\",\n    \"id\":\"1\",\n    \"email\":\"123@123.com\",\n    \"phoneNumber\":\"12345678901\",\n    \"gender\":1,\n    \"workPlace\":\"uestc\",\n    \"title\":\"1\",\n    \"avatarUrl\":null,\n    \"param1\":null,\n    \"param2\":null\n    }]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./src/main/java/org/sel/rms/controller/AdminController.java",
+    "groupTitle": "admin",
+    "error": {
+      "examples": [
+        {
+          "title": "NormalErrorResponse:",
+          "content": "\n{\n  \"code\": 1,\n  \"msg\": \"ERROR(:...some err info)\",\n  \"body\": null\n}",
+          "type": "json"
+        },
+        {
+          "title": "DataBaseErrorResponse:",
+          "content": "\n{\n  \"code\": 3,\n  \"msg\": \"DATABASE_ERROR\",\n  \"body\": null\n}",
+          "type": "json"
+        },
+        {
+          "title": "UnLoginErrorResponse:",
+          "content": "\n{\n  \"code\": 5,\n  \"msg\": \"UN_LOGIN\",\n  \"body\": null\n}",
           "type": "json"
         }
       ]
