@@ -55,7 +55,7 @@ public class MD5Util {
 
 
     public static void main(String[] args) {
-        System.out.print(MD5Util.calc("123"));
+        System.out.print(MD5Util.calc("12345678"));
     }
 
 }

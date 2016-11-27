@@ -40,7 +40,7 @@ public class TeacherController {
     @Autowired
     JavaMailSender mailSender;
 
-    @Value("config.teacher.key")
+    @Value("${config.teacher.key}")
     String teacherKey;
 
     /**
@@ -123,8 +123,12 @@ public class TeacherController {
     @RequestMapping(value = "/teacher/register", method = RequestMethod.POST)
     public ResponseMessage teacherRegister(@Validated(TeacherGroup.register.class) @RequestBody TeacherEntity teacherEntity, BindingResult bindingResult) {
         TeacherStatus teacherStatus;
+        System.out.println(teacherEntity);
         if(bindingResult.hasErrors()) {
             logger.error("teacher register arguments error");
+            StringBuilder errors = new StringBuilder("error:");
+            bindingResult.getAllErrors().forEach(n -> errors.append(n.getDefaultMessage() + "     "));
+            logger.error(errors.toString());
             teacherStatus = TeacherStatus.ARGUMENTS_ERROR;
         } else {
             teacherStatus = teacherService.teacherRegister(teacherEntity);
@@ -251,7 +255,7 @@ public class TeacherController {
      * @apiUse UploadFileErrorResponse
      */
     @RequestMapping(value = "/teacher/uploadAvatar/{id}", method = RequestMethod.POST)
-    public ResponseMessage uploadAvatar(@PathVariable("id") int id, HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar) {
+    public ResponseMessage uploadAvatar(@PathVariable("id") int id, HttpServletRequest request, @RequestParam("file") MultipartFile avatar) {
         String avatarPath;
         avatarPath = teacherService.uploadAvatar(request, avatar, id);
         return new ResponseMessage(TeacherStatus.SUCCESS, avatarPath);

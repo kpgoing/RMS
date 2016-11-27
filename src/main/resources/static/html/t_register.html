@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>新用户注册</title>
+	<link rel="stylesheet" type="text/css" href="../css/t_register.css">
+	<link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
+</head>
+<body>
+	<div id="header">
+		<img src="../img/logo.png" width="35">
+		<button class="signup">注册</button>
+		<button class="signin">登录</button>
+	</div>
+	<div id="container">
+		<div id="flow">
+			<p class="title">注册账户</p>
+			<p class="lead">妥善管理、分享您的科研成果</p>
+			<div id="step">
+				<div class="block active" style="border-right:1px solid #ddd">
+					<img src="../img/person.png" width="35">
+					<div class="title">
+						<p>第一步:</p>
+						<p>创建您的账户</p>
+					</div>
+				</div>
+				<div class="block" style="border-right:1px solid #ddd">
+					<img src="../img/info_ccc.png" width="35">
+					<div class="title">
+						<p>第二步:</p>
+						<p>完善个人信息</p>
+					</div>
+				</div>
+				<div class="block">
+					<img src="../img/complete_ccc.png" width="35">
+					<div class="title">
+						<p>第三步:</p>
+						<p>等待管理员审核</p>
+					</div>
+				</div>
+			</div>
+			<div id="board">
+				<div class="left show">
+					<p class="title">创建账户</p>
+					<p class="min_title">工号</p>
+					<input type="text" name="username">
+					<p class="explain">填写学校分配的教师工号</p>
+					<p class="min_title">邮箱</p>
+					<input type="text" name="email">
+					<p class="explain">填写您常用的邮箱，我们确保不会泄露您的信息</p>
+					<p class="min_title">密码</p>
+					<input type="password" name="passwd">
+					<p class="explain">密码长度位于8位~16位，不能包含空格字符</p>
+					<i></i>
+					<button id="create_account">创建账户</button>
+				</div>
+				<div class="left ">
+					<p class="title">完善个人信息</p>
+					<p class="min_title">姓名</p>
+					<input type="text" name="name">
+					<p class="explain">填写您的真实姓名</p>
+					<p class="min_title_select">性别</p>
+					<select>
+						<option>男</option>
+						<option>女</option>
+					</select>
+					<p class="min_title_select">职称</p>
+					<select>
+						<option>讲师</option>
+						<option>副教授</option>
+						<option>教授</option>
+					</select>
+					<p class="min_title">出生年月</p>
+					<input type="date" name="birth">
+					<p class="min_title">身份证号</p>
+					<input type="text" name="IDCard">
+					<p class="explain">填写您的居民身份证号</p>
+					<p class="min_title">手机号</p>
+					<input type="text" name="phone">
+					<p class="explain">请确保手机号真实有效，我们不会泄露您的个人信息</p>
+					<p class="min_title">工作单位</p>
+					<input type="text" name="company">
+					<p class="min_title">院系</p>
+					<input type="text" name="college">
+					<i></i>
+					<button id="complete_reg">完成注册</button>
+				</div>
+				<div class="left ">
+					<p class="title">注册成功</p>
+					<div class="complete_box">
+						<span>恭喜您已经注册成功！请等待管理员审核信息，结果将会反馈到您的注册邮箱。</span>
+					</div>
+				</div>
+			</div>
+			<img src="../img/logo_ccc.png" class="bottom_logo">
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
+<script type="text/javascript" src="../js/t_register.js"></script>
+</html>

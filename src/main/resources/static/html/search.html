@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+    <link type="text/css" href="../css/search.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img  class="logo" src="../img/logo.png"/>
+            <div class="header_nav_link" >
+                <img src="../img/avatar.png">
+                <span class="dropdown"></span>
+            </div>
+            <div class="header_nav_link" id="change">
+                <img src="../img/plus.png">
+                <span class="dropdown"></span>
+            </div>
+            <div class="menu" style="right:14%">
+                <div class="menu_detail">发布项目</div>
+                <div class="menu_detail">发布论文</div>
+            </div>
+            <div class="menu" style="right:10%">
+                <div class="menu_detail" id="personal_index">个人主页</div>
+                <div class="menu_detail" id="reset_password">修改密码</div>
+                <div class="menu_detail" id="sign_out">退出登录</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="search">
+                <span>Search</span>
+                <input type="text" class="input_search"/>
+                <button class="button_search">搜索</button>
+            </div>
+            <div class="result">
+                <div class="result_menu">
+                    <span class="paper choose" id="paper">论文</span>
+                    <span class="proj" id="project">项目</span>
+                    <span class="user" id="user">用户</span>
+                </div>
+                <div class="result_detail" ms-controller="detail">
+                    <p class="result_number">我们找到<span>{{number}}</span>条结果</p>
+                    <div class="result_blocks" ms-repeat = "content">
+                        <a class="headline" href="#" >{{el.headline}}</a>
+                        <span class="update_time">Publish On <span>{{el.time}}</span></span>
+                        <p class="abstract">{{el.sign}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="../js/avalon.js"></script>
+    <script type="text/javascript" src="../js/ajax.js"></script>
+    <script type="text/javascript" src="../js/search.js"></script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+*{
+	margin:0;
+	padding: 0;
+	font-family: "Microsoft YaHei";
+}
+
+body{
+	min-width: 1366px;
+}
+
+ul{
+	list-style-type: none;
+}
+
+a{
+	color: #4080cd;
+	text-decoration: none;
+}
+
+a:hover{
+	text-decoration: underline; 
+}
+
+#header{
+	height: 29px;
+	border-bottom: 1px solid #e5e5e5;
+	background-color: #f5f5f5;
+	padding: 10px 13.1%;
+}
+
+#header > img{
+	float: left;
+	height: 29px;
+}
+
+.search{
+	float: left;
+	padding: 0 5px;
+    height: 26px;
+    margin-left: 10px;
+    font-size: 13px;
+    border-radius: 3px;
+    width: 360px;
+    border:1px solid #ddd;
+	box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+}
+
+.header_nav_link{
+	float: right; 
+	cursor: pointer;
+	margin-left: 15px;
+}
+
+.header_nav_link:hover,.header_nav_link:focus{
+	color: #4078c0;
+}
+
+.header_nav_link > img{
+	display: inline-block;
+	vertical-align: middle;
+	height: 20px;
+	width: 20px;
+}
+
+.dropdown{
+	display: inline-block;
+    width: 0;
+    height: 0;
+    margin-top: 4px;
+    vertical-align: middle;
+    content: "";
+    border: 4px solid;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+}
+
+#container{
+	padding: 27px 10%;
+}
+
+#person{
+	float: left;
+	width: 23.6%;
+	margin-right: 2.4%;
+}
+
+.profile_area{
+	margin: 15px 0;
+	color: #666;
+	border-bottom: 1px solid #eee;
+}
+
+#project{
+	float: left;
+	width: 74%;
+}
+
+#person > img{
+	width: 100%;
+}
+
+#modify_personal_info,#delete_account{
+	display: none;
+	height: 36px;
+	width: 100%;
+	border-radius: 3px;
+	margin-bottom: 12px;
+}
+
+#delete_account{
+	border:1px solid #a00;
+	background-image: linear-gradient(to bottom,#df3e3e,#df3e3e);
+	color: #fff;
+}
+
+#modify_personal_info{
+	border: 1px solid #d5d5d5;
+	background-image: linear-gradient(to bottom,#fbfbfb,#efefef);
+	color: #333;
+}
+
+#loginname{
+	font-family: "Microsoft YaHei Light";
+	font-size: 16px;
+}
+
+#name{
+	font-size: 25px;
+	margin-bottom: 5px;
+	color: #333;
+	font-family: '宋体';
+	font-weight: bold;
+}
+
+#intro{
+	margin: 15px 0;
+	font-size:14px; 
+	font-family: "Microsoft YaHei Light";
+}
+
+#intro_detail{
+	margin-top: 20px;
+}
+
+#intro_detail li{
+	font-family: "Microsoft YaHei Light";
+	color: #333;
+	font-size: 13px;
+	margin-bottom: 10px;
+}
+
+#intro_detail li > span,#intro_detail li > a{
+	display: inline-block;
+}
+
+#intro_detail li > img{
+	float: left;
+	margin-right: 5px;
+	height: 20px;
+	width: 20px;
+}
+
+#pro_area{
+	font-size: 18px;
+	margin-bottom: 15px;
+	color: #333;
+}
+
+.pro_box{
+	float: left;
+	width: 49%;
+	height: 75px;
+	font-size: 14px;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 15px 0 10px;
+	margin-bottom: 10px;
+}
+
+.pro_box:nth-child(2n){
+	margin-right: 1%;
+}
+
+.pro_box > *{
+	margin-left: 10px;
+}
+
+.pro_box > a{
+	display: inline-block;
+	padding-left: 20px;
+	background: url('../img/menu.png') left no-repeat;
+	background-size: 15px 15px;
+}
+
+.pro_intro{
+	margin-top: 10px;
+	color: #767676;
+	font-size: 12px;
+}
+
+.pro_kind{
+	background:url('../img/branch.png') left no-repeat;
+}
+
+.pro_time{
+	background:url('../img/clock.png') left no-repeat;
+}
+
+.pro_kind,.pro_time{
+	margin-top: 15px;
+	font-size: 12px;
+	padding-left: 20px;
+	display: inline-block;
+	color: #767676;
+	background-size: 15px 15px;
+}
+
+.menu{
+    width: 100px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    background-color: #fff;
+    background-clip: padding-box;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+    z-index: 100;
+    display: none;
+    position: absolute;
+    top: 50px;
+}
+
+.menu_detail{
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    padding-top: 10px;
+    height: 33px;
+    border-bottom: 1px solid #d5d5d5;
+    font-size: 14px;
+}
+
+.menu_detail:hover {
+    background: #4078c0;
+    color: #fff;
+}

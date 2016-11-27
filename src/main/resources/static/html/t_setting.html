@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+    <link type="text/css" href="../css/t_setting.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../webuploader/webuploader.css">
+    <link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
+</head>
+<body>
+    <div id="header">
+        <img src="../img/logo.png">
+        <input type="text" name="search" class="search" placeholder="搜索">
+        <div class="header_nav_link">
+            <img src="../img/avatar.png">
+            <span class="dropdown"></span>
+        </div>
+        <div class="header_nav_link">
+            <img src="../img/plus.png">
+            <span class="dropdown"></span>
+        </div>
+    </div>
+    <div class="menu" style="right:10%">
+        <div class="menu_detail" id="personal_index">个人主页</div>
+        <div class="menu_detail" id="reset_password">修改密码</div>
+        <div class="menu_detail" id="sign_out">退出登录</div>
+    </div>
+    <div class="menu" style="right:14%">
+        <div class="menu_detail">发布项目</div>
+        <div class="menu_detail">发布论文</div>
+    </div>
+    <div ms-controller="teacherInfor">
+        <div class="boxed">
+            <h3>个人基本信息</h3>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>头像</p>
+                    <img ms-if="mainInfor.avatarUrl != null"  ms-attr-src="mainInfor.avatarUrl" class="big_avatar"/>
+                    <img ms-if="mainInfor.avatarUrl == null" src="../img/big_avatar.png" class="big_avatar"/>
+                <span class="upload">
+                    <button id="avatar_upload">上传头像</button>
+                    <div id="thelist" class="uploader-list"></div>
+                </span>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>姓名</p>
+                    <input class="input_detail disabled" ms-attr-value="mainInfor.name" type="text" disabled="disabled"/>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>账号</p>
+                    <input class="input_detail disabled" ms-attr-value="mainInfor.account" type="text" disabled="disabled"/>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>身份证号</p>
+                    <input class="input_detail disabled" disabled="disabled"  ms-attr-value="mainInfor.id" type="text"/>
+                </div>
+            </div>
+        </div>
+        <div class="boxed">
+            <h3>个人详细信息</h3>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>出生年月</p>
+                    <input class="input_detail" ms-attr-value="mainInfor.birthday" type="date"/>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>手机号</p>
+                    <input class="input_detail" ms-attr-value="mainInfor.phoneNumber" type="text"/>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>邮箱地址</p>
+                    <input class="input_detail" ms-attr-value="mainInfor.email" type="text"/>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>工作单位</p>
+                    <input class="input_detail" type="text" ms-attr-value="mainInfor.workPlace"/>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>学院</p>
+                    <input class="input_detail" ms-attr-value="mainInfor.college" type="text"/>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>教育经历</p>
+                    <textarea class="edu_detail" ms-attr-value="mainInfor.educationBackground"></textarea>
+                </div>
+            </div>
+            <input type="button" name="send" id="update" value="更新信息"/>
+        </div>
+    </div>
+
+    <div id="uploader" class="wu-example" style="position: absolute;bottom:0;opacity:0">
+        <!--用来存放文件信息-->
+        <div class="btns">
+            <div id="picker">选择文件</div>
+            <button id="ctlBtn" class="btn btn-default">开始上传</button>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="../webuploader/webuploader.js"></script>
+    <script type="text/javascript" src="../js/avatar_upload.js"></script>
+    <script type="text/javascript" src="../js/avalon.js"></script>
+    <script type="text/javascript" src="../js/ajax.js"></script>
+    <script type="text/javascript" src="../js/t_setting.js"></script>
+</body>
+</html>

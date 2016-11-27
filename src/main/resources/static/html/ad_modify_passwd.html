@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <link type="text/css" href="../css/ad_modify_passwd.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../webuploader/webuploader.css">
+    <link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
+</head>
+<body>
+<div class="header">
+    <img  class="logo" src="../img/logo.png"/>
+    <input type="text" name="search" class="search" placeholder="搜索">
+    <div class="header_nav_link" >
+        <img src="../img/avatar.png">
+        <span class="dropdown"></span>
+    </div>
+    <div class="header_nav_link" id="change">
+        <img src="../img/plus.png">
+        <span class="dropdown"></span>
+    </div>
+    <div class="menu" style="right:10%">
+        <div class="menu_detail" id="personal_index">个人主页</div>
+        <div class="menu_detail" id="reset_password">修改密码</div>
+        <div class="menu_detail" id="sign_out">退出登录</div>
+    </div>
+    <div class="menu" style="right:14%">
+        <div class="menu_detail">发布项目</div>
+        <div class="menu_detail">发布论文</div>
+    </div>
+
+</div>
+    <div class="content">
+        <div class="boxed">
+            <h3>修改密码</h3>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>旧密码</p>
+                    <input id="old_password" class="input_detail" type="password"/>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>新密码</p>
+                    <input id="new_password" class="input_detail" type="password"/>
+                </div>
+            </div>
+            <div class="change_info">
+                <div class="info_detail">
+                    <p>确认新密码</p>
+                    <input  id="repeat_password" class="input_detail" type="password"/>
+                </div>
+            </div>
+            <button class="password_submit">确认修改</button>
+            <a href="#">忘记密码?</a>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="../js/avalon.js"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
+    <script type="text/javascript" src="../js/ad_modify_passwd.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>发表论文</title>
+	<link rel="stylesheet" type="text/css" href="../css/t_detail.css">
+	<link rel="stylesheet" type="text/css" href="../webuploader/webuploader.css">
+	<link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
+</head>
+<body ms-controller="paper">
+	<div id="header">
+		<img src="../img/logo.png">
+		<input type="text" name="search" class="search" placeholder="搜索">
+		<div class="header_nav_link">
+		    <img src="../img/avatar.png">
+			<span class="dropdown"></span>
+		</div>
+		<div class="header_nav_link">
+		    <img src="../img/plus.png">
+			<span class="dropdown"></span>
+		</div>
+	</div>
+    <div class="menu" style="right:10%">
+        <div class="menu_detail" data="t_index.html">个人主页</div>
+        <div class="menu_detail" id="reset_password" data="ad_modify_passwd.html">修改密码</div>
+        <div class="menu_detail" id="sign_out" data="login.html">退出登录</div>
+    </div>
+    <div class="menu" style="right:14%">
+        <div class="menu_detail" data="t_publish_project.html">创建项目</div>
+        <div class="menu_detail" data="t_publish_paper.html">发表论文</div>
+    </div>
+    <div id="sub_header">
+        <img src="../img/mark.png">
+        <a class="owner" href="#">拥有者</a>
+        <span>/</span>
+        <a class="proj_name" href="#">论文标题</a>
+    </div>
+    <div id="button_group" style="margin-top:25px;">
+    	<button class="operate" id="cancel_publish">取消</button>
+    	<button class="operate" id="publish_paper">发布</button>
+    </div>
+    <div id="content">
+    	<div class="left">
+    		<p class="key">题目</p><p class="value"><input type="text" name="title" placeholder="论文标题" ms-attr-value="content.title"></p><br>
+	    	<p class="key">作者</p><p class="value"><input type="text" name="author" placeholder="格式：作者1，作者2..." ms-attr-value="content.writer"></p><br>
+	    	<p class="key">发表时间</p><p class="value"><input type="date" name="date" ms-attr-value="content.releaseDate"></p><br>
+	    	<p class="key">发表期刊/会议名称</p><p class="value"><input type="text" name="publish" placeholder="例如：《新青年杂志》2016期6月6号" ms-attr-value="content.publishPlace"></p><br>
+	    	<p class="key">关键字</p><p class="value"><input type="text" name="keywords" placeholder="格式：tag1,tag2..." ms-attr-value="content.keyWord"></p><br>
+	    	<p class="key">论文摘要</p><br>
+	    	<p class="value" style="margin-left:15px">
+                <textarea placeholder="填写您要发布的论文摘要内容" ms-attr-value="content.abstractContent"></textarea>
+            </p>
+    	</div>
+    	<div class="right">
+    		<img src="../img/pdf.png"><br>
+    		<button style="background-color:#58b032;color:#fff;" id="uploadpdf">选择文件</button>
+    		<div id="thelist" class="uploader-list" style="position:absolute;top:20px;left:600px;width:400px"></div>
+    	</div>
+    </div>
+</body>
+<div id="uploader" class="wu-example" style="position: absolute;bottom:0;opacity:0">
+    <!--用来存放文件信息-->
+    <div class="btns">
+        <div id="picker">选择文件</div>
+        <button id="ctlBtn" class="btn btn-default">开始上传</button>
+    </div>
+</div>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="../webuploader/webuploader.js"></script>
+<script type="text/javascript" src="../js/avalon.js"></script>
+<script type="text/javascript" src="../js/uploader.js"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
+<script type="text/javascript" src="../js/t_detail_publish.js"></script>
+</html>

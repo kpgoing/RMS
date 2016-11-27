@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +54,7 @@ public class TeacherServiceImpl implements TeacherService {
                 }
             }
         } catch (Exception e) {
-            throw new TeacherException("authorize teacher error", TeacherStatus.ERROR);
+            throw new TeacherException("authorize teacher error", e, TeacherStatus.ERROR);
         }
         return teacherStatus;
     }
@@ -76,7 +77,7 @@ public class TeacherServiceImpl implements TeacherService {
             teacherRepository.save(teacherEntity);
             teacherStatus = TeacherStatus.SUCCESS;
         } catch (Exception e) {
-            throw new TeacherException("save teacher information error", TeacherStatus.SAVE_INFO_ERROR);
+            throw new TeacherException("save teacher information error", e, TeacherStatus.SAVE_INFO_ERROR);
         }
         return teacherStatus;
     }
@@ -168,7 +169,17 @@ public class TeacherServiceImpl implements TeacherService {
     public TeacherStatus modifyTeacherInfo(TeacherEntity teacherEntity) {
         TeacherStatus teacherStatus;
         try {
-            teacherRepository.save(teacherEntity);
+            TeacherEntity one = teacherRepository.findOne(teacherEntity.getIdTeacher());
+            System.out.println(teacherEntity);
+            Date date = teacherEntity.getBirthday();
+            one.setBirthday(teacherEntity.getBirthday());
+            one.setCollege(teacherEntity.getCollege());
+            one.setEducationBackground(teacherEntity.getEducationBackground());
+            one.setEmail(teacherEntity.getEmail());
+            one.setWorkPlace(teacherEntity.getWorkPlace());
+            one.setPhoneNumber(teacherEntity.getPhoneNumber());
+            one.setTitle(one.getTitle());
+            teacherRepository.save(one);
             teacherStatus = TeacherStatus.SUCCESS;
         } catch (Exception e) {
             throw new TeacherException("modify teacher information error", e, TeacherStatus.MODIFY_TEACHER_INFO_ERROR);

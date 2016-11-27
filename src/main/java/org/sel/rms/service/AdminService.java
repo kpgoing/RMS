@@ -14,7 +14,7 @@ import java.util.Map;
 public interface AdminService {
     AdminStatus adminAuth(AdminEntity adminEntity);
 
-    List getAdmin(AdminEntity adminEntity);
+    int getAdmin(AdminEntity adminEntity);
 
     AdminStatus checkTeacher(int teacherId);
 

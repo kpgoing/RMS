@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 
 /**
 * 生成于2016/10/29
@@ -39,7 +41,7 @@ public class AdminServiceImpl implements AdminService {
     String adminKey;
 
     @Override
-    public AdminStatus adminAuth(AdminEntity adminEntity) {
+    public AdminStatus  adminAuth(AdminEntity adminEntity) {
         AdminStatus status = AdminStatus.ERROR;
         AdminEntity adminEntityAuth;
         try {
@@ -59,16 +61,14 @@ public class AdminServiceImpl implements AdminService {
         return status;
     }
 
-    public List getAdmin(AdminEntity adminEntity) {
-        List list = new ArrayList<>();
+    public int getAdmin(AdminEntity adminEntity) {
         AdminEntity adminResult;
         try {
             adminResult = adminRepository.findByAccount(adminEntity.getAccount());
         } catch (Exception e) {
             throw new AdminException("find admin by account error", e, AdminStatus.ERROR);
         }
-        list.add(adminResult.getIdAdmin());
-        return list;
+        return adminEntity.getIdAdmin();
     }
 
     public AdminStatus checkTeacher(int teacherId) {
@@ -100,17 +100,24 @@ public class AdminServiceImpl implements AdminService {
 
     public Map getUncheck() {
         Map map = new HashMap<>();
+        int id;
+        int uncheckNum;
         TeacherEntity teacherEntity;
-        List<CheckStatusOfTeacherEntity> checkStatusOfTeacherEntities;
+        List<CheckStatusOfTeacherEntity> checkStatusOfTeacherEntities = null;
         try {
             checkStatusOfTeacherEntities = checkStatusOfTeacherRepository.uncheckList();
         } catch (Exception e) {
             throw new AdminException("get uncheck list error", e, AdminStatus.GET_UNCHECK_ERROR);
         }
-        int id = checkStatusOfTeacherEntities.get(0).getIdTeacher();
-        teacherEntity = teacherRepository.findOne(id);
-        teacherEntity.setPassword(null);
-        int uncheckNum = checkStatusOfTeacherEntities.size() - 1;
+        if (checkStatusOfTeacherEntities.size() == 0) {
+            teacherEntity = null;
+            uncheckNum = 0;
+        } else {
+            id = checkStatusOfTeacherEntities.get(0).getIdTeacher();
+            teacherEntity = teacherRepository.findOne(id);
+            teacherEntity.setPassword(null);
+            uncheckNum = checkStatusOfTeacherEntities.size();
+        }
         map.put("uncheckNum", uncheckNum);
         map.put("teacher", teacherEntity);
         return map;

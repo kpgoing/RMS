@@ -73,8 +73,7 @@ public class AdminController {
                 AdminEntity anotherAdminEntity = new AdminEntity();
                 anotherAdminEntity.setAccount(adminEntity.getAccount());
                 anotherAdminEntity.setPassword(adminEntity.getPassword());
-                List list = adminService.getAdmin(anotherAdminEntity);
-                int aid = (int) list.get(1);
+                int aid = adminService.getAdmin(anotherAdminEntity);
                 httpSession.setAttribute(adminKey, aid);
             }
         }
@@ -103,7 +102,7 @@ public class AdminController {
     @RequestMapping(value = "/admin/checkTeacher", method = RequestMethod.POST)
     public ResponseMessage checkTeacher(@RequestBody Map map) {
         AdminStatus adminStatus;
-        int teacherId = (int)map.get("teacherId");
+        int teacherId = Integer.parseInt((String)map.get("teacherId"));
         String teacherMail = (String)map.get("teacherMail");
         if(0 == teacherId) {
             logger.error("check teacher arguments error");
@@ -112,7 +111,7 @@ public class AdminController {
             adminStatus = adminService.checkTeacher(teacherId);
             if(AdminStatus.SUCCESS.equals(adminStatus)) {
                 SimpleMailMessage message = new SimpleMailMessage();
-                message.setFrom("15528359737@163.com");
+                message.setFrom("科研管理系统");
                 message.setTo(teacherMail);
                 message.setSubject("审核结果");
                 message.setText("审核通过");
@@ -154,7 +153,7 @@ public class AdminController {
             adminStatus = adminService.unpassTeacher(teacherId);
             if(AdminStatus.SUCCESS.equals(adminStatus)) {
                 SimpleMailMessage message = new SimpleMailMessage();
-                message.setFrom("15528359737@163.com");
+                message.setFrom("科研管理系统");
                 message.setTo(teacherMail);
                 message.setSubject("审核结果");
                 message.setText("审未通过,请重新注册");

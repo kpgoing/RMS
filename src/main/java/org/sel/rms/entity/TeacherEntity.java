@@ -27,7 +27,7 @@ public class TeacherEntity {
     private String name;
     @NotNull(groups = {TeacherGroup.register.class})
     private String id;
-    @Pattern(regexp = "^\\\\s*\\\\w+(?:\\\\.{0,1}[\\\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\\\.[a-zA-Z]+\\\\s*$",groups = {TeacherGroup.register.class})
+//    @Pattern(regexp = "^\\\\s*\\\\w+(?:\\\\.{0,1}[\\\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\\\.[a-zA-Z]+\\\\s*$",groups = {TeacherGroup.register.class})
     private String email;
     @Pattern(regexp = "^1[3-8]{1}\\d{9}$", groups = {TeacherGroup.register.class})
     private String phoneNumber;
@@ -247,5 +247,27 @@ public class TeacherEntity {
         result = 31 * result + (param1 != null ? param1.hashCode() : 0);
         result = 31 * result + (param2 != null ? param2.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "TeacherEntity{" +
+                "idTeacher=" + idTeacher +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", birthday=" + birthday +
+                ", educationBackground='" + educationBackground + '\'' +
+                ", college='" + college + '\'' +
+                ", name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", gender=" + gender +
+                ", workPlace='" + workPlace + '\'' +
+                ", title='" + title + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", param1='" + param1 + '\'' +
+                ", param2='" + param2 + '\'' +
+                '}';
     }
 }

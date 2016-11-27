@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>项目详情</title>
+	<link rel="stylesheet" type="text/css" href="../css/t_detail.css">
+	<link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
+</head>
+<body ms-controller="project">
+	<div id="header">
+		<img src="../img/logo.png">
+		<input type="text" name="search" class="search" placeholder="搜索">
+		<div class="header_nav_link">
+		    <img src="../img/avatar.png">
+			<span class="dropdown"></span>
+		</div>
+		<div class="header_nav_link">
+		    <img src="../img/plus.png">
+			<span class="dropdown"></span>
+		</div>
+	</div>
+    <div class="menu" style="right:10%">
+		<div class="menu_detail" data="t_index.html">个人主页</div>
+        <div class="menu_detail" id="reset_password" data="ad_modify_passwd.html">修改密码</div>
+        <div class="menu_detail" id="sign_out" data="login.html">退出登录</div>
+    </div>
+    <div class="menu" style="right:14%">
+	    <div class="menu_detail" data="t_publish_project.html">创建项目</div>
+	    <div class="menu_detail" data="t_publish_paper.html">发表论文</div>
+    </div>
+    <div id="sub_header">
+        <img src="../img/mark.png">
+    	<a class="owner" href="#">拥有者</a>
+    	<span>/</span>
+    	<a class="proj_name" href="#">{{content.name}}</a>
+    </div>
+    <div id="button_group" ms-attr-data="content.idProject">
+    	<button class="operate">删除</button>
+    	<button class="operate">编辑</button>
+    </div>
+    <div id="content">
+    	<div class="left">
+    		<p class="key">名称</p><p class="value">{{content.name}}</p><br>
+	    	<p class="key">负责人</p><p class="value">{{content.master}}</p><br>
+	    	<p class="key">项目时间</p><p class="value">{{content.projectTime}}</p><br>
+	    	<p class="key">来源</p><p class="value">{{content.source}}</p><br>
+	    	<p class="key">经费</p><p class="value">{{content.funds}}元</p><br>
+	    	<p class="key">项目介绍</p><br>
+	    	<p class="value" style="margin-left:15px">{{content.introduction}}</p>
+    	</div>
+    </div>
+</body>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="../js/avalon.js"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
+<script type="text/javascript" src="../js/t_detail.js"></script>
+</html>

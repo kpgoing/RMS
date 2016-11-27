@@ -1,0 +1,211 @@
+*{
+    margin:0;
+    padding: 0;
+    font-family: "Microsoft YaHei";
+}
+ul{
+    list-style-type: none;
+}
+
+a{
+    color: #4080cd;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+#header{
+    height: 29px;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #f5f5f5;
+    padding: 10px 13.1%;
+}
+
+#header > img{
+    float: left;
+    height: 29px;
+}
+
+.search{
+    float: left;
+    padding: 0 5px;
+    height: 26px;
+    margin-left: 10px;
+    font-size: 13px;
+    border-radius: 3px;
+    width: 360px;
+    border:1px solid #ddd;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+}
+
+.header_nav_link{
+    float: right;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.header_nav_link:hover,.header_nav_link:focus{
+    color: #4078c0;
+}
+
+.header_nav_link > img{
+    display: inline-block;
+    vertical-align: middle;
+    height: 20px;
+    width: 20px;
+}
+
+.dropdown{
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-top: 4px;
+    vertical-align: middle;
+    content: "";
+    border: 4px solid;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+}
+
+.menu{
+    width: 100px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    background-color: #fff;
+    background-clip: padding-box;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+    z-index: 100;
+    display: none;
+    position: absolute;
+    top: 50px;
+}
+
+.menu_detail{
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    padding-top: 10px;
+    height: 33px;
+    border-bottom: 1px solid #d5d5d5;
+    font-size: 14px;
+}
+
+.menu_detail:hover {
+    background: #4078c0;
+    color: #fff;
+}
+
+.boxed{
+    width: 53.5%;
+    margin-left: 23.25%;
+    border-radius: 3px;
+    margin-top: 26px;
+    border: 1px solid #d8d8d8;
+    padding-bottom: 13px;
+}
+.boxed>h3{
+    display: block;
+    padding: 3px 16px 3px;
+    margin-bottom: 30px;
+    font-size: 14px;
+    border-bottom: 1px solid #d8d8d8;
+    line-height: 30px;
+    background-color: #f5f5f5;
+}
+.info_detail>p{
+    color:#666;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 7px;
+}
+.info_detail{
+    margin: 21px 16px;
+}
+.input_detail{
+    min-height: 31px;
+    padding: 0px 8px;
+    font-size: 14px;
+    line-height: 20px;
+    height: 32px;
+    vertical-align: middle;
+    background-color: #fafafa;
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+    width: 422px;
+    max-width: 100%;
+    margin-right: 5px;
+    font-family: "Microsoft YaHei";
+}
+.input_detail:focus{
+    background-color: #fff;
+}
+input{
+    display: block;
+    border-radius: 5px;
+    height: 35px;
+    width: 100%;
+}
+
+input[type=button]{
+    width:137px ;
+    color: #ffffff;
+    border:0;
+    background-image: linear-gradient(to bottom,#88db6b,#64b548);
+    cursor: pointer;
+    margin-left: 16px;
+}
+.big_avatar{
+    width: 70px;
+    height: 70px;
+    display: inline-block;
+    overflow: hidden;
+    line-height: 1;
+    vertical-align: middle;
+    border-radius: 3px;
+}
+
+.upload{
+    display: inline-block;
+    float: right;
+    margin-right: 65%;
+}
+.upload >button{
+    background-image: linear-gradient(#fcfcfc, #eee);
+    color: #333;
+    width: 164px;
+    border-radius: 3px;
+    margin-left: 0px;
+    border: 1px solid #d5d5d5;
+    height: 35px;
+    cursor: pointer;
+}
+.edu_detail{
+    width: 422px;
+    height: 5.35em;
+    min-height: 0;
+    max-width: 100%;
+    margin-right: 5px;
+    background-color: #fafafa;
+    padding: 6px 8px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    resize: none;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+}
+.disabled{
+    color: #d5d5d5;
+}
+#thelist{
+    font-size: 12px;
+}

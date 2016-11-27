@@ -291,7 +291,7 @@ public class PaperController {
      * @apiUse UploadFileErrorResponse
      */
     @RequestMapping(value = "/teacher/paper/uploadfile", method = RequestMethod.POST)
-    public ResponseMessage uploadFile(HttpServletRequest request, @RequestParam("paper") MultipartFile paper) {
+    public ResponseMessage uploadFile(HttpServletRequest request, @RequestParam("file") MultipartFile paper) {
         String url = paperService.uploadFile(request, paper);
         return new ResponseMessage(PaperStatus.SUCCESS, url);
     }

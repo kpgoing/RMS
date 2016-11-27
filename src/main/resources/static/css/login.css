@@ -1,0 +1,84 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft YaHei";
+}
+
+#container{
+	width: 100%;
+	height: 100%;
+	background-color: #f9f9f9;
+	position: absolute;
+}
+
+.logo{
+	width: 55px;
+	height: 55px;
+	margin: 30px auto;
+	display: block;
+}
+
+.title{
+	margin: 0 auto 20px; 
+	width: 320px;
+	text-align: center;
+	font-family: "Microsoft YaHei Light";
+	font-size: 25px;
+}
+
+.menu{
+	width: 280px;
+	height: 195px;
+	padding: 20px;
+	background-color: #ffffff;
+	margin: 0 auto;
+	border:1px solid #d8dee2;
+	border-radius: 5px;
+}
+
+.login_title{
+	font-size: 14px;
+	padding: 5px 0;
+}
+
+.login_title > a{
+	color: #6faedd;
+	text-decoration: none;
+	float: right;
+}
+
+input{
+	display: block;
+	border-radius: 5px;
+	height: 35px;
+	width: 100%;
+}
+
+input[type=text],input[type=password]{
+	margin-bottom: 15px;
+	padding: 0 5px;
+	width: 270px;
+	border:1px solid #dddddd;
+}
+
+input[type=button]{
+	color: #ffffff;
+	border:0;
+	background-image: linear-gradient(to bottom,#88db6b,#64b548);
+}
+
+.register{
+	margin: 12px auto 0;
+	border:1px solid #d8dee2;
+	border-radius: 5px;
+	padding: 20px 45px;
+	height: 15px;
+	width: 230px;
+	font-size: 14px;
+	text-align: center;
+}
+
+.register > a{
+	color: #6faedd;
+	text-decoration: none;
+}

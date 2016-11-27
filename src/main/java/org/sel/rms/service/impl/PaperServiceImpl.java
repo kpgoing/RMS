@@ -108,7 +108,7 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
     public String uploadFile(HttpServletRequest request, MultipartFile file) {
-        int id = Integer.parseInt((String) request.getSession().getAttribute(teacherKey));
+        Integer id = (Integer) request.getSession().getAttribute(teacherKey);
         String sqPath;
         String fileName = file.getOriginalFilename();
         String extensionName = fileName.substring(fileName.indexOf("."));

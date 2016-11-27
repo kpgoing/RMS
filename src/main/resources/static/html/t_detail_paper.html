@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>论文详情</title>
+	<link rel="stylesheet" type="text/css" href="../css/t_detail.css">
+    <link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
+</head>
+<body ms-controller="paper">
+	<div id="header">
+		<img src="../img/logo.png">
+		<input type="text" name="search" class="search" placeholder="搜索">
+		<div class="header_nav_link">
+		    <img src="../img/avatar.png">
+			<span class="dropdown"></span>
+		</div>
+		<div class="header_nav_link">
+		    <img src="../img/plus.png">
+			<span class="dropdown"></span>
+		</div>
+	</div>
+    <div class="menu" style="right:10%">
+        <div class="menu_detail" data="t_index.html">个人主页</div>
+        <div class="menu_detail" id="reset_password" data="ad_modify_passwd.html">修改密码</div>
+        <div class="menu_detail" id="sign_out" data="login.html">退出登录</div>
+    </div>
+    <div class="menu" style="right:14%">
+        <div class="menu_detail" data="t_publish_project.html">创建项目</div>
+        <div class="menu_detail" data="t_publish_paper.html">发表论文</div>
+    </div>
+    <div id="sub_header">
+        <img src="../img/mark.png">
+    	<a class="owner" href="#">拥有者</a>
+    	<span>/</span>
+    	<a class="proj_name" href="#">{{content.title}}</a>
+    </div>
+    <div id="button_group" ms-attr-data="content.idPaper">
+    	<button class="operate">删除</button>
+    	<button class="operate">编辑</button>
+    </div>
+    <div id="content">
+    	<div class="left">
+    		<p class="key">题目</p><p class="value">{{content.title}}</p><br>
+	    	<p class="key">作者</p><p class="value">{{content.writer}}</p><br>
+	    	<p class="key">发表时间</p><p class="value">{{content.releaseDate}}</p><br>
+	    	<p class="key">发表期刊/会议名称</p><p class="value">{{content.publishPlace}}</p><br>
+	    	<p class="key">关键字</p><p class="value">{{content.keyWord}}</p><br>
+	    	<p class="key">论文摘要</p><br>
+	    	<p class="value" style="margin-left:15px">{{content.abstractContent}}</p>
+    	</div>
+    	<div class="right">
+    		<img src="../img/pdf.png"><br>
+    		<button>下载pdf</button>
+    	</div>
+    </div>
+</body>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="../js/avalon.js"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
+<script type="text/javascript" src="../js/t_detail.js"></script>
+</html>

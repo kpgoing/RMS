@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员主页</title>
+    <link type="text/css" href="../css/ad_index.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
+</head>
+<body>
+        <div class="header">
+            <img  class="logo" src="../img/logo.png"/>
+            <input class="search" id="search" type="text" placeholder="搜索"/>
+            <span class="avatar_holder">
+                <img class="small_avatar" src="../img/avatar.png"/>
+                <span class="arrow"></span>
+            </span>
+        </div>
+        <div class="content">
+            <div class="menu">
+                <div class="menu_detail" id="ad_index">个人主页</div>
+                <div class="menu_detail" id="reset_password">修改密码</div>
+                <div class="menu_detail" id="sign_out">退出登录</div>
+            </div>
+            <div class="latest_info" ms-controller = "newInfor"> 
+                <span class = "info_holder" ms-repeat = "content">
+                    <img class="mark" src="../img/paper.png">
+                    <span class="info_detail">
+                        <a class="teacherName">{{el.teacherName}}</a>
+                        <span class="action">{{el.action}}</span>
+                        <a class="name">{{el.name}}</a>
+                        <span class="create_time">{{el.publishDate}}</span>
+                    </span>
+                </span>
+            </div>
+            <div class="message_box" ms-controller = "checkInfor"> 
+                <div class="amount">当前有<span  id="number" style="font-weight: bold">{{checkNum}}</span>条待审核注册信息</div>
+                <div class="message">
+                    <p class="headline">注册信息审核</p>
+                    <span class="review_holder">姓名：<span>{{mainInfor.name}}</span></span>
+                    <span class="review_holder">身份证号：<span >{{mainInfor.id}}</span></span>
+                    <span class="review_holder">手机号：<span>{{mainInfor.phoneNumber}}</span></span>
+                    <span class="review_holder" >邮箱账号：<span id="email">{{mainInfor.email}}</span></span>
+                    <span class="review_holder">工作单位：<span>{{mainInfor.workPlace}}</span></span>
+                    <span class="review_holder">学院：<span>{{mainInfor.college}}</span></span>
+                    <span class="review_holder">教师工号：
+                        <span id="idTeacher" ms-attr-data = "mainInfor.idTeacher">{{mainInfor.account}}</span>
+                    </span>
+                    <button class="pass">通过</button>
+                    <button class="refuse">拒绝</button>
+                </div>
+            </div>
+            <div class="allteacher" ms-controller="allteacher">
+                <div class="mtitle">当前有<span class="counter">{{num}}</span>个教师用户</div>
+                <div class="muser" ms-repeat="content">
+                    <img src="../img/userlist.png">
+                    <a href="#" ms-attr-data="el.idTeacher">{{el.name}}</a>
+                    <span>{{el.account}}</span>
+                </div>
+            </div>
+        </div>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="../js/avalon.js"></script>
+    <script type="text/javascript" src="../js/ajax.js"></script>
+    <script type="text/javascript" src="../js/ad_index.js"></script>
+</body>
+</html>
