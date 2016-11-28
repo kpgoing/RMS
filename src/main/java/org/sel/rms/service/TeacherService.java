@@ -1,4 +1,5 @@
 package org.sel.rms.service;
+import org.sel.rms.entity.CheckStatusOfTeacherEntity;
 import org.sel.rms.entity.TeacherEntity;
 import org.sel.rms.status.TeacherStatus;
 import org.springframework.data.domain.Page;
@@ -38,4 +39,6 @@ public interface TeacherService {
     TeacherStatus resetPassword(int id, String newPassword);
 
     int forgetPassword(String email);
+
+    CheckStatusOfTeacherEntity uncheckDenied(int teacherId);
 }
