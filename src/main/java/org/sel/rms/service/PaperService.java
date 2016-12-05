@@ -17,10 +17,10 @@ public interface PaperService {
 
     void publishPaper(PaperEntity paperEntity);
 
-    @Transactional
+
     void modifyPaper(PaperEntity paperEntity, HttpServletRequest request);
 
-    @Transactional
+
     void deletePaper(int idPaper, int idTeacher, HttpServletRequest request);
 
     PaperEntity getPaperById(int id);

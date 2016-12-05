@@ -4,6 +4,7 @@ import org.sel.rms.entity.ProjectEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,9 @@ public interface ProjectService {
 
     public void publishProject(ProjectEntity projectEntity);
 
+
     public void modifyProject(ProjectEntity projectEntity);
+
 
     public void deleteProject(int idProject, int idTeacher);
 

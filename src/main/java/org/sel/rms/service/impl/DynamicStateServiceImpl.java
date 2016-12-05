@@ -42,4 +42,9 @@ public class DynamicStateServiceImpl implements DynamicStateService{
     public Page<DynamicStateEntity> getByPage(Pageable pageable) {
         return dynamicStateRepository.findAll(pageable);
     }
+
+    @Override
+    public void deleteByKindAndIdContent(String kind, int idContent) {
+        dynamicStateRepository.deleteByKindAndIdContent(kind, idContent);
+    }
 }

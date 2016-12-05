@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ import java.time.LocalDate;
 * 生成于2016/10/29
 */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class PaperServiceImpl implements PaperService {
 
     @Autowired
@@ -36,6 +38,8 @@ public class PaperServiceImpl implements PaperService {
 
     @Value("${config.teacher.key}")
     String teacherKey;
+
+    final static String KIND = "paper";
 
     @Override
     public void publishPaper(PaperEntity paperEntity) {
@@ -91,13 +95,14 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
+
     public void deletePaper(int idPaper, int idTeacher, HttpServletRequest request) {
         PaperEntity paperEntity = paperRepository.findOne(idPaper);
         if (paperEntity.getIdTeacher() == idTeacher) {
             try {
                 deleteFile(request, paperEntity.getContent());
                 paperRepository.delete(idPaper);
-
+                dynamicStateService.deleteByKindAndIdContent(KIND, idPaper);
             } catch (Exception ex) {
                 throw new PaperException("delete paper error which id = " + idPaper, ex, PaperStatus.NOT_FOUND);
             }

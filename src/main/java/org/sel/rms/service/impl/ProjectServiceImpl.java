@@ -11,15 +11,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
+
+
 
 
 /**
 * 生成于2016/10/29
 */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
@@ -30,6 +34,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Value("config.teacher.key")
     String teacherKey;
+
+    final static String KIND = "project";
 
     
     
@@ -62,6 +68,7 @@ public class ProjectServiceImpl implements ProjectService {
         if (projectEntity.getIdTeacher() == idTeacher) {
             try {
                 projectRepository.delete(idProject);
+                dynamicStateService.deleteByKindAndIdContent(KIND, idProject);
             } catch (Exception ex) {
                 throw new ProjectException("delete project error which id = " + idProject, ex, ProjectStatus.DATABASE_ERROR);
             }

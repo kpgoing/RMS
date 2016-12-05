@@ -17,4 +17,6 @@ public interface DynamicStateService {
     public void addProject(ProjectEntity projectEntity);
 
     public Page<DynamicStateEntity> getByPage(Pageable pageable);
+
+    public void deleteByKindAndIdContent(String kind, int idContent);
 }

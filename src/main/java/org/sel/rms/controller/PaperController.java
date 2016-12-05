@@ -158,6 +158,7 @@ public class PaperController {
             paperStatus = PaperStatus.UN_LOGIN;
         } else {
             paperService.deletePaper(id, idTeacher, request);
+
             paperStatus = PaperStatus.SUCCESS;
         }
         return new ResponseMessage(paperStatus);
