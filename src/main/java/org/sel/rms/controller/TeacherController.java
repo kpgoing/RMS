@@ -2,6 +2,7 @@ package org.sel.rms.controller;
 
 import org.apache.log4j.Logger;
 import org.sel.rms.common.ResponseMessage;
+import org.sel.rms.entity.CheckStatusOfTeacherEntity;
 import org.sel.rms.entity.TeacherEntity;
 import org.sel.rms.entity.ValidGroup.TeacherGroup;
 import org.sel.rms.exception.TeacherException;
@@ -71,6 +72,7 @@ public class TeacherController {
     @RequestMapping(value = "/teacher/login", method = RequestMethod.POST)
     public ResponseMessage teacherLogin(@Validated(TeacherGroup.login.class) @RequestBody TeacherEntity teacherEntity, HttpSession httpSession, BindingResult bindingResult) {
         TeacherStatus teacherStatus;
+        CheckStatusOfTeacherEntity checkStatusOfTeacherEntity;
         Map map = new HashMap<>();
         if(bindingResult.hasErrors()) {
             logger.error("teacher login arguments error");
@@ -82,6 +84,10 @@ public class TeacherController {
                 anotherEntity.setAccount(teacherEntity.getAccount());
                 anotherEntity.setPassword(teacherEntity.getPassword());
                 int tid = teacherService.getTeacherId(anotherEntity);
+                checkStatusOfTeacherEntity = teacherService.uncheckDenied(tid);
+                if(checkStatusOfTeacherEntity.getCheckStatus() == (byte)0) {
+                    return new ResponseMessage(TeacherStatus.UNCHECK_DENY);
+                }
                 httpSession.setAttribute(teacherKey, tid);
                 map.put("IdTeacher", tid);
             }

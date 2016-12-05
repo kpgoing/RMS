@@ -48,13 +48,13 @@
                     <button class="pass">通过</button>
                     <button class="refuse">拒绝</button>
                 </div>
-            </div>
-            <div class="allteacher" ms-controller="allteacher">
-                <div class="mtitle">当前有<span class="counter">{{num}}</span>个教师用户</div>
-                <div class="muser" ms-repeat="content">
-                    <img src="../img/userlist.png">
-                    <a href="#" ms-attr-data="el.idTeacher">{{el.name}}</a>
-                    <span>{{el.account}}</span>
+                <div class="allteacher" ms-controller="allteacher">
+                    <div class="mtitle">当前有<span class="counter">{{num}}</span>个教师用户</div>
+                    <div class="muser" ms-repeat="content">
+                        <img src="../img/userlist.png">
+                        <a href="#" ms-attr-data="el.idTeacher">{{el.name}}</a>
+                        <span>{{el.account}}</span>
+                    </div>
                 </div>
             </div>
         </div>

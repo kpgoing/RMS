@@ -213,4 +213,14 @@ public class TeacherServiceImpl implements TeacherService {
         }
         return teacherId;
     }
+
+    public CheckStatusOfTeacherEntity uncheckDenied(int teacherId) {
+        CheckStatusOfTeacherEntity checkStatusOfTeacherEntity;
+        try {
+            checkStatusOfTeacherEntity = checkStatusOfTeacherRepository.findByidTeacher(teacherId);
+        } catch (Exception e) {
+            throw new TeacherException("uncheck deny error", e, TeacherStatus.UNCHECK_DENY);
+        }
+        return checkStatusOfTeacherEntity;
+    }
 }
