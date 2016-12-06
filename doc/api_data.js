@@ -1708,7 +1708,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Request-Example",
-          "content": "{\n    \"teacherId\":1,\n    \"newPassword\":\"123\"\n}",
+          "content": "{\n    \"uid\":\"aaa\",\n    \"newPassword\":\"123\"\n}",
           "type": "json"
         }
       ]

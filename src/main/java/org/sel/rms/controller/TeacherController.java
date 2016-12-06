@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,8 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Huxh on 2016/11/3.
@@ -40,6 +43,9 @@ public class TeacherController {
 
     @Autowired
     JavaMailSender mailSender;
+
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
 
     @Value("${config.teacher.key}")
     String teacherKey;
@@ -319,11 +325,13 @@ public class TeacherController {
         if(0 == teacherId) {
             throw new TeacherException("find teacher by email error", TeacherStatus.FORGET_PASSWORD_ERROR);
         } else {
+            String uid = UUID.randomUUID().toString();
+            stringRedisTemplate.boundValueOps(uid).set(String.valueOf(teacherId), 300, TimeUnit.SECONDS);
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("15528359737@163.com");
+            message.setFrom("科研管理系统");
             message.setTo(email);
             message.setSubject("重置密码");
-            message.setText("请点击此连接重置密码：" + request.getContextPath() + "/html/reset_passwd.html?id=" + teacherId);
+            message.setText("请点击此连接重置密码(5分钟内有效)：" + request.getContextPath() + "/html/reset_passwd.html?uid=" + uid);
 
             mailSender.send(message);
         }
@@ -340,7 +348,7 @@ public class TeacherController {
      * @apiParam {String} newPassword 教师新密码
      * @apiParamExample {json} Request-Example
      * {
-     *     "teacherId":1,
+     *     "uid":"aaa",
      *     "newPassword":"123"
      * }
      * @apiUse NormalSuccessResponse
@@ -352,13 +360,18 @@ public class TeacherController {
     @RequestMapping(value = "/teacher/resetPassword", method = RequestMethod.POST)
     public ResponseMessage resetPassword(@RequestBody Map map) {
         TeacherStatus teacherStatus;
-        int teacherId = (int)map.get("teacherId");
+        String uid = (String)map.get("uid");
         String newPassword = (String)map.get("newPassword");
-        if(0 == teacherId || null == newPassword) {
+        if(null == uid || null == newPassword) {
             logger.error("teacher modify password arguments error");
             throw new TeacherException("teacher modify password arguments error", TeacherStatus.ARGUMENTS_ERROR);
         } else {
-            teacherStatus = teacherService.resetPassword(teacherId, newPassword);
+            if(null == stringRedisTemplate.boundValueOps(uid).get()) {
+                throw new TeacherException("reset password time out", TeacherStatus.RESET_PASSWORD_TIMEOUT);
+            } else {
+                int teacherId = Integer.parseInt(stringRedisTemplate.boundValueOps(uid).get());
+                teacherStatus = teacherService.resetPassword(teacherId, newPassword);
+            }
         }
         return new ResponseMessage(teacherStatus);
     }
