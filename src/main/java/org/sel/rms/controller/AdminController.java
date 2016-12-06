@@ -81,6 +81,22 @@ public class AdminController {
     }
 
     /**
+     * @api {get} /admin/logout 管理员登出
+     * @apiName adminLogout
+     * @apiGroup admin
+     * @apiPermission admin
+     * @apiVersion 0.1.0
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
+     * @apiUse UnLoginErrorResponse
+     */
+    @RequestMapping(value = "/admin/logout", method = RequestMethod.GET)
+    public ResponseMessage adminLogout(HttpSession httpSession) {
+        httpSession.removeAttribute(adminKey);
+        return new ResponseMessage(AdminStatus.SUCCESS);
+    }
+
+    /**
      * @api {post} /admin/checkTeacher 审核通过教师
      * @apiName checkTeacher
      * @apiGroup admin

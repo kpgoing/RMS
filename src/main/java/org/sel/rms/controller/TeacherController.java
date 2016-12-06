@@ -102,6 +102,22 @@ public class TeacherController {
     }
 
     /**
+     * @api {get} /teacher/logout 教师登出
+     * @apiName teacherLogout
+     * @apiGroup teacher
+     * @apiPermission teacher
+     * @apiVersion 0.1.0
+     * @apiUse NormalSuccessResponse
+     * @apiUse NormalErrorResponse
+     * @apiUse UnLoginErrorResponse
+     */
+    @RequestMapping(value = "/teacher/logout", method = RequestMethod.GET)
+    public ResponseMessage teacherLogout(HttpSession httpSession) {
+        httpSession.removeAttribute(teacherKey);
+        return new ResponseMessage(TeacherStatus.SUCCESS);
+    }
+
+    /**
      * @api {post} /teacher/register 教师注册
      * @apiName teacherRegister
      * @apiGroup teacher
