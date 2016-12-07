@@ -9,7 +9,7 @@ $(function(){
 	$(document).on("click","input[name=signin]",function(){
 		var passwd = $("input[name=passwd]:eq(0)").val();
 		var passwdagain = $("input[name=passwdagain]:eq(0)").val();
-		var teacherId = GetQueryString("teacherId");
+		var uid = GetQueryString("uid");
 		if(passwd == "" || passwdagain == ""){
 			swal("Oops...","密码不能为空！","error");
 		}else if(passwd.indexOf(" ") != -1 || passwdagain.indexOf(" ") != -1){
@@ -20,7 +20,7 @@ $(function(){
 			swal("Oops...","密码长度应位于8~16位之间！","error");
 		}else{
 			var params = {
-				"teacherId": teacherId,
+				"uid": uid,
     			"newPassword": passwd
 			};
 			postAjax("/teacher/resetPassword",params,function(data){
@@ -39,7 +39,19 @@ $(function(){
 				      } 
 				    });
 				}else{
-					swal("Oops...",data.msg,"error");
+					swal({   
+				      title: "链接失效",   
+				      text: "请重新获取重置密码链接！",   
+				      type: "error",   
+				      confirmButtonColor: "#DD6B55",   
+				      confirmButtonText: "我知道了",   
+				      closeOnConfirm: false,   
+				    }, 
+				    function(isConfirm){   
+				      if (isConfirm) {     
+				        window.location.href = "./login.html";
+				      } 
+				    });
 				}
 			});
 		}
