@@ -680,7 +680,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"code\": 0,\n  \"msg\": \"SUCCESS\",\n  \"body\": {\n    \"idProject\": 7,\n    \"idTeacher\": 1,\n    \"name\": \"ds\",\n    \"source\": \"计算机学院\",\n    \"projectTime\": \"2016-10-30\",\n    \"master\": \"哈哈\",\n    \"funds\": 1231412314.11,\n    \"publishTime\": \"2016-11-15\",\n    \"introduction\": \"123\",\n    \"param1\": null,\n    \"param2\": null\n  }\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"code\": 0,\n\"msg\": \"SUCCESS\",\n\"body\": {\n\"idProject\": 7,\n\"idTeacher\": 1,\n\"name\": \"ds\",\n\"source\": \"计算机学院\",\n\"projectTime\": \"2016-10-30\",\n\"master\": \"哈哈\",\n\"funds\": 1231412314.11,\n\"publishTime\": \"2016-11-15\",\n\"introduction\": \"123\",\n\"param1\": null,\n\"param2\": null\n}\n}",
           "type": "json"
         }
       ]
@@ -740,7 +740,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n  {\n  \"code\": 0,\n  \"msg\": \"SUCCESS\",\n  \"body\": {\n  \"content\": [\n  {\n  \"idProject\": 5,\n  \"idTeacher\": 1,\n  \"name\": \"ds\",\n  \"source\": \"计算机学院\",\n  \"projectTime\": \"2016-10-30\",\n  \"master\": \"哈哈\",\n  \"funds\": 1231412314.11,\n  \"publishTime\": \"2016-10-30\",\n  \"introduction\": \"123\",\n  \"param1\": null,\n  \"param2\": null\n  },\n  {\n  \"idProject\": 4,\n  \"idTeacher\": 1,\n  \"name\": \"ds\",\n  \"source\": \"十大\",\n  \"projectTime\": \"2016-10-30\",\n  \"master\": \"阿萨德撒\",\n  \"funds\": 123123,\n  \"publishTime\": \"2016-10-30\",\n  \"introduction\": \"123\",\n  \"param1\": null,\n  \"param2\": null\n  }\n  ],\n  \"last\": true,\n  \"totalElements\": 2,\n  \"totalPages\": 1,\n  \"size\": 3,\n  \"number\": 0,\n  \"sort\": [\n  {\n  \"direction\": \"DESC\",\n  \"property\": \"idProject\",\n  \"ignoreCase\": false,\n  \"nullHandling\": \"NATIVE\",\n  \"ascending\": false\n  }\n  ],\n  \"first\": true,\n  \"numberOfElements\": 2\n  }\n  }",
+          "content": "HTTP/1.1 200 OK\n{\n\"code\": 0,\n\"msg\": \"SUCCESS\",\n\"body\": {\n\"content\": [\n{\n\"idProject\": 5,\n\"idTeacher\": 1,\n\"name\": \"ds\",\n\"source\": \"计算机学院\",\n\"projectTime\": \"2016-10-30\",\n\"master\": \"哈哈\",\n\"funds\": 1231412314.11,\n\"publishTime\": \"2016-10-30\",\n\"introduction\": \"123\",\n\"param1\": null,\n\"param2\": null\n},\n{\n\"idProject\": 4,\n\"idTeacher\": 1,\n\"name\": \"ds\",\n\"source\": \"十大\",\n\"projectTime\": \"2016-10-30\",\n\"master\": \"阿萨德撒\",\n\"funds\": 123123,\n\"publishTime\": \"2016-10-30\",\n\"introduction\": \"123\",\n\"param1\": null,\n\"param2\": null\n}\n],\n\"last\": true,\n\"totalElements\": 2,\n\"totalPages\": 1,\n\"size\": 3,\n\"number\": 0,\n\"sort\": [\n{\n\"direction\": \"DESC\",\n\"property\": \"idProject\",\n\"ignoreCase\": false,\n\"nullHandling\": \"NATIVE\",\n\"ascending\": false\n}\n],\n\"first\": true,\n\"numberOfElements\": 2\n}\n}",
           "type": "json"
         }
       ]
@@ -789,7 +789,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n     \"idProject\":4,\n     \"idTeacher\":1,\n     \"name\":\"ds\",\n     \"source\":\"国外\",\n     \"projectTime\":\"2016-10-30\",\n     \"master\":\"哈哈\",\n     \"funds\":\"1231412314.11\",\n     \"introduction\":\"123\"\n}",
+          "content": "{\n\"idProject\":4,\n\"idTeacher\":1,\n\"name\":\"ds\",\n\"source\":\"国外\",\n\"projectTime\":\"2016-10-30\",\n\"master\":\"哈哈\",\n\"funds\":\"1231412314.11\",\n\"introduction\":\"123\"\n}",
           "type": "json"
         }
       ]
@@ -862,7 +862,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n     \"idTeacher\":1,\n     \"name\":\"ds\",\n     \"source\":\"计算机学院\",\n     \"projectTime\":\"2016-10-30\",\n     \"master\":\"哈哈\",\n     \"funds\":\"1231412314.11\",\n     \"introduction\":\"123\"\n}",
+          "content": "{\n\"idTeacher\":1,\n\"name\":\"ds\",\n\"source\":\"计算机学院\",\n\"projectTime\":\"2016-10-30\",\n\"master\":\"哈哈\",\n\"funds\":\"1231412314.11\",\n\"introduction\":\"123\"\n}",
           "type": "json"
         }
       ]
@@ -941,7 +941,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n  {\n    \"code\": 0,\n    \"msg\": \"SUCCESS\",\n    \"body\": {\n      \"content\": [\n        {\n          \"idProject\": 5,\n          \"idTeacher\": 1,\n          \"name\": \"ds\",\n          \"source\": \"计算机学院\",\n          \"projectTime\": \"2016-10-30\",\n          \"master\": \"哈哈\",\n          \"funds\": 1231412314.11,\n          \"publishTime\": \"2016-10-30\",\n          \"introduction\": \"123\",\n          \"param1\": null,\n          \"param2\": null\n        }\n      ],\n      \"last\": true,\n      \"totalPages\": 1,\n      \"totalElements\": 1,\n      \"size\": 5,\n      \"number\": 0,\n      \"sort\": [\n        {\n          \"direction\": \"DESC\",\n          \"property\": \"idProject\",\n          \"ignoreCase\": false,\n          \"nullHandling\": \"NATIVE\",\n          \"ascending\": false\n        }\n      ],\n      \"first\": true,\n      \"numberOfElements\": 1\n    }\n  }",
+          "content": "HTTP/1.1 200 OK\n{\n\"code\": 0,\n\"msg\": \"SUCCESS\",\n\"body\": {\n\"content\": [\n{\n\"idProject\": 5,\n\"idTeacher\": 1,\n\"name\": \"ds\",\n\"source\": \"计算机学院\",\n\"projectTime\": \"2016-10-30\",\n\"master\": \"哈哈\",\n\"funds\": 1231412314.11,\n\"publishTime\": \"2016-10-30\",\n\"introduction\": \"123\",\n\"param1\": null,\n\"param2\": null\n}\n],\n\"last\": true,\n\"totalPages\": 1,\n\"totalElements\": 1,\n\"size\": 5,\n\"number\": 0,\n\"sort\": [\n{\n\"direction\": \"DESC\",\n\"property\": \"idProject\",\n\"ignoreCase\": false,\n\"nullHandling\": \"NATIVE\",\n\"ascending\": false\n}\n],\n\"first\": true,\n\"numberOfElements\": 1\n}\n}",
           "type": "json"
         }
       ]
@@ -995,6 +995,59 @@ define({ "api": [
         }
       ]
     },
+    "success": {
+      "examples": [
+        {
+          "title": "Success_Response:",
+          "content": "{\n \"code\": 0,\n \"msg\": \"SUCCESS\",\n \"body\": {\n     \"adminId\": 1\n         }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\": 0,\n  \"msg\": \"SUCCESS\",\n  \"body\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./src/main/java/org/sel/rms/controller/AdminController.java",
+    "groupTitle": "admin",
+    "error": {
+      "examples": [
+        {
+          "title": "NormalErrorResponse:",
+          "content": "\n{\n  \"code\": 1,\n  \"msg\": \"ERROR(:...some err info)\",\n  \"body\": null\n}",
+          "type": "json"
+        },
+        {
+          "title": "ArgumentsErrorResponse",
+          "content": "\n{\n  \"code\": 2,\n  \"msg\": \"ARGUMENTS_ERROR\",\n  \"body\": null\n}",
+          "type": "json"
+        },
+        {
+          "title": "DataBaseErrorResponse:",
+          "content": "\n{\n  \"code\": 3,\n  \"msg\": \"DATABASE_ERROR\",\n  \"body\": null\n}",
+          "type": "json"
+        },
+        {
+          "title": "UnLoginErrorResponse:",
+          "content": "\n{\n  \"code\": 5,\n  \"msg\": \"UN_LOGIN\",\n  \"body\": null\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "get",
+    "url": "/admin/logout",
+    "title": "管理员登出",
+    "name": "adminLogout",
+    "group": "admin",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "version": "0.1.0",
     "filename": "./src/main/java/org/sel/rms/controller/AdminController.java",
     "groupTitle": "admin",
     "success": {
@@ -1011,16 +1064,6 @@ define({ "api": [
         {
           "title": "NormalErrorResponse:",
           "content": "\n{\n  \"code\": 1,\n  \"msg\": \"ERROR(:...some err info)\",\n  \"body\": null\n}",
-          "type": "json"
-        },
-        {
-          "title": "ArgumentsErrorResponse",
-          "content": "\n{\n  \"code\": 2,\n  \"msg\": \"ARGUMENTS_ERROR\",\n  \"body\": null\n}",
-          "type": "json"
-        },
-        {
-          "title": "DataBaseErrorResponse:",
-          "content": "\n{\n  \"code\": 3,\n  \"msg\": \"DATABASE_ERROR\",\n  \"body\": null\n}",
           "type": "json"
         },
         {
@@ -1882,6 +1925,44 @@ define({ "api": [
         {
           "title": "DataBaseErrorResponse:",
           "content": "\n{\n  \"code\": 3,\n  \"msg\": \"DATABASE_ERROR\",\n  \"body\": null\n}",
+          "type": "json"
+        },
+        {
+          "title": "UnLoginErrorResponse:",
+          "content": "\n{\n  \"code\": 5,\n  \"msg\": \"UN_LOGIN\",\n  \"body\": null\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "get",
+    "url": "/teacher/logout",
+    "title": "教师登出",
+    "name": "teacherLogout",
+    "group": "teacher",
+    "permission": [
+      {
+        "name": "teacher"
+      }
+    ],
+    "version": "0.1.0",
+    "filename": "./src/main/java/org/sel/rms/controller/TeacherController.java",
+    "groupTitle": "teacher",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\": 0,\n  \"msg\": \"SUCCESS\",\n  \"body\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "NormalErrorResponse:",
+          "content": "\n{\n  \"code\": 1,\n  \"msg\": \"ERROR(:...some err info)\",\n  \"body\": null\n}",
           "type": "json"
         },
         {

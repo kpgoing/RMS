@@ -58,6 +58,14 @@ public class AdminController {
      *     "account":"abc",
      *     "password":"123"
      *}
+     * @apiSuccessExample {json} Success_Response:
+     * {
+     *  "code": 0,
+     *  "msg": "SUCCESS",
+     *  "body": {
+     *      "adminId": 1
+     *          }
+     * }
      * @apiUse NormalSuccessResponse
      * @apiUse NormalErrorResponse
      * @apiUse ArgumentsErrorResponse
@@ -67,6 +75,7 @@ public class AdminController {
     @RequestMapping(value = "/admin/login", method = RequestMethod.POST)
     public ResponseMessage adminLogin(@Validated(AdminGroup.class) @RequestBody AdminEntity adminEntity, HttpSession httpSession, BindingResult bindingResult) {
         AdminStatus adminStatus;
+        Map map = new HashMap<>();
         if(bindingResult.hasErrors()) {
             logger.error("admin login arguments error");
             adminStatus = AdminStatus.ARGUMENTS_ERROR;
@@ -78,9 +87,10 @@ public class AdminController {
                 anotherAdminEntity.setPassword(adminEntity.getPassword());
                 int aid = adminService.getAdmin(anotherAdminEntity);
                 httpSession.setAttribute(adminKey, aid);
+                map.put("adminId", aid);
             }
         }
-        return new ResponseMessage(adminStatus);
+        return new ResponseMessage(adminStatus, map);
     }
 
     /**

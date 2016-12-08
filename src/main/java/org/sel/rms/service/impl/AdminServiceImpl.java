@@ -84,7 +84,7 @@ public class AdminServiceImpl implements AdminService {
         } catch (Exception e) {
             throw new AdminException("find admin by account error", e, AdminStatus.ERROR);
         }
-        return adminEntity.getIdAdmin();
+        return adminResult.getIdAdmin();
     }
 
     public AdminStatus checkTeacher(int teacherId) {
@@ -168,7 +168,7 @@ public class AdminServiceImpl implements AdminService {
         AdminEntity adminEntity;
         try {
             adminEntity = adminRepository.findOne(adminId);
-            if(!(oldPassword.equals(MD5Util.calc(adminEntity.getPassword())))) {
+            if(!(adminEntity.getPassword().equals(MD5Util.calc(oldPassword)))) {
                 adminStatus = AdminStatus.OLDPASSWORD_ERROR;
                 return adminStatus;
             }
