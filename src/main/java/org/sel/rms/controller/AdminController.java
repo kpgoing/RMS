@@ -7,6 +7,8 @@ import org.sel.rms.entity.TeacherEntity;
 import org.sel.rms.entity.ValidGroup.AdminGroup;
 import org.sel.rms.exception.AdminException;
 import org.sel.rms.service.AdminService;
+import org.sel.rms.service.PaperService;
+import org.sel.rms.service.ProjectService;
 import org.sel.rms.service.TeacherService;
 import org.sel.rms.status.AdminStatus;
 import org.sel.rms.status.TeacherStatus;
@@ -18,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -55,6 +58,14 @@ public class AdminController {
      *     "account":"abc",
      *     "password":"123"
      *}
+     * @apiSuccessExample {json} Success_Response:
+     * {
+     *  "code": 0,
+     *  "msg": "SUCCESS",
+     *  "body": {
+     *      "adminId": 1
+     *          }
+     * }
      * @apiUse NormalSuccessResponse
      * @apiUse NormalErrorResponse
      * @apiUse ArgumentsErrorResponse
@@ -64,6 +75,7 @@ public class AdminController {
     @RequestMapping(value = "/admin/login", method = RequestMethod.POST)
     public ResponseMessage adminLogin(@Validated(AdminGroup.class) @RequestBody AdminEntity adminEntity, HttpSession httpSession, BindingResult bindingResult) {
         AdminStatus adminStatus;
+        Map map = new HashMap<>();
         if(bindingResult.hasErrors()) {
             logger.error("admin login arguments error");
             adminStatus = AdminStatus.ARGUMENTS_ERROR;
@@ -75,9 +87,10 @@ public class AdminController {
                 anotherAdminEntity.setPassword(adminEntity.getPassword());
                 int aid = adminService.getAdmin(anotherAdminEntity);
                 httpSession.setAttribute(adminKey, aid);
+                map.put("adminId", aid);
             }
         }
-        return new ResponseMessage(adminStatus);
+        return new ResponseMessage(adminStatus, map);
     }
 
     /**
@@ -127,7 +140,7 @@ public class AdminController {
             adminStatus = adminService.checkTeacher(teacherId);
             if(AdminStatus.SUCCESS.equals(adminStatus)) {
                 SimpleMailMessage message = new SimpleMailMessage();
-                message.setFrom("科研管理系统");
+                message.setFrom("15528359737@163.com");
                 message.setTo(teacherMail);
                 message.setSubject("审核结果");
                 message.setText("审核通过");
@@ -169,7 +182,7 @@ public class AdminController {
             adminStatus = adminService.unpassTeacher(teacherId);
             if(AdminStatus.SUCCESS.equals(adminStatus)) {
                 SimpleMailMessage message = new SimpleMailMessage();
-                message.setFrom("科研管理系统");
+                message.setFrom("15528359737@163.com");
                 message.setTo(teacherMail);
                 message.setSubject("审核结果");
                 message.setText("审未通过,请重新注册");
@@ -194,16 +207,16 @@ public class AdminController {
      * @apiUse PermissionDenyErrorResponse
      */
     @RequestMapping(value = "/admin/deleteTeacher/{id}", method = RequestMethod.GET)
-    public ResponseMessage deleteTeacher(@PathVariable("id") int id) {
-        TeacherStatus teacherStatus;
+    public ResponseMessage deleteTeacher(@PathVariable("id") int id, HttpServletRequest httpServletRequest) {
+        AdminStatus adminStatus;
         int teacherId = id;
         if(0 == teacherId) {
             logger.error("check teacher arguments error");
             throw new AdminException("check teacher arguments error", AdminStatus.ARGUMENTS_ERROR);
         } else {
-            teacherStatus = teacherService.deleteTeacher(teacherId);
+            adminStatus = adminService.deleteTeacher(id, httpServletRequest);
         }
-        return new ResponseMessage(teacherStatus);
+        return new ResponseMessage(adminStatus);
     }
 
     /**

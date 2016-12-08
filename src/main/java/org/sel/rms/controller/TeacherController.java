@@ -189,7 +189,7 @@ public class TeacherController {
     @RequestMapping(value = "/teacher/modifyPassword", method = RequestMethod.POST)
     public ResponseMessage modifyPassword(@RequestBody Map map) {
         TeacherStatus teacherStatus;
-        int teacherId = (int)map.get("teacherId");
+        int teacherId = Integer.parseInt((String) map.get("teacherId"));
         String oldPassword = (String)map.get("oldPassword");
         String newPassword = (String)map.get("newPassword");
         if(0 == teacherId || null == newPassword) {
@@ -344,10 +344,10 @@ public class TeacherController {
             String uid = UUID.randomUUID().toString();
             stringRedisTemplate.boundValueOps(uid).set(String.valueOf(teacherId), 300, TimeUnit.SECONDS);
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("科研管理系统");
+            message.setFrom("15528359737@163.com");
             message.setTo(email);
             message.setSubject("重置密码");
-            message.setText("请点击此连接重置密码(5分钟内有效)：" + request.getContextPath() + "/html/reset_passwd.html?uid=" + uid);
+            message.setText("请点击此连接重置密码(5分钟内有效)："  + "http://localhost:8080/html/password_reset.html?uid=" + uid);
 
             mailSender.send(message);
         }
@@ -387,6 +387,8 @@ public class TeacherController {
             } else {
                 int teacherId = Integer.parseInt(stringRedisTemplate.boundValueOps(uid).get());
                 teacherStatus = teacherService.resetPassword(teacherId, newPassword);
+                stringRedisTemplate.delete(uid);
+
             }
         }
         return new ResponseMessage(teacherStatus);

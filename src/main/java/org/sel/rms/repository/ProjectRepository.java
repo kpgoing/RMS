@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 
 /**
 * 生成于2016/10/29
@@ -15,4 +17,6 @@ public interface ProjectRepository extends JpaRepository<ProjectEntity,Integer> 
 
     @Query("select s from ProjectEntity s where  s.introduction like :kw or s.master like  :kw or s.name like :kw or s.source like :kw")
     Page<ProjectEntity> search(@Param("kw")String kw, Pageable pageable);
+
+    List<ProjectEntity> findByIdTeacher(int id);
 }

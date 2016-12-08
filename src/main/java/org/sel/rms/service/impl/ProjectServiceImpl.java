@@ -1,4 +1,5 @@
 package org.sel.rms.service.impl;
+
 import org.apache.commons.lang3.StringUtils;
 import org.sel.rms.entity.ProjectEntity;
 import org.sel.rms.exception.ProjectException;
@@ -15,13 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
-
-
+import java.util.List;
 
 
 /**
-* 生成于2016/10/29
-*/
+ * 生成于2016/10/29
+ */
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class ProjectServiceImpl implements ProjectService {
@@ -37,8 +37,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     final static String KIND = "project";
 
-    
-    
 
     @Override
     public void publishProject(ProjectEntity projectEntity) {
@@ -62,20 +60,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void deleteProject(int idProject, int idTeacher) {
-        ProjectEntity projectEntity = getProjectById(idProject);
-
-        if (projectEntity.getIdTeacher() == idTeacher) {
-            try {
-                projectRepository.delete(idProject);
-                dynamicStateService.deleteByKindAndIdContent(KIND, idProject);
-            } catch (Exception ex) {
-                throw new ProjectException("delete project error which id = " + idProject, ex, ProjectStatus.DATABASE_ERROR);
-            }
-        } else {
-            throw new ProjectException("delete paper error because the project is not belong to the teacher which idProject =  " + idProject + " idTeahcer = " + idTeacher, ProjectStatus.PERMISSIOM_DENY);
+    public void deleteProject(int idProject) {
+        try {
+            projectRepository.delete(idProject);
+            dynamicStateService.deleteByKindAndIdContent(KIND, idProject);
+        } catch (Exception ex) {
+            throw new ProjectException("delete project error which id = " + idProject, ex, ProjectStatus.DATABASE_ERROR);
         }
-
     }
 
     @Override
@@ -97,7 +88,7 @@ public class ProjectServiceImpl implements ProjectService {
             throw new ProjectException("get entities by teacher id error who id = " + id, ex, ProjectStatus.DATABASE_ERROR);
         }
         return projectEntities;
-        
+
     }
 
     @Override
@@ -111,6 +102,11 @@ public class ProjectServiceImpl implements ProjectService {
         keyWord = "%" + keyWord + "%";
         projectEntities = projectRepository.search(keyWord, page);
         return projectEntities;
+    }
+
+    @Override
+    public List<ProjectEntity> getAllProjectsByIdTeacher(int id) {
+        return projectRepository.findByIdTeacher(id);
     }
 
 

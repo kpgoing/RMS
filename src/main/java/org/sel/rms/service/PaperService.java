@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 /**
@@ -21,7 +22,7 @@ public interface PaperService {
     void modifyPaper(PaperEntity paperEntity, HttpServletRequest request);
 
 
-    void deletePaper(int idPaper, int idTeacher, HttpServletRequest request);
+    void deletePaper(int idPaper, HttpServletRequest request);
 
     PaperEntity getPaperById(int id);
 
@@ -36,4 +37,6 @@ public interface PaperService {
     public Page<PaperEntity> searchPaper(String keyWord, Pageable page);
 
     public Page<PaperEntity> getNewPapers(Pageable pageable);
+
+    List<PaperEntity> getAllPapersByIdTeacher(int id);
 }

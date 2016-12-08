@@ -1,4 +1,5 @@
 package org.sel.rms.service.impl;
+
 import org.apache.commons.lang3.StringUtils;
 import org.sel.rms.entity.PaperEntity;
 import org.sel.rms.exception.PaperException;
@@ -21,11 +22,12 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 
 /**
-* 生成于2016/10/29
-*/
+ * 生成于2016/10/29
+ */
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class PaperServiceImpl implements PaperService {
@@ -96,20 +98,17 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
 
-    public void deletePaper(int idPaper, int idTeacher, HttpServletRequest request) {
+    public void deletePaper(int idPaper, HttpServletRequest request) {
         PaperEntity paperEntity = paperRepository.findOne(idPaper);
-        if (paperEntity.getIdTeacher() == idTeacher) {
-            try {
-                deleteFile(request, paperEntity.getContent());
-                paperRepository.delete(idPaper);
-                dynamicStateService.deleteByKindAndIdContent(KIND, idPaper);
-            } catch (Exception ex) {
-                throw new PaperException("delete paper error which id = " + idPaper, ex, PaperStatus.NOT_FOUND);
-            }
-        } else {
-            throw new PaperException("delete paper error because the paper is not belong to the teacher which idPaper =  " + idPaper + " idTeahcer = " + idTeacher, PaperStatus.PERMISSIOM_DENY);
+        try {
+            deleteFile(request, paperEntity.getContent());
+            paperRepository.delete(idPaper);
+            dynamicStateService.deleteByKindAndIdContent(KIND, idPaper);
+        } catch (Exception ex) {
+            throw new PaperException("delete paper error which id = " + idPaper, ex, PaperStatus.NOT_FOUND);
         }
     }
+
 
     @Override
     public String uploadFile(HttpServletRequest request, MultipartFile file) {
@@ -117,9 +116,9 @@ public class PaperServiceImpl implements PaperService {
         String sqPath;
         String fileName = file.getOriginalFilename();
         String extensionName = fileName.substring(fileName.indexOf("."));
-        fileName = fileName.substring(0,fileName.indexOf("."));
+        fileName = fileName.substring(0, fileName.indexOf("."));
         fileName = fileName + new java.util.Date().getTime() + extensionName;
-        String path = request.getServletContext().getRealPath(File.separator + "upload") + File.separator + id ;
+        String path = request.getServletContext().getRealPath(File.separator + "upload") + File.separator + id;
 
         File dir = new File(path);
         if (!dir.exists())
@@ -142,13 +141,13 @@ public class PaperServiceImpl implements PaperService {
         oldPath = request.getServletContext().getRealPath("") + oldPath;
         File oldFile = new File(oldPath);
         try {
-        boolean deleted = oldFile.delete();
+            boolean deleted = oldFile.delete();
             if (deleted) {
                 return PaperStatus.SUCCESS;
             } else {
                 throw new PaperException("delele the old file error!.", PaperStatus.DELETE_OLD_FILE_ERROR);
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw new PaperException("delele the old file error!.", ex, PaperStatus.DELETE_OLD_FILE_ERROR);
         }
 
@@ -171,5 +170,11 @@ public class PaperServiceImpl implements PaperService {
     public Page<PaperEntity> getNewPapers(Pageable pageable) {
         Page<PaperEntity> paperEntities = paperRepository.findAll(pageable);
         return paperEntities;
+    }
+
+    @Override
+    public List<PaperEntity> getAllPapersByIdTeacher(int id) {
+        List<PaperEntity> all = paperRepository.findByIdTeacher(id);
+        return all;
     }
 }

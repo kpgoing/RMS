@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 /**
@@ -21,7 +22,7 @@ public interface ProjectService {
     public void modifyProject(ProjectEntity projectEntity);
 
 
-    public void deleteProject(int idProject, int idTeacher);
+    public void deleteProject(int idProject);
 
     public ProjectEntity getProjectById(int id);
 
@@ -29,4 +30,6 @@ public interface ProjectService {
 
 
     Page<ProjectEntity> searchProjects(String keyWord, Pageable page);
+
+    List<ProjectEntity> getAllProjectsByIdTeacher(int id);
 }
