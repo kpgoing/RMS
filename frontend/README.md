@@ -13,6 +13,7 @@
 - 是否为管理员:isAdmin(true/null)
 - 用户ID:userId
 - 修改论文/项目标志位:isModify(true/null)
+- 管理员ID:adminId
 
 # 编码规范
 

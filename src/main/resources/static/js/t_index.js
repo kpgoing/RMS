@@ -85,7 +85,24 @@ $(function(){
         }
         sessionStorage.setItem("teacherId",userId);
         sessionStorage.removeItem("isModify");
-    	window.location.href = "./" + _href;
+        if(_href == "login.html"){
+            getAjax("/teacher/logout",null,function(data){
+                if(data.code == 0){
+                    sessionStorage.removeItem("userId");
+                    window.location.href = "login.html";
+                }
+            });
+        }else if(_href == "ad_login.html"){
+            getAjax("/admin/logout",null,function(data){
+                if(data.code == 0){
+                    sessionStorage.removeItem("isAdmin");
+                    sessionStorage.removeItem("adminId");
+                    window.location.href = "ad_login.html"; 
+                }
+            });
+        }else{
+            window.location.href = "./" + _href;
+        }
     });
 
     $(document).on("click","#modify_personal_info",function(){

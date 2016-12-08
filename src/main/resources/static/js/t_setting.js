@@ -157,8 +157,12 @@ $(function(){
             },
             function(isConfirm){
                 if (isConfirm) {
-                    sessionStorage.removeItem("userId");
-                    window.location.href = "./login.html";
+                    getAjax("/teacher/logout",null,function(data){
+                        if(data.code == 0){
+                            sessionStorage.removeItem("userId");
+                            window.location.href = "login.html";
+                        }
+                    });
                 }
             });
         e.stopPropagation();

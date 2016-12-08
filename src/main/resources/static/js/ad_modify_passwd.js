@@ -1,9 +1,11 @@
 var isAdmin = sessionStorage.getItem("isAdmin");
 var userId = sessionStorage.getItem("userId");
+
 $(function () {
     if(isAdmin)
     {
         $("#change").hide();
+        var adminId = sessionStorage.getItem("adminId");
     }
     else
     {
@@ -22,9 +24,7 @@ $(function () {
     $(document).click(function () {
         $(".menu").hide();
     });
-    $(document).on("click",".password_submit",function (e) {
-        
-    });
+
     $(document).on("change",".input_detail",function (e) {
         $(".input_detail").removeAttr("disabled");
         e.stopOpacity();
@@ -109,12 +109,22 @@ $(function () {
         }
         else
         {
-            var params = {
-                "teacherId": userId,
-                "oldPassword":$("#old_password").val(),
-                "newPassword":$("#new_password").val()
-            };
-            postAjax("/teacher/modifyPassword",params,function (data) {
+            if(!isAdmin){
+                var params = {
+                    "teacherId": userId,
+                    "oldPassword":$("#old_password").val(),
+                    "newPassword":$("#new_password").val()
+                };
+                var reqUrl = "/teacher/modifyPassword";
+            }else{
+                var params = {
+                    "adminId": adminId,
+                    "oldPassword":$("#old_password").val(),
+                    "newPassword":$("#new_password").val()
+                }
+                var reqUrl = "/admin/modifyPassword";
+            }
+            postAjax(reqUrl,params,function (data) {
               if(data.code == 0)
               {
                   swal("Oops...","修改密码成功","success");
@@ -188,13 +198,22 @@ $(function () {
                 if (isConfirm) {
                     if(isAdmin)
                     {
-                        sessionStorage.removeItem("isAdmin");
-                        window.location.href = "ad_login.html"
+                        getAjax("/admin/logout",null,function(data){
+                            if(data.code == 0){
+                                sessionStorage.removeItem("isAdmin");
+                                sessionStorage.removeItem("adminId");
+                                window.location.href = "ad_login.html"; 
+                            }
+                        });
                     }
                     else
                     {
-                        sessionStorage.removeItem("userId");
-                        window.location.href = "login.html";
+                        getAjax("/teacher/logout",null,function(data){
+                            if(data.code == 0){
+                                sessionStorage.removeItem("userId");
+                                window.location.href = "login.html";
+                            }
+                        });
                     }
                 }
             });

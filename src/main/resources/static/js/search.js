@@ -233,13 +233,22 @@ $(function () {
     $(document).on("click","#sign_out",function (e) {
         if(isAdmin)
         {
-            sessionStorage.removeItem("isAdmin");
-            window.location.href = "ad_login.html"
+            getAjax("/admin/logout",null,function(data){
+                if(data.code == 0){
+                    sessionStorage.removeItem("isAdmin");
+                    sessionStorage.removeItem("adminId");
+                    window.location.href = "ad_login.html"; 
+                }
+            });
         }
         else
         {
-            sessionStorage.setItem("teacherId",userId);
-            window.location.href = "login.html";
+            getAjax("/teacher/logout",null,function(data){
+                if(data.code == 0){
+                    sessionStorage.removeItem("userId");
+                    window.location.href = "login.html";
+                }
+            });
         }
         e.stopPropagation();
     });

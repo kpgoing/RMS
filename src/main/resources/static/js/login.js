@@ -42,6 +42,7 @@ $(function(){
 				if(data.code == 0){
 					sessionStorage.removeItem("userId");
 					sessionStorage.setItem("isAdmin",true);
+					sessionStorage.setItem("adminId",data.body.adminId);
 					window.location.href = "./ad_index.html";
 				}else{
 					swal("Oops...", data.msg, "error");

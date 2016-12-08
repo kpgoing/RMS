@@ -192,8 +192,13 @@ $(function () {
         e.stopPropagation();
     });
     $(document).on("click","#sign_out",function (e) {
-        sessionStorage.removeItem("isAdmin");
-        window.location.href = "ad_login.html";
+        getAjax("/admin/logout",null,function(data){
+            if(data.code == 0){
+                sessionStorage.removeItem("isAdmin");
+                sessionStorage.removeItem("adminId");
+                window.location.href = "ad_login.html"; 
+            }
+        });
         e.stopPropagation();
     });
 
