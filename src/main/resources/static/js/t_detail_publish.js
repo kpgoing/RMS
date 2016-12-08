@@ -3,6 +3,7 @@ $(function(){
   paperId = sessionStorage.getItem("paperId");
   projectId = sessionStorage.getItem("projectId");
   isModify = sessionStorage.getItem("isModify");
+  userId = sessionStorage.getItem("userId");
 
   getAjax("/admin/getTeacher/"+teacherId,null,function(data){
     if(data.code == 0){
@@ -269,8 +270,7 @@ $(function(){
         }, 
         function(isConfirm){
           if(isConfirm){
-            if(_href == "t_index.html")
-                  sessionStorage.setItem("teacherId",userId);
+            sessionStorage.setItem("teacherId",userId);
             sessionStorage.removeItem("isModify");
             window.location.href = "./" + _href;
           }

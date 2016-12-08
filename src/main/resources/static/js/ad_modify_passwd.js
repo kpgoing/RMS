@@ -166,6 +166,7 @@ $(function () {
             },
             function(isConfirm){
                 if (isConfirm) {
+                    sessionStorage.setItem("teacherId",userId);
                     window.location.href = "ad_modify_passwd.html";
                 }
             });
@@ -214,6 +215,8 @@ $(function () {
             },
             function(isConfirm){
                 if (isConfirm) {
+                    sessionStorage.setItem("teacherId",userId);
+                    sessionStorage.removeItem("isModify");
                     window.location.href ="t_publish_project.html";
                 }
             });
@@ -233,6 +236,8 @@ $(function () {
             },
             function(isConfirm){
                 if (isConfirm) {
+                    sessionStorage.setItem("teacherId",userId);
+                    sessionStorage.removeItem("isModify");
                     window.location.href ="t_publish_project.html";
                 }
             });

@@ -17,6 +17,8 @@ $(function(){
 					sessionStorage.setItem("userId",data.body.IdTeacher);
 					sessionStorage.setItem("teacherId",data.body.IdTeacher);
 					window.location.href = "./t_index.html";
+				}else if(data.code == 15){
+					swal("待审核", "请等待管理员审核！", "error");
 				}else{
 					swal("Oops...", data.msg, "error");
 				}

@@ -1,6 +1,8 @@
 $(function () {
     var searchStr = sessionStorage.getItem("searchStr");
     var isAdmin = sessionStorage.getItem("isAdmin");
+    userId = sessionStorage.getItem("userId");
+    var spanIndex = 0;
     if(isAdmin)
     {
         $("#change").hide();
@@ -133,7 +135,17 @@ $(function () {
     });
     //点击搜索模拟点击论文
     $(document).on("click",".button_search",function (e) {
-        $("#paper").click();
+        switch(spanIndex){
+            case 0:
+                $("#paper").click();
+                break;
+            case 1:
+                $("#project").click();
+                break;
+            case 2:
+                $("#user").click();
+                break;
+        }
         e.stopPropagation();
     });
     $(document).on("keypress",".input_search",function (e) {
@@ -170,6 +182,7 @@ $(function () {
     });
     $(document).on("click",".result_menu > span",function (e) {
         var index = $(this).index();
+        spanIndex = index;
         $(".result_menu>span").removeClass("choose");
         $(this).addClass("choose");
         e.stopPropagation();
@@ -188,6 +201,19 @@ $(function () {
     $(document).click(function () {
         $(".menu").hide();
     });
+    $(document).on("click",".menu_detail",function(){
+        var index = $(this).index();
+        sessionStorage.setItem("teacherId",userId);
+        sessionStorage.removeItem("isModify");
+        switch(index){
+            case 0:
+                window.location.href = "./t_publish_project.html";
+                break;
+            case 1:
+                window.location.href = "./t_detail_paper.html";
+                break;
+        }
+    });
     $(document).on("click","#personal_index",function (e) {
         if(isAdmin)
         {
@@ -200,6 +226,7 @@ $(function () {
         e.stopPropagation();
     });
     $(document).on("click","#reset_password",function (e) {
+        sessionStorage.setItem("teacherId",userId);
         window.location.href = "ad_modify_passwd.html";
         e.stopPropagation();
     });
@@ -211,6 +238,7 @@ $(function () {
         }
         else
         {
+            sessionStorage.setItem("teacherId",userId);
             window.location.href = "login.html";
         }
         e.stopPropagation();
