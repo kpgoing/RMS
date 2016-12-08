@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 
 /**
  * Created by xubowei on 30/10/2016.
@@ -149,20 +151,22 @@ public class PaperController {
      * @apiUse UnLoginErrorResponse
      * @apiUse PermissionDenyErrorResponse
      */
-    @RequestMapping(value = "/teacher/paper/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = {"/teacher/paper/delete/{id}", "/admin/paper/delete/{id}"}, method = RequestMethod.GET)
     public ResponseMessage delete(@PathVariable("id") int id, HttpServletRequest request) {
         PaperStatus paperStatus;
-        Integer idTeacher = (Integer) request.getSession().getAttribute(teacherKey);
-        if (idTeacher == null) {
-            logger.error("teacher is offline!");
-            paperStatus = PaperStatus.UN_LOGIN;
-        } else {
-            paperService.deletePaper(id, idTeacher, request);
+//        Integer idTeacher = (Integer) request.getSession().getAttribute(teacherKey);
+//        if (idTeacher == null) {
+//            logger.error("teacher is offline!");
+//            paperStatus = PaperStatus.UN_LOGIN;
+//        } else {
+            paperService.deletePaper(id, request);
 
             paperStatus = PaperStatus.SUCCESS;
-        }
+//        }
         return new ResponseMessage(paperStatus);
     }
+
+
 
     /**
      * @api {get} /project/teacher/:id/:page/:size 查询某个老师的论文

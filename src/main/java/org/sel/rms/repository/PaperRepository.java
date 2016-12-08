@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 
 /**
 * 生成于2016/10/29
@@ -16,6 +18,8 @@ public interface PaperRepository extends JpaRepository<PaperEntity,Integer> {
     @Query("select s from PaperEntity s where  s.title like :kw or s.writer like  :kw or s.abstractContent like :kw or s.keyWord like :kw")
 //    @Query(value = "select * from PaperEntity where  UPPER(keyWord) like  UPPER(CONCAT('%',:kw,'%')) ",nativeQuery = true)
     Page<PaperEntity> search(@Param("kw") String keyword, Pageable pageable);
+
+    List<PaperEntity> findByIdTeacher(int id);
 
 //    @Query("select s from PaperEntity s where s.idPaper = ")
 //    PaperEntity findNewOne()

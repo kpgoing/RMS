@@ -8,12 +8,17 @@ import org.sel.rms.repository.AdminRepository;
 import org.sel.rms.repository.CheckStatusOfTeacherRepository;
 import org.sel.rms.repository.TeacherRepository;
 import org.sel.rms.service.AdminService;
+import org.sel.rms.service.PaperService;
+import org.sel.rms.service.ProjectService;
+import org.sel.rms.service.TeacherService;
 import org.sel.rms.status.AdminStatus;
+import org.sel.rms.status.TeacherStatus;
 import org.sel.rms.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,8 +42,19 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     TeacherRepository teacherRepository;
 
+    @Autowired
+    PaperService paperService;
+
+    @Autowired
+    ProjectService projectService;
+
+    @Autowired
+    TeacherService teacherService;
+
+
     @Value("config.admin.key")
     String adminKey;
+
 
     @Override
     public AdminStatus  adminAuth(AdminEntity adminEntity) {
@@ -163,5 +179,21 @@ public class AdminServiceImpl implements AdminService {
             throw new AdminException("modify password error", e, AdminStatus.MODIFY_PASSWORD_ERROR);
         }
         return adminStatus;
+    }
+
+    @Override
+    public AdminStatus deleteTeacher(int id, HttpServletRequest httpServletRequest) {
+        try {
+            paperService.getAllPapersByIdTeacher(id).forEach(paperEntity -> {
+                paperService.deletePaper(paperEntity.getIdPaper(), httpServletRequest);
+            });
+            projectService.getAllProjectsByIdTeacher(id).forEach(projectEntity -> {
+                projectService.deleteProject(projectEntity.getIdProject());
+            });
+            teacherService.deleteTeacher(id);
+        } catch (Exception e) {
+            throw new AdminException("delete teacher error whose id = " + id, e, AdminStatus.ERROR);
+        }
+        return AdminStatus.SUCCESS;
     }
 }

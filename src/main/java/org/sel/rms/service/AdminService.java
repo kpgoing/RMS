@@ -4,6 +4,7 @@ import org.sel.rms.entity.TeacherEntity;
 import org.sel.rms.status.AdminStatus;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -27,4 +28,6 @@ public interface AdminService {
     TeacherEntity getTeacher(int idTeacher);
 
     AdminStatus modifyPassword(int adminId, String oldPassword, String newPassword);
+
+    AdminStatus deleteTeacher(int id, HttpServletRequest httpServletRequest);
 }

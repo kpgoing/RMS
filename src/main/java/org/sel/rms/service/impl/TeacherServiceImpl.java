@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ import java.util.Map;
 * 生成于2016/10/29
 */
 @Service
-
+@Transactional(rollbackFor = Exception.class)
 public class TeacherServiceImpl implements TeacherService {
 
     @Autowired
@@ -102,11 +103,11 @@ public class TeacherServiceImpl implements TeacherService {
         TeacherEntity teacherEntity;
         try {
             teacherEntity = teacherRepository.findOne(teacherId);
-            if(!(oldPassword.equals(MD5Util.calc(teacherEntity.getPassword())))) {
+            if(!(teacherEntity.getPassword().equals(MD5Util.calc(oldPassword)))) {
                 teacherStatus = TeacherStatus.OLDPASSWORD_ERROR;
                 return teacherStatus;
             }
-            teacherEntity.setPassword(newPassword);
+            teacherEntity.setPassword(MD5Util.calc(newPassword));
             teacherRepository.save(teacherEntity);
             teacherStatus = TeacherStatus.SUCCESS;
         } catch (Exception e) {
@@ -134,9 +135,6 @@ public class TeacherServiceImpl implements TeacherService {
         keyWord = StringUtils.join(keyWords, "%");
         keyWord = "%" + keyWord + "%";
         teacherEntities = teacherRepository.search(keyWord, page);
-        for(TeacherEntity t : teacherEntities) {
-            t.setPassword(null);
-        }
         return teacherEntities;
     }
 

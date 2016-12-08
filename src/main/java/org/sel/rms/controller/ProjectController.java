@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -40,7 +41,6 @@ public class ProjectController {
     }
 
 
-
     /**
      * @api {post} /teacher/project/publish 发表项目
      * @apiName publishProject
@@ -50,15 +50,14 @@ public class ProjectController {
      * @apiParam {json} projectEntity 论文信息
      * @apiParamExample {json} Request-Example:
      * {
-     *      "idTeacher":1,
-     *      "name":"ds",
-     *      "source":"计算机学院",
-     *      "projectTime":"2016-10-30",
-     *      "master":"哈哈",
-     *      "funds":"1231412314.11",
-     *      "introduction":"123"
+     * "idTeacher":1,
+     * "name":"ds",
+     * "source":"计算机学院",
+     * "projectTime":"2016-10-30",
+     * "master":"哈哈",
+     * "funds":"1231412314.11",
+     * "introduction":"123"
      * }
-     *
      * @apiUse NormalSuccessResponse
      * @apiUse NormalErrorResponse
      * @apiUse ArgumentsErrorResponse
@@ -96,16 +95,15 @@ public class ProjectController {
      * @apiParam {json} projectEntity 论文信息
      * @apiParamExample {json} Request-Example:
      * {
-     *      "idProject":4,
-     *      "idTeacher":1,
-     *      "name":"ds",
-     *      "source":"国外",
-     *      "projectTime":"2016-10-30",
-     *      "master":"哈哈",
-     *      "funds":"1231412314.11",
-     *      "introduction":"123"
+     * "idProject":4,
+     * "idTeacher":1,
+     * "name":"ds",
+     * "source":"国外",
+     * "projectTime":"2016-10-30",
+     * "master":"哈哈",
+     * "funds":"1231412314.11",
+     * "introduction":"123"
      * }
-     *
      * @apiUse NormalSuccessResponse
      * @apiUse NormalErrorResponse
      * @apiUse ArgumentsErrorResponse
@@ -151,14 +149,8 @@ public class ProjectController {
     @RequestMapping(value = "/teacher/project/delete/{id}", method = RequestMethod.GET)
     public ResponseMessage delete(@PathVariable("id") int id, HttpSession httpSession) {
         ProjectStatus projectStatus;
-        Integer idTeacher = (Integer) httpSession.getAttribute(teacherKey);
-        if (idTeacher == null) {
-            logger.error("teacher is offline!");
-            projectStatus = ProjectStatus.UN_LOGIN;
-        } else {
-            projectService.deleteProject(id, idTeacher);
-            projectStatus = ProjectStatus.SUCCESS;
-        }
+        projectService.deleteProject(id);
+        projectStatus = ProjectStatus.SUCCESS;
         return new ResponseMessage(projectStatus);
     }
 
@@ -172,56 +164,56 @@ public class ProjectController {
      * @apiParam {Number} size 每页数据数量
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
-     *   {
-     *   "code": 0,
-     *   "msg": "SUCCESS",
-     *   "body": {
-     *   "content": [
-     *   {
-     *   "idProject": 5,
-     *   "idTeacher": 1,
-     *   "name": "ds",
-     *   "source": "计算机学院",
-     *   "projectTime": "2016-10-30",
-     *   "master": "哈哈",
-     *   "funds": 1231412314.11,
-     *   "publishTime": "2016-10-30",
-     *   "introduction": "123",
-     *   "param1": null,
-     *   "param2": null
-     *   },
-     *   {
-     *   "idProject": 4,
-     *   "idTeacher": 1,
-     *   "name": "ds",
-     *   "source": "十大",
-     *   "projectTime": "2016-10-30",
-     *   "master": "阿萨德撒",
-     *   "funds": 123123,
-     *   "publishTime": "2016-10-30",
-     *   "introduction": "123",
-     *   "param1": null,
-     *   "param2": null
-     *   }
-     *   ],
-     *   "last": true,
-     *   "totalElements": 2,
-     *   "totalPages": 1,
-     *   "size": 3,
-     *   "number": 0,
-     *   "sort": [
-     *   {
-     *   "direction": "DESC",
-     *   "property": "idProject",
-     *   "ignoreCase": false,
-     *   "nullHandling": "NATIVE",
-     *   "ascending": false
-     *   }
-     *   ],
-     *   "first": true,
-     *   "numberOfElements": 2
-     *   }
-     *   }
+     * {
+     * "code": 0,
+     * "msg": "SUCCESS",
+     * "body": {
+     * "content": [
+     * {
+     * "idProject": 5,
+     * "idTeacher": 1,
+     * "name": "ds",
+     * "source": "计算机学院",
+     * "projectTime": "2016-10-30",
+     * "master": "哈哈",
+     * "funds": 1231412314.11,
+     * "publishTime": "2016-10-30",
+     * "introduction": "123",
+     * "param1": null,
+     * "param2": null
+     * },
+     * {
+     * "idProject": 4,
+     * "idTeacher": 1,
+     * "name": "ds",
+     * "source": "十大",
+     * "projectTime": "2016-10-30",
+     * "master": "阿萨德撒",
+     * "funds": 123123,
+     * "publishTime": "2016-10-30",
+     * "introduction": "123",
+     * "param1": null,
+     * "param2": null
+     * }
+     * ],
+     * "last": true,
+     * "totalElements": 2,
+     * "totalPages": 1,
+     * "size": 3,
+     * "number": 0,
+     * "sort": [
+     * {
+     * "direction": "DESC",
+     * "property": "idProject",
+     * "ignoreCase": false,
+     * "nullHandling": "NATIVE",
+     * "ascending": false
+     * }
+     * ],
+     * "first": true,
+     * "numberOfElements": 2
+     * }
+     * }
      * @apiUse NormalErrorResponse
      * @apiUse DataBaseErrorResponse
      */
@@ -246,45 +238,43 @@ public class ProjectController {
      * @apiParam {Number} size 每页数据数量
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
-     *   {
-     *     "code": 0,
-     *     "msg": "SUCCESS",
-     *     "body": {
-     *       "content": [
-     *         {
-     *           "idProject": 5,
-     *           "idTeacher": 1,
-     *           "name": "ds",
-     *           "source": "计算机学院",
-     *           "projectTime": "2016-10-30",
-     *           "master": "哈哈",
-     *           "funds": 1231412314.11,
-     *           "publishTime": "2016-10-30",
-     *           "introduction": "123",
-     *           "param1": null,
-     *           "param2": null
-     *         }
-     *       ],
-     *       "last": true,
-     *       "totalPages": 1,
-     *       "totalElements": 1,
-     *       "size": 5,
-     *       "number": 0,
-     *       "sort": [
-     *         {
-     *           "direction": "DESC",
-     *           "property": "idProject",
-     *           "ignoreCase": false,
-     *           "nullHandling": "NATIVE",
-     *           "ascending": false
-     *         }
-     *       ],
-     *       "first": true,
-     *       "numberOfElements": 1
-     *     }
-     *   }
-     *
-     *
+     * {
+     * "code": 0,
+     * "msg": "SUCCESS",
+     * "body": {
+     * "content": [
+     * {
+     * "idProject": 5,
+     * "idTeacher": 1,
+     * "name": "ds",
+     * "source": "计算机学院",
+     * "projectTime": "2016-10-30",
+     * "master": "哈哈",
+     * "funds": 1231412314.11,
+     * "publishTime": "2016-10-30",
+     * "introduction": "123",
+     * "param1": null,
+     * "param2": null
+     * }
+     * ],
+     * "last": true,
+     * "totalPages": 1,
+     * "totalElements": 1,
+     * "size": 5,
+     * "number": 0,
+     * "sort": [
+     * {
+     * "direction": "DESC",
+     * "property": "idProject",
+     * "ignoreCase": false,
+     * "nullHandling": "NATIVE",
+     * "ascending": false
+     * }
+     * ],
+     * "first": true,
+     * "numberOfElements": 1
+     * }
+     * }
      * @apiUse NormalErrorResponse
      * @apiUse DataBaseErrorResponse
      */
@@ -304,28 +294,27 @@ public class ProjectController {
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
-     *   "code": 0,
-     *   "msg": "SUCCESS",
-     *   "body": {
-     *     "idProject": 7,
-     *     "idTeacher": 1,
-     *     "name": "ds",
-     *     "source": "计算机学院",
-     *     "projectTime": "2016-10-30",
-     *     "master": "哈哈",
-     *     "funds": 1231412314.11,
-     *     "publishTime": "2016-11-15",
-     *     "introduction": "123",
-     *     "param1": null,
-     *     "param2": null
-     *   }
+     * "code": 0,
+     * "msg": "SUCCESS",
+     * "body": {
+     * "idProject": 7,
+     * "idTeacher": 1,
+     * "name": "ds",
+     * "source": "计算机学院",
+     * "projectTime": "2016-10-30",
+     * "master": "哈哈",
+     * "funds": 1231412314.11,
+     * "publishTime": "2016-11-15",
+     * "introduction": "123",
+     * "param1": null,
+     * "param2": null
      * }
-     *
+     * }
      * @apiUse NormalErrorResponse
      * @apiUse NotFoundErrorResponse
      */
     @RequestMapping(value = "/project/{id}", method = RequestMethod.GET)
-    public ResponseMessage findOne(@PathVariable("id") int id){
+    public ResponseMessage findOne(@PathVariable("id") int id) {
         ProjectEntity projectById = projectService.getProjectById(id);
         return new ResponseMessage(ProjectStatus.SUCCESS, projectById);
     }
